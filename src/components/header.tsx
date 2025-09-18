@@ -5,6 +5,7 @@ import {
   ListTodo,
   PlusCircle,
   Users,
+  Briefcase,
 } from 'lucide-react';
 import {
   Sheet,
@@ -15,14 +16,24 @@ import { Button } from '@/components/ui/button';
 import UserNav from './user-nav';
 import { Logo } from './icons';
 
-const mobileNavItems = [
-  { href: '/dashboard', icon: Home, label: 'Dashboard' },
+const requesterMobileNavItems = [
+  { href: '/dashboard', icon: Home, label: 'Available Tasks' },
   { href: '/tasks/new', icon: PlusCircle, label: 'Post Task' },
   { href: '/tasks/mine', icon: ListTodo, label: 'My Tasks' },
   { href: '/helpers', icon: Users, label: 'Find Helpers' },
 ];
 
+const helperMobileNavItems = [
+    { href: '/helper-dashboard', icon: Briefcase, label: 'Find Work' },
+    { href: '/tasks/mine', icon: ListTodo, label: 'My Accepted Tasks' },
+]
+
+// This is a placeholder. In a real app, you'd get this from user auth state.
+const userRole = 'requester';
+
 export default function Header() {
+  const mobileNavItems = userRole === 'helper' ? helperMobileNavItems : requesterMobileNavItems;
+
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>

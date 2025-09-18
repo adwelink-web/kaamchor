@@ -14,19 +14,29 @@ import {
   PlusCircle,
   Users,
   Settings,
+  Briefcase,
 } from 'lucide-react';
 import { Logo } from './icons';
 import { cn } from '@/lib/utils';
 
-const navItems = [
-  { href: '/dashboard', icon: Home, label: 'Dashboard' },
+const requesterNavItems = [
+  { href: '/dashboard', icon: Home, label: 'Available Tasks' },
   { href: '/tasks/new', icon: PlusCircle, label: 'Post Task' },
   { href: '/tasks/mine', icon: ListTodo, label: 'My Tasks' },
   { href: '/helpers', icon: Users, label: 'Find Helpers' },
 ];
 
+const helperNavItems = [
+    { href: '/helper-dashboard', icon: Briefcase, label: 'Find Work' },
+    { href: '/tasks/mine', icon: ListTodo, label: 'My Accepted Tasks' },
+]
+
+// This is a placeholder. In a real app, you'd get this from user auth state.
+const userRole = 'requester'; 
+
 export default function AppSidebar() {
   const pathname = usePathname();
+  const navItems = userRole === 'helper' ? helperNavItems : requesterNavItems;
 
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">

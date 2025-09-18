@@ -36,7 +36,7 @@ export default function RoleSelectionPage() {
             </Card>
         </Link>
 
-        <Link href="/dashboard">
+        <Link href="/helper-dashboard">
             <Card className="text-center hover:bg-primary/5 border-2 border-transparent hover:border-primary/30 transition-all duration-300 transform hover:scale-105 cursor-pointer flex flex-col items-center p-8">
             <CardHeader>
                  <div className="mx-auto bg-primary/20 p-4 rounded-full mb-4">
