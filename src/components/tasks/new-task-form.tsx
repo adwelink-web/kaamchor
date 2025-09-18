@@ -1,6 +1,7 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { createTask } from '@/app/actions';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -25,7 +26,7 @@ function SubmitButton() {
 
 export default function NewTaskForm() {
   const initialState = { message: '', errors: {} };
-  const [state, dispatch] = useFormState(createTask, initialState);
+  const [state, dispatch] = useActionState(createTask, initialState);
   const { toast } = useToast();
 
   useEffect(() => {
