@@ -16,6 +16,7 @@ import {
 import { TASK_CATEGORIES } from '@/lib/constants';
 import { useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { Upload } from 'lucide-react';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -89,6 +90,10 @@ export default function NewTaskForm() {
           <Input id="price" name="price" type="number" placeholder="e.g., 50" />
           {state.errors?.price && <p className="text-sm text-destructive">{state.errors.price}</p>}
         </div>
+      </div>
+       <div className="grid gap-3">
+        <Label htmlFor="photo">Task Photo (Optional)</Label>
+        <Input id="photo" name="photo" type="file" className="h-auto p-0 file:h-10 file:mr-4 file:px-4 file:border-0 file:bg-muted file:text-muted-foreground hover:file:bg-muted/50"/>
       </div>
       <div className="flex justify-end">
         <SubmitButton />

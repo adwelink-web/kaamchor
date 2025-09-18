@@ -25,6 +25,7 @@ export const mockTasks: Task[] = [
     status: 'Posted',
     requesterId: 'user-1',
     createdAt: new Date(2023, 10, 15),
+    imageUrl: 'https://picsum.photos/seed/task1/400/300'
   },
   {
     id: 'task-2',
@@ -71,6 +72,18 @@ export const mockTasks: Task[] = [
     status: 'Posted',
     requesterId: 'user-3',
     createdAt: new Date(2023, 10, 17),
+  },
+   {
+    id: 'task-6',
+    title: 'Paint living room',
+    description: 'Living room needs a fresh coat of paint. Color is light grey.',
+    category: 'home',
+    location: 'San Francisco, CA',
+    price: 250,
+    status: 'In Progress',
+    requesterId: 'user-1',
+    helperId: 'helper-2',
+    createdAt: new Date(2023, 10, 18),
   },
 ];
 

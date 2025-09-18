@@ -6,6 +6,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -27,12 +28,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { WandSparkles, Bot, User, Check, X } from 'lucide-react';
+import { WandSparkles, Bot, User, Check, X, Star, MessageSquare } from 'lucide-react';
 import { mockHelpers, getCurrentUser } from '@/lib/data';
 import { getSuggestedMatches } from '@/app/actions';
 import type { SuggestTaskMatchesOutput } from '@/ai/flows/suggest-task-matches';
 import { Skeleton } from '../ui/skeleton';
 import Image from 'next/image';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { Separator } from '../ui/separator';
 
 type MyTasksClientProps = {
   tasks: Task[];
@@ -96,22 +99,16 @@ function MatcherDialog({ task }: MatcherDialogProps) {
         <div className="space-y-4 py-4">
           {loading && (
             <div className="space-y-4">
-              <div className="flex items-start gap-4">
-                <Skeleton className="h-12 w-12 rounded-full" />
-                <div className="space-y-2 flex-1">
-                  <Skeleton className="h-4 w-1/4" />
-                  <Skeleton className="h-4 w-full" />
-                   <Skeleton className="h-4 w-3/4" />
+              {[...Array(2)].map((_, i) => (
+                <div key={i} className="flex items-start gap-4">
+                  <Skeleton className="h-12 w-12 rounded-full" />
+                  <div className="space-y-2 flex-1">
+                    <Skeleton className="h-4 w-1/4" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </div>
                 </div>
-              </div>
-               <div className="flex items-start gap-4">
-                <Skeleton className="h-12 w-12 rounded-full" />
-                <div className="space-y-2 flex-1">
-                  <Skeleton className="h-4 w-1/4" />
-                  <Skeleton className="h-4 w-full" />
-                   <Skeleton className="h-4 w-3/4" />
-                </div>
-              </div>
+              ))}
             </div>
           )}
           {error && <p className="text-destructive">{error}</p>}
@@ -144,6 +141,46 @@ function MatcherDialog({ task }: MatcherDialogProps) {
   );
 }
 
+function HelperInfo({ helperId }: { helperId: string }) {
+    const helper = mockHelpers.find(h => h.id === helperId);
+    if (!helper) return <span className="text-muted-foreground">N/A</span>;
+    
+    return (
+        <div className="flex items-center gap-2">
+            <Avatar className="h-6 w-6">
+                <AvatarImage src={helper.avatarUrl} alt={helper.name} />
+                <AvatarFallback>{helper.name[0]}</AvatarFallback>
+            </Avatar>
+            <span>{helper.name}</span>
+        </div>
+    )
+}
+
+function TaskActions({ task }: { task: Task }) {
+    switch(task.status) {
+        case 'Posted':
+            return (
+                <div className="flex gap-2">
+                    <MatcherDialog task={task} />
+                    <Button size="sm" variant="destructive-outline">Cancel</Button>
+                </div>
+            );
+        case 'Accepted':
+        case 'In Progress':
+             return <Button size="sm" variant="outline">
+                <MessageSquare className="mr-2 h-4 w-4"/>
+                Contact Helper
+             </Button>;
+        case 'Completed':
+            return <Button size="sm">
+                <Star className="mr-2 h-4 w-4"/>
+                Rate Helper
+            </Button>;
+        default:
+            return null;
+    }
+}
+
 
 export default function MyTasksClient({ tasks }: MyTasksClientProps) {
   const getStatusVariant = (status: Task['status']) => {
@@ -152,6 +189,8 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
         return 'secondary';
       case 'Completed':
         return 'default';
+      case 'In Progress':
+        return 'warning';
       case 'Posted':
       default:
         return 'outline';
@@ -171,13 +210,11 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
           <TableHeader>
             <TableRow>
               <TableHead>Title</TableHead>
-              <TableHead>Category</TableHead>
+              <TableHead>Helper</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Price</TableHead>
               <TableHead>Created</TableHead>
-              <TableHead>
-                <span className="sr-only">Actions</span>
-              </TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -185,7 +222,9 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
               tasks.map((task) => (
                 <TableRow key={task.id}>
                   <TableCell className="font-medium">{task.title}</TableCell>
-                  <TableCell>{task.category}</TableCell>
+                   <TableCell>
+                    {task.helperId ? <HelperInfo helperId={task.helperId}/> : <span className="text-muted-foreground">-</span>}
+                  </TableCell>
                   <TableCell>
                     <Badge variant={getStatusVariant(task.status)}>
                       {task.status}
@@ -194,7 +233,7 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
                   <TableCell>${task.price}</TableCell>
                   <TableCell>{task.createdAt.toLocaleDateString()}</TableCell>
                   <TableCell className="text-right">
-                    {task.status === 'Posted' && <MatcherDialog task={task} />}
+                    <TaskActions task={task} />
                   </TableCell>
                 </TableRow>
               ))

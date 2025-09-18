@@ -13,10 +13,11 @@ export type Task = {
   category: string;
   location: string;
   price: number;
-  status: 'Posted' | 'Accepted' | 'Completed';
+  status: 'Posted' | 'Accepted' | 'In Progress' | 'Completed';
   requesterId: string;
   helperId?: string;
   createdAt: Date;
+  imageUrl?: string;
 };
 
 export type Helper = {

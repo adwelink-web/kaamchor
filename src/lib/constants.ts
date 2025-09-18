@@ -8,4 +8,4 @@ export const TASK_CATEGORIES = [
   { value: "transport", label: "Transport", icon: Car },
 ];
 
-export const TASK_STATUSES = ["Posted", "Accepted", "Completed"] as const;
+export const TASK_STATUSES = ["Posted", "Accepted", "In Progress", "Completed"] as const;
