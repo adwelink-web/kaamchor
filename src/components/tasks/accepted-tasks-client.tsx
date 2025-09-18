@@ -94,7 +94,7 @@ export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTas
                     <SelectContent>
                         <SelectItem value="Accepted">Accepted</SelectItem>
                         <SelectItem value="In Progress">In Progress</SelectItem>
-                        <SelectItem value="Completed">Completed</Go>
+                        <SelectItem value="Completed">Completed</SelectItem>
                     </SelectContent>
                 </Select>
              </div>
