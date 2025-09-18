@@ -43,7 +43,7 @@ export default function LandingPage() {
           >
             Login
           </Link>
-          <Button asChild variant="outline" className="border-primary/50 bg-transparent text-primary-foreground hover:bg-primary hover:text-primary-foreground">
+          <Button asChild>
             <Link href="/login">
               Get Started <MoveRight className="ml-2 h-4 w-4" />
             </Link>
