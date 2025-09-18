@@ -1,14 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/icons';
 import Link from 'next/link';
-import Image from 'next/image';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
-import { CheckCircle, MoveRight, Zap, Users, ShieldCheck, MapPin } from 'lucide-react';
+import { MoveRight, Zap, Users, ShieldCheck, MapPin } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
-
-const heroImage = PlaceHolderImages.find((img) => img.id === 'hero-image');
 
 const BentoCard = ({
   className,
@@ -19,32 +14,33 @@ const BentoCard = ({
 }) => (
   <div
     className={cn(
-      'group relative flex flex-col justify-between rounded-xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-sm transition-all duration-500 will-change-transform hover:border-white/20 hover:bg-white/10 hover:shadow-primary/20 hover:scale-[1.02] overflow-hidden',
+      'group relative flex flex-col justify-between rounded-xl bg-card border border-card p-6 shadow-lg transition-shadow duration-300 hover:shadow-primary/20',
       className
     )}
   >
     {children}
-    <div className="pointer-events-none absolute inset-0 -z-10 transform-gpu bg-gradient-to-br from-white/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+    <div className="pointer-events-none absolute inset-0 -z-10 rounded-xl bg-gradient-to-br from-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+     <div className="pointer-events-none absolute top-0 left-0 h-1/2 w-1/2 -z-10 rounded-xl bg-gradient-to-br from-primary/20 to-transparent opacity-0 blur-2xl transition-all duration-500 group-hover:opacity-50 group-hover:-translate-x-1/4 group-hover:-translate-y-1/4" />
   </div>
 );
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-16 flex items-center bg-background/80 backdrop-blur-sm sticky top-0 z-50 animate-in fade-in slide-in-from-top-4 duration-500">
+    <div className="flex flex-col min-h-screen animated-gradient">
+      <header className="px-4 lg:px-6 h-16 flex items-center bg-transparent backdrop-blur-sm sticky top-0 z-50 animate-in fade-in slide-in-from-top-4 duration-500">
         <Link href="#" className="flex items-center justify-center" prefetch={false}>
           <Logo className="h-6 w-6 text-primary" />
-          <span className="ml-2 font-bold text-xl font-headline">Kaamchor</span>
+          <span className="ml-2 font-bold text-xl font-headline text-white">Kaamchor</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
           <Link
             href="/login"
-            className="text-sm font-medium hover:text-primary transition-colors"
+            className="text-sm font-medium text-muted-foreground hover:text-white transition-colors"
             prefetch={false}
           >
             Login
           </Link>
-          <Button asChild variant="outline" className="border-primary/50 hover:bg-primary/10 hover:text-primary">
+          <Button asChild variant="outline" className="border-primary/50 bg-transparent text-primary hover:bg-primary/10 hover:text-primary">
             <Link href="/login">
               Get Started <MoveRight className="ml-2 h-4 w-4" />
             </Link>
@@ -57,19 +53,19 @@ export default function LandingPage() {
             <div className="flex flex-col items-center justify-center space-y-6 text-center">
               <div className="space-y-4 animate-in fade-in slide-in-from-bottom-12 duration-700">
                 <h1 className="text-5xl font-black tracking-tighter sm:text-7xl xl:text-8xl/none font-headline">
-                  <span className="animated-text-gradient">Your Life,</span> Delegated.
+                  <span className="animated-text-gradient">Your Life,</span> <span className="text-white">Delegated.</span>
                 </h1>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl mx-auto animate-in fade-in duration-500 delay-200">
                   Stop drowning in chores. Kaamchor connects you with local hustlers ready to tackle your to-do list. Get it done.
                 </p>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row items-center animate-in fade-in duration-500 delay-300">
-                <Button asChild size="lg" className="shadow-lg shadow-primary/40 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 transform hover:scale-105">
+                <Button asChild size="lg" className="shadow-lg shadow-primary/40 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 animate-pulse-slow">
                   <Link href="/login">
                     Find Help Now <MoveRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="ghost" className="transition-all duration-300 transform hover:scale-105">
+                <Button asChild size="lg" variant="ghost" className="text-muted-foreground hover:text-white transition-all duration-300 transform hover:scale-105">
                   <Link href="#">
                     Learn How It Works
                   </Link>
@@ -145,10 +141,10 @@ export default function LandingPage() {
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-white/10">
         <p className="text-xs text-muted-foreground">&copy; 2024 Kaamchor. All rights reserved.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <Link href="#" className="text-xs hover:underline underline-offset-4" prefetch={false}>
+          <Link href="#" className="text-xs text-muted-foreground hover:text-white underline-offset-4" prefetch={false}>
             Terms of Service
           </Link>
-          <Link href="#" className="text-xs hover:underline underline-offset-4" prefetch={false}>
+          <Link href="#" className="text-xs text-muted-foreground hover:text-white underline-offset-4" prefetch={false}>
             Privacy
           </Link>
         </nav>
