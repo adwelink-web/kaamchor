@@ -18,7 +18,7 @@ const features = [
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-16 flex items-center bg-background/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="px-4 lg:px-6 h-16 flex items-center bg-background/80 backdrop-blur-sm sticky top-0 z-50 animate-in fade-in slide-in-from-top-4 duration-500">
         <Link href="#" className="flex items-center justify-center" prefetch={false}>
           <Logo className="h-6 w-6 text-primary" />
           <span className="ml-2 font-bold text-xl">Kaamchor</span>
@@ -42,17 +42,17 @@ export default function LandingPage() {
         <section className="w-full pt-24 md:pt-32 lg:pt-40 animated-gradient">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-              <div className="flex flex-col justify-center space-y-6">
+              <div className="flex flex-col justify-center space-y-6 animate-in fade-in slide-in-from-left-12 duration-500">
                 <div className="space-y-4">
-                  <h1 className="text-4xl font-black tracking-tighter sm:text-6xl xl:text-7xl/none font-headline">
+                  <h1 className="text-4xl font-black tracking-tighter sm:text-6xl xl:text-7xl/none font-headline animated-text-gradient">
                     Your Life, Delegated.
                   </h1>
-                  <p className="max-w-[600px] text-muted-foreground md:text-xl">
+                  <p className="max-w-[600px] text-muted-foreground md:text-xl animate-in fade-in duration-500 delay-200">
                     Stop drowning in chores. Kaamchor connects you with local hustlers ready to tackle your to-do list. Get it done.
                   </p>
                 </div>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Button asChild size="lg" className="shadow-lg shadow-primary/20">
+                <div className="flex flex-col gap-2 min-[400px]:flex-row animate-in fade-in duration-500 delay-300">
+                  <Button asChild size="lg" className="shadow-lg shadow-primary/20 animate-pulse">
                     <Link href="/login">
                       Find Help Now <MoveRight className="ml-2 h-5 w-5" />
                     </Link>
@@ -66,7 +66,7 @@ export default function LandingPage() {
                   height={400}
                   alt={heroImage.description}
                   data-ai-hint={heroImage.imageHint}
-                  className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last animate-in fade-in zoom-in-95 duration-500"
+                  className="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last animate-in fade-in zoom-in-95 slide-in-from-right-12 duration-700"
                 />
               )}
             </div>
@@ -87,7 +87,7 @@ export default function LandingPage() {
             </div>
             <div className="mx-auto grid max-w-5xl items-start gap-8 sm:grid-cols-2 md:gap-12 lg:grid-cols-2 mt-12">
               {features.map((feature, i) => (
-                <div key={feature} className="flex items-start gap-4 animate-in fade-in-0 slide-in-from-bottom-10 duration-500" style={{ animationDelay: `${i * 100}ms`}}>
+                <div key={feature} className="flex items-start gap-4 animate-in fade-in-0 slide-in-from-bottom-10 duration-500 transition-transform hover:scale-105" style={{ animationDelay: `${i * 150}ms`}}>
                    <Card className="p-3 bg-primary/10 border-primary/20">
                     <CheckCircle className="w-6 h-6 text-primary" />
                   </Card>
