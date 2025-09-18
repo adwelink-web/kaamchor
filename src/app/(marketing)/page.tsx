@@ -13,12 +13,15 @@ const BentoCard = ({
   children: React.ReactNode;
 }) => (
   <div
+    style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
     className={cn(
-      'group relative flex flex-col justify-between rounded-xl bg-card border border-card p-6 shadow-lg transition-shadow duration-300 hover:shadow-primary/20',
+      'group relative flex flex-col justify-between rounded-xl bg-card border-2 border-primary/20 p-6 shadow-xl shadow-primary/10 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/20 hover:border-primary/40',
       className
     )}
   >
-    {children}
+    <div className="transition-transform duration-500 ease-out group-hover:[transform:translateZ(40px)]">
+        {children}
+    </div>
     <div className="pointer-events-none absolute inset-0 -z-10 rounded-xl bg-gradient-to-br from-white/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
      <div className="pointer-events-none absolute top-0 left-0 h-1/2 w-1/2 -z-10 rounded-xl bg-gradient-to-br from-primary/20 to-transparent opacity-0 blur-2xl transition-all duration-500 group-hover:opacity-50 group-hover:-translate-x-1/4 group-hover:-translate-y-1/4" />
   </div>
@@ -26,11 +29,11 @@ const BentoCard = ({
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen animated-gradient">
+    <div className="flex flex-col min-h-screen bg-black text-white">
       <header className="px-4 lg:px-6 h-16 flex items-center bg-transparent backdrop-blur-sm sticky top-0 z-50 animate-in fade-in slide-in-from-top-4 duration-500">
         <Link href="#" className="flex items-center justify-center" prefetch={false}>
           <Logo className="h-6 w-6 text-primary" />
-          <span className="ml-2 font-bold text-xl font-headline text-white">Kaamchor</span>
+          <span className="ml-2 font-bold text-xl font-headline">Kaamchor</span>
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
           <Link
@@ -40,7 +43,7 @@ export default function LandingPage() {
           >
             Login
           </Link>
-          <Button asChild variant="outline" className="border-primary/50 bg-transparent text-primary hover:bg-primary/10 hover:text-primary">
+          <Button asChild variant="outline" className="border-primary/50 bg-transparent text-primary-foreground hover:bg-primary hover:text-primary-foreground">
             <Link href="/login">
               Get Started <MoveRight className="ml-2 h-4 w-4" />
             </Link>
@@ -53,14 +56,14 @@ export default function LandingPage() {
             <div className="flex flex-col items-center justify-center space-y-6 text-center">
               <div className="space-y-4 animate-in fade-in slide-in-from-bottom-12 duration-700">
                 <h1 className="text-5xl font-black tracking-tighter sm:text-7xl xl:text-8xl/none font-headline">
-                  <span className="animated-text-gradient">Your Life,</span> <span className="text-white">Delegated.</span>
+                  <span className="text-primary">Your Life,</span> Delegated.
                 </h1>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl mx-auto animate-in fade-in duration-500 delay-200">
                   Stop drowning in chores. Kaamchor connects you with local hustlers ready to tackle your to-do list. Get it done.
                 </p>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row items-center animate-in fade-in duration-500 delay-300">
-                <Button asChild size="lg" className="shadow-lg shadow-primary/40 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 transform hover:scale-105 animate-pulse-slow">
+                <Button asChild size="lg" className="shadow-lg shadow-primary/40 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 transform hover:scale-105">
                   <Link href="/login">
                     Find Help Now <MoveRight className="ml-2 h-5 w-5" />
                   </Link>
@@ -81,7 +84,7 @@ export default function LandingPage() {
               <BentoCard className="lg:col-span-2">
                  <CardHeader>
                     <div className="flex items-center gap-3">
-                        <div className="p-3 rounded-lg bg-primary/10 border border-primary/20"><Zap className="w-6 h-6 text-primary"/></div>
+                        <div className="p-3 rounded-lg bg-primary/20 border border-primary/30"><Zap className="w-6 h-6 text-primary"/></div>
                         <CardTitle className="text-2xl font-bold font-headline">Post in Seconds</CardTitle>
                     </div>
                 </CardHeader>
@@ -95,7 +98,7 @@ export default function LandingPage() {
               <BentoCard>
                  <CardHeader>
                     <div className="flex items-center gap-3">
-                         <div className="p-3 rounded-lg bg-primary/10 border border-primary/20"><Users className="w-6 h-6 text-primary"/></div>
+                         <div className="p-3 rounded-lg bg-primary/20 border border-primary/30"><Users className="w-6 h-6 text-primary"/></div>
                         <CardTitle className="text-xl font-bold font-headline">Find Local Helpers</CardTitle>
                     </div>
                 </CardHeader>
@@ -109,7 +112,7 @@ export default function LandingPage() {
               <BentoCard>
                  <CardHeader>
                     <div className="flex items-center gap-3">
-                         <div className="p-3 rounded-lg bg-primary/10 border border-primary/20"><ShieldCheck className="w-6 h-6 text-primary"/></div>
+                         <div className="p-3 rounded-lg bg-primary/20 border border-primary/30"><ShieldCheck className="w-6 h-6 text-primary"/></div>
                         <CardTitle className="text-xl font-bold font-headline">Secure & Seamless</CardTitle>
                     </div>
                 </CardHeader>
@@ -123,7 +126,7 @@ export default function LandingPage() {
               <BentoCard className="lg:col-span-2">
                 <CardHeader>
                     <div className="flex items-center gap-3">
-                         <div className="p-3 rounded-lg bg-primary/10 border border-primary/20"><MapPin className="w-6 h-6 text-primary"/></div>
+                         <div className="p-3 rounded-lg bg-primary/20 border border-primary/30"><MapPin className="w-6 h-6 text-primary"/></div>
                         <CardTitle className="text-2xl font-bold font-headline">AI-Powered Matchmaking</CardTitle>
                     </div>
                 </CardHeader>
