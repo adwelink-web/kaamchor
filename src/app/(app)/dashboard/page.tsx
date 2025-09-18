@@ -1,32 +1,32 @@
-import { Button } from '@/components/ui/button';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '@/components/ui/tabs';
-import { PlusCircle } from 'lucide-react';
+import { PlusIcon, Search } from 'lucide-react';
 import Link from 'next/link';
 import { TASK_CATEGORIES } from '@/lib/constants';
 import { mockTasks } from '@/lib/data';
 import TaskCard from '@/components/tasks/task-card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export default function DashboardPage() {
   const availableTasks = mockTasks.filter(task => task.status === 'Posted');
   
   return (
-    <div className="grid flex-1 items-start gap-4">
+    <div className="grid flex-1 items-start gap-4 relative">
       <div className="flex items-center">
         <h1 className="font-semibold text-lg md:text-2xl">Available Tasks</h1>
-        <div className="ml-auto flex items-center gap-2">
-          <Button asChild>
-            <Link href="/tasks/new">
-              <PlusCircle className="h-4 w-4 mr-2" />
-              Post a Task
-            </Link>
-          </Button>
-        </div>
       </div>
+       <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+          <Input
+            placeholder="Search for tasks..."
+            className="pl-10 w-full"
+          />
+        </div>
       <Tabs defaultValue="all">
         <TabsList>
           <TabsTrigger value="all">All</TabsTrigger>
@@ -61,6 +61,12 @@ export default function DashboardPage() {
           </TabsContent>
         ))}
       </Tabs>
+       <Button asChild className="fixed bottom-8 right-8 h-16 w-16 rounded-full shadow-lg" size="icon">
+         <Link href="/tasks/new">
+           <PlusIcon className="h-8 w-8" />
+           <span className="sr-only">Post a Task</span>
+         </Link>
+       </Button>
     </div>
   );
 }
