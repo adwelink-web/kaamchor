@@ -39,7 +39,7 @@ export default function LandingPage() {
         </nav>
       </header>
       <main className="flex-1">
-        <section className="w-full pt-24 md:pt-32 lg:pt-40 animated-gradient">
+        <section className="w-full pt-24 md:pt-32 lg:pt-40">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_500px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <div className="flex flex-col justify-center space-y-6 animate-in fade-in slide-in-from-left-12 duration-500">
