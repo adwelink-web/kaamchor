@@ -6,6 +6,8 @@ import {
   PlusCircle,
   Users,
   Briefcase,
+  Wallet,
+  User as UserIcon
 } from 'lucide-react';
 import {
   Sheet,
@@ -25,11 +27,13 @@ const requesterMobileNavItems = [
 
 const helperMobileNavItems = [
     { href: '/helper-dashboard', icon: Briefcase, label: 'Find Work' },
-    { href: '/tasks/mine', icon: ListTodo, label: 'My Accepted Tasks' },
+    { href: '/tasks/accepted', icon: ListTodo, label: 'My Accepted Tasks' },
+    { href: '/earnings', icon: Wallet, label: 'Earnings' },
+    { href: '/profile', icon: UserIcon, label: 'Profile' },
 ]
 
 // This is a placeholder. In a real app, you'd get this from user auth state.
-const userRole = 'requester';
+const userRole = 'helper';
 
 export default function Header() {
   const mobileNavItems = userRole === 'helper' ? helperMobileNavItems : requesterMobileNavItems;

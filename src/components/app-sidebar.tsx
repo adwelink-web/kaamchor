@@ -15,6 +15,8 @@ import {
   Users,
   Settings,
   Briefcase,
+  Wallet,
+  User,
 } from 'lucide-react';
 import { Logo } from './icons';
 import { cn } from '@/lib/utils';
@@ -28,11 +30,13 @@ const requesterNavItems = [
 
 const helperNavItems = [
     { href: '/helper-dashboard', icon: Briefcase, label: 'Find Work' },
-    { href: '/tasks/mine', icon: ListTodo, label: 'My Accepted Tasks' },
+    { href: '/tasks/accepted', icon: ListTodo, label: 'My Accepted Tasks' },
+    { href: '/earnings', icon: Wallet, label: 'Earnings' },
+    { href: '/profile', icon: User, label: 'Profile' },
 ]
 
 // This is a placeholder. In a real app, you'd get this from user auth state.
-const userRole = 'requester'; 
+const userRole = 'helper'; 
 
 export default function AppSidebar() {
   const pathname = usePathname();
