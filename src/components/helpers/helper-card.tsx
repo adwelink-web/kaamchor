@@ -1,3 +1,4 @@
+
 import type { Helper } from '@/lib/types';
 import {
   Card,
@@ -11,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MapPin, Star } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type HelperCardProps = {
   helper: Helper;
@@ -46,7 +48,9 @@ export default function HelperCard({ helper }: HelperCardProps) {
         </div>
       </CardContent>
       <CardFooter className="w-full">
-        <Button className="w-full" variant="outline">View Profile</Button>
+        <Button className="w-full" variant="outline" asChild>
+            <Link href={`/helper/profile`}>View Profile</Link>
+        </Button>
       </CardFooter>
     </Card>
   );

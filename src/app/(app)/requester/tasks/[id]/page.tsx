@@ -1,3 +1,6 @@
+
+'use client';
+
 import { mockTasks, mockHelpers } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -10,10 +13,20 @@ import Link from 'next/link';
 import { TASK_CATEGORIES } from '@/lib/constants';
 import type { Task, Helper } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/hooks/use-toast';
 
 function HelperInfo({ helperId }: { helperId: string }) {
     const helper = mockHelpers.find(h => h.id === helperId);
     if (!helper) return null;
+
+    const { toast } = useToast();
+
+    const handleContact = () => {
+        toast({
+            title: "Contacting Helper...",
+            description: `A notification has been sent to ${helper.name}.`,
+        });
+    }
 
     const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('');
 
@@ -45,7 +58,7 @@ function HelperInfo({ helperId }: { helperId: string }) {
                     </div>
                 </CardContent>
                 <CardFooter>
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="w-full" onClick={handleContact}>
                         <MessageSquare className="w-4 h-4 mr-2" />
                         Contact Helper
                     </Button>
@@ -58,9 +71,17 @@ function HelperInfo({ helperId }: { helperId: string }) {
 
 export default function RequesterTaskDetailsPage({ params }: { params: { id: string } }) {
   const task = mockTasks.find((t) => t.id === params.id);
+  const { toast } = useToast();
 
   if (!task) {
     notFound();
+  }
+  
+  const handleMarkComplete = () => {
+      toast({
+        title: "Task Marked as Complete!",
+        description: `Payment of $${task.price} will be released to the helper.`,
+      })
   }
   
   const category = TASK_CATEGORIES.find(c => c.value === task.category);
@@ -147,7 +168,7 @@ export default function RequesterTaskDetailsPage({ params }: { params: { id: str
             </CardContent>
             {task.status === 'In Progress' && (
                 <CardFooter>
-                     <Button size="lg" className="w-full sm:w-auto">Mark as Complete</Button>
+                     <Button size="lg" className="w-full sm:w-auto" onClick={handleMarkComplete}>Mark as Complete</Button>
                 </CardFooter>
             )}
         </Card>

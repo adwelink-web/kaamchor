@@ -1,3 +1,6 @@
+
+'use client';
+
 import { mockTasks, mockUsers } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -9,9 +12,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { TASK_CATEGORIES } from '@/lib/constants';
 import type { Task } from '@/lib/types';
+import { useToast } from '@/hooks/use-toast';
+import { useState } from 'react';
 
 export default function TaskDetailsPage({ params }: { params: { id: string } }) {
-  const task = mockTasks.find((t) => t.id === params.id);
+  const initialTask = mockTasks.find((t) => t.id === params.id);
+  
+  const [task, setTask] = useState(initialTask);
+  const { toast } = useToast();
 
   if (!task) {
     notFound();
@@ -19,6 +27,17 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
   
   const requester = mockUsers.find(u => u.id === task.requesterId);
   const category = TASK_CATEGORIES.find(c => c.value === task.category);
+
+  const handleAccept = () => {
+    // In a real app, you'd call an API to update the task status
+    // and send a real notification.
+    setTask({ ...task, status: 'Accepted' });
+
+    toast({
+      title: 'Task Accepted!',
+      description: `You have accepted the task: "${task.title}". The requester has been notified.`,
+    });
+  };
 
   const getStatusVariant = (status: Task['status']) => {
     switch (status) {
@@ -113,7 +132,7 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
             </CardContent>
             <CardFooter>
                  {task.status === 'Posted' && (
-                    <Button size="lg" className="w-full sm:w-auto">Accept Task</Button>
+                    <Button size="lg" className="w-full sm:w-auto" onClick={handleAccept}>Accept Task</Button>
                 )}
                  {(task.status === 'Accepted' || task.status === 'In Progress') && (
                     <Button size="lg" disabled className="w-full sm:w-auto">Task Already Accepted</Button>
