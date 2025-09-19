@@ -1,3 +1,5 @@
+'use client';
+
 import AppSidebar from '@/components/app-sidebar';
 import Header from '@/components/header';
 import { Briefcase, ListTodo, User, Wallet } from 'lucide-react';

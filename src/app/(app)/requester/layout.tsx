@@ -1,3 +1,5 @@
+'use client';
+
 import AppSidebar from '@/components/app-sidebar';
 import Header from '@/components/header';
 import { Home, ListTodo, PlusCircle, Users } from 'lucide-react';
