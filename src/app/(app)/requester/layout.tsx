@@ -2,15 +2,16 @@
 
 import AppSidebar from '@/components/app-sidebar';
 import Header from '@/components/header';
-import { Home, PlusCircle, Users, PlusIcon, History, MessageSquareWarning } from 'lucide-react';
+import { Home, PlusCircle, Users, History, MessageSquareWarning } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import BottomNav from '@/components/bottom-nav';
 
 const requesterNavItems = [
   { href: '/requester/dashboard', icon: Home, label: 'My Tasks' },
-  { href: '/requester/history', icon: History, label: 'Task History' },
-  { href: '/requester/tasks/new', icon: PlusCircle, label: 'Post Task' },
-  { href: '/requester/helpers', icon: Users, label: 'Find Helpers' },
+  { href: '/requester/history', icon: History, label: 'History' },
+  { href: '/requester/tasks/new', icon: PlusCircle, label: 'Post' },
+  { href: '/requester/helpers', icon: Users, label: 'Helpers' },
   { href: '/requester/feedback', icon: MessageSquareWarning, label: 'Feedback' },
 ];
 
@@ -24,16 +25,11 @@ export default function RequesterAppLayout({
       <AppSidebar navItems={requesterNavItems} logoHref="/requester/dashboard" />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <Header mobileNavItems={requesterNavItems} logoHref="/requester/dashboard" />
-        <main className="p-4 sm:px-6 sm:py-0 flex-1 relative">
+        <main className="p-4 sm:px-6 sm:py-0 flex-1 relative pb-20 sm:pb-0">
           {children}
-           <Button asChild className="fixed bottom-8 right-8 h-16 w-16 rounded-full shadow-lg" size="icon">
-             <Link href="/requester/tasks/new">
-               <PlusIcon className="h-8 w-8" />
-               <span className="sr-only">Post a Task</span>
-             </Link>
-           </Button>
         </main>
       </div>
+      <BottomNav navItems={requesterNavItems} />
     </div>
   );
 }
