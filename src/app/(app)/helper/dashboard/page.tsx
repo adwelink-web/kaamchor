@@ -39,7 +39,7 @@ export default function HelperDashboardPage() {
             </TabsList>
         </ScrollArea>
         <TabsContent value="all">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {availableTasks.map((task) => (
               <TaskCard key={task.id} task={task} />
             ))}
@@ -47,7 +47,7 @@ export default function HelperDashboardPage() {
         </TabsContent>
         {TASK_CATEGORIES.map((cat) => (
           <TabsContent value={cat.value} key={cat.value}>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {availableTasks
                 .filter((task) => task.category === cat.value)
                 .map((task) => (
