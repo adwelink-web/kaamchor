@@ -9,6 +9,7 @@ import { mockTasks } from '@/lib/data';
 import TaskCard from '@/components/tasks/task-card';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export default function HelperDashboardPage() {
   const availableTasks = mockTasks.filter(task => task.status === 'Posted');
@@ -26,15 +27,17 @@ export default function HelperDashboardPage() {
           />
         </div>
       <Tabs defaultValue="all">
-        <TabsList>
-          <TabsTrigger value="all">All</TabsTrigger>
-          {TASK_CATEGORIES.map((cat) => (
-            <TabsTrigger value={cat.value} key={cat.value}>
-              <cat.icon className="h-4 w-4 mr-2" />
-              {cat.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+        <ScrollArea className="w-full whitespace-nowrap">
+            <TabsList>
+            <TabsTrigger value="all">All</TabsTrigger>
+            {TASK_CATEGORIES.map((cat) => (
+                <TabsTrigger value={cat.value} key={cat.value}>
+                <cat.icon className="h-4 w-4 mr-2" />
+                {cat.label}
+                </TabsTrigger>
+            ))}
+            </TabsList>
+        </ScrollArea>
         <TabsContent value="all">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {availableTasks.map((task) => (
