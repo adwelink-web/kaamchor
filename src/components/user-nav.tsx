@@ -16,6 +16,9 @@ import {
 import { getCurrentUser } from '@/lib/data';
 import Link from 'next/link';
 
+// NOTE: This component is not yet fully integrated with Firebase Auth.
+// It still uses mock data but the logout functionality is updated.
+// A future step would be to use a hook like `useAuthState` to get the real user.
 export default function UserNav() {
   const user = getCurrentUser();
   // In a real app, role would be determined dynamically.

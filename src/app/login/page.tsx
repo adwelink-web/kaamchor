@@ -1,14 +1,38 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Logo } from '@/components/icons';
 import Link from 'next/link';
-import { ChromeIcon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { auth } from '@/lib/firebase';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { useToast } from '@/hooks/use-toast';
 
 export default function LoginPage() {
-  // In a real app, you'd have logic to determine if a user is new or returning.
-  // For this prototype, we'll assume a returning user and direct them to their dashboard.
-  // The mock data identifies user-1 (Alice) as a requester.
-  const loginHref = "/requester/dashboard"; // Default to requester dashboard for existing user.
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      toast({
+        title: 'Login Successful',
+        description: "Welcome back!",
+      });
+      // In a real app, you might check if the user is a helper or requester
+      // and redirect accordingly. For now, we default to the requester dashboard.
+      router.push('/requester/dashboard');
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+      toast({
+        title: 'Login Failed',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -22,8 +46,8 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4">
-            <Button asChild>
-              <Link href={loginHref} className="flex items-center gap-2">
+            <Button onClick={handleLogin}>
+              <div className="flex items-center gap-2">
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path
                     fill="currentColor"
@@ -31,7 +55,7 @@ export default function LoginPage() {
                   />
                 </svg>
                 Sign in with Google
-              </Link>
+              </div>
             </Button>
             <p className="text-center text-xs text-muted-foreground">New user? <Link href="/role-selection" className="underline hover:text-primary">Create an account</Link></p>
           </div>

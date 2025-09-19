@@ -1,19 +1,44 @@
-
 'use client'
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Logo } from '@/components/icons';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { Suspense } from 'react';
+import { auth } from '@/lib/firebase';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { useToast } from '@/hooks/use-toast';
 
 function SignupContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const { toast } = useToast();
   const role = searchParams.get('role');
 
   const roleText = role === 'helper' ? 'Helper' : 'Requester';
   const loginHref = role === 'helper' ? '/helper/dashboard' : '/requester/dashboard';
+
+  const handleSignUp = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      // Here you would typically also create a user document in your database (e.g., Firestore)
+      // with the selected role.
+      toast({
+        title: 'Account Created!',
+        description: `Welcome to Kaamchor as a ${roleText}!`,
+      });
+      router.push(loginHref);
+    } catch (error) {
+      console.error('Error during sign-up:', error);
+      toast({
+        title: 'Sign-up Failed',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -27,8 +52,8 @@ function SignupContent() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4">
-            <Button asChild>
-              <Link href={loginHref} className="flex items-center gap-2">
+            <Button onClick={handleSignUp}>
+              <div className="flex items-center gap-2">
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path
                     fill="currentColor"
@@ -36,7 +61,7 @@ function SignupContent() {
                   />
                 </svg>
                 Sign up with Google
-              </Link>
+              </div>
             </Button>
              <p className="text-center text-xs text-muted-foreground">
                 Wrong role? <Link href="/role-selection" className="underline hover:text-primary">Go back</Link>
