@@ -1,27 +1,34 @@
 
 'use client';
 
-import { mockTasks, mockHelpers } from '@/lib/data';
+import { getTask, getHelper } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CircleDollarSign, MapPin, CalendarDays, User, ArrowLeft, Star, MessageSquare } from 'lucide-react';
+import { CircleDollarSign, MapPin, CalendarDays, ArrowLeft, Star, MessageSquare } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { TASK_CATEGORIES } from '@/lib/constants';
 import type { Task, Helper } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
+import { useEffect, useState } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+import MyTasksClient from '@/components/tasks/my-tasks-client';
+
 
 function HelperInfo({ helperId }: { helperId: string }) {
-    const helper = mockHelpers.find(h => h.id === helperId);
-    if (!helper) return null;
-
+    const [helper, setHelper] = useState<Helper | null>(null);
     const { toast } = useToast();
 
+    useEffect(() => {
+        getHelper(helperId).then(setHelper);
+    }, [helperId])
+
     const handleContact = () => {
+        if (!helper) return;
         toast({
             title: "Contacting Helper...",
             description: `A notification has been sent to ${helper.name}.`,
@@ -29,6 +36,23 @@ function HelperInfo({ helperId }: { helperId: string }) {
     }
 
     const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('');
+
+    if (!helper) {
+        return (
+             <div>
+                <h3 className="font-semibold text-lg mb-3">Assigned Helper</h3>
+                <Card>
+                    <CardHeader className="flex flex-row items-center gap-4">
+                        <Skeleton className="w-16 h-16 rounded-full" />
+                        <div className="grid gap-2 w-full">
+                           <Skeleton className="h-6 w-1/2" />
+                           <Skeleton className="h-4 w-3/4" />
+                        </div>
+                    </CardHeader>
+                </Card>
+            </div>
+        )
+    }
 
     return (
         <div>
@@ -70,11 +94,38 @@ function HelperInfo({ helperId }: { helperId: string }) {
 
 
 export default function RequesterTaskDetailsPage({ params }: { params: { id: string } }) {
-  const task = mockTasks.find((t) => t.id === params.id);
+  const [task, setTask] = useState<Task | null | undefined>(null);
   const { toast } = useToast();
 
-  if (!task) {
+  useEffect(() => {
+    getTask(params.id).then(setTask);
+  }, [params.id]);
+
+
+  if (task === undefined) {
     notFound();
+  }
+
+  if (task === null) {
+      return (
+          <div className="max-w-4xl mx-auto p-4 md:p-0">
+               <Skeleton className="h-8 w-48 mb-4" />
+                <Card>
+                    <Skeleton className="aspect-video w-full rounded-t-lg" />
+                    <CardHeader>
+                        <Skeleton className="h-10 w-3/4" />
+                        <Skeleton className="h-5 w-1/4 mt-2" />
+                    </CardHeader>
+                    <CardContent className="grid gap-6">
+                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <Skeleton className="h-20 w-full" />
+                            <Skeleton className="h-20 w-full" />
+                            <Skeleton className="h-20 w-full" />
+                         </div>
+                    </CardContent>
+                </Card>
+          </div>
+      )
   }
   
   const handleMarkComplete = () => {
@@ -159,9 +210,7 @@ export default function RequesterTaskDetailsPage({ params }: { params: { id: str
                     <HelperInfo helperId={task.helperId} />
                  ) : (
                     <div className="text-center py-8">
-                        <h3 className="font-semibold text-lg mb-2">No Helper Assigned</h3>
-                        <p className="text-muted-foreground">This task is still open. We'll notify you when a helper accepts it.</p>
-                        <Button className="mt-4">Find Matches with AI</Button>
+                       <MyTasksClient tasks={[task]} isDialog={true}/>
                     </div>
                  )}
 

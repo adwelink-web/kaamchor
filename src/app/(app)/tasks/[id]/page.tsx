@@ -1,32 +1,69 @@
-
 'use client';
 
-import { mockTasks, mockUsers } from '@/lib/data';
+import { getTask, getUser } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { CircleDollarSign, MapPin, CalendarDays, User, ArrowLeft } from 'lucide-react';
+import { CircleDollarSign, MapPin, CalendarDays, ArrowLeft } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { TASK_CATEGORIES } from '@/lib/constants';
-import type { Task } from '@/lib/types';
+import type { Task, User } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function TaskDetailsPage({ params }: { params: { id: string } }) {
-  const initialTask = mockTasks.find((t) => t.id === params.id);
-  
-  const [task, setTask] = useState(initialTask);
+  const [task, setTask] = useState<Task | null | undefined>(null);
+  const [requester, setRequester] = useState<User | null>(null);
   const { toast } = useToast();
 
-  if (!task) {
+  useEffect(() => {
+    getTask(params.id).then(fetchedTask => {
+      setTask(fetchedTask);
+      if (fetchedTask?.requesterId) {
+        getUser(fetchedTask.requesterId).then(setRequester);
+      }
+    });
+  }, [params.id]);
+
+  if (task === undefined) {
     notFound();
   }
-  
-  const requester = mockUsers.find(u => u.id === task.requesterId);
-  const category = TASK_CATEGORIES.find(c => c.value === task.category);
+
+  if (task === null) {
+    return (
+      <div className="max-w-4xl mx-auto p-4 md:p-0">
+        <Skeleton className="h-8 w-48 mb-4" />
+        <Card>
+          <Skeleton className="aspect-video w-full rounded-t-lg" />
+          <CardHeader>
+            <Skeleton className="h-10 w-3/4" />
+            <Skeleton className="h-5 w-1/4 mt-2" />
+          </CardHeader>
+          <CardContent className="grid gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <Skeleton className="h-20 w-full" />
+              <Skeleton className="h-20 w-full" />
+              <Skeleton className="h-20 w-full" />
+            </div>
+            <div>
+              <Skeleton className="h-6 w-32 mb-3" />
+              <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
+                <Skeleton className="w-12 h-12 rounded-full" />
+                <div className="w-full">
+                  <Skeleton className="h-5 w-1/2" />
+                  <Skeleton className="h-4 w-1/4 mt-2" />
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   const handleAccept = () => {
     // In a real app, you'd call an API to update the task status
@@ -38,6 +75,8 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
       description: `You have accepted the task: "${task.title}". The requester has been notified.`,
     });
   };
+  
+  const category = TASK_CATEGORIES.find(c => c.value === task.category);
 
   const getStatusVariant = (status: Task['status']) => {
     switch (status) {
@@ -46,7 +85,7 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
       case 'Completed':
         return 'default';
       case 'In Progress':
-          return 'warning';
+        return 'warning';
       case 'Posted':
       default:
         return 'outline';
@@ -123,7 +162,6 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
                             </Avatar>
                             <div>
                                 <p className="font-semibold text-foreground">{requester.name}</p>
-
                                 <p className="text-sm text-muted-foreground">{requester.location}</p>
                             </div>
                         </div>

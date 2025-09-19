@@ -7,15 +7,33 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { mockTasks } from '@/lib/data';
+import { getTasks } from '@/lib/data';
 import { useToast } from '@/hooks/use-toast';
 import type React from 'react';
+import { useAuth } from '@/contexts/auth-context';
+import { useState, useEffect } from 'react';
+import type { Task } from '@/lib/types';
+
 
 export default function HelperFeedbackPage() {
-    const helperId = 'helper-1'; // Placeholder
-    const helperTasks = mockTasks.filter(task => task.helperId === helperId);
+    const { user } = useAuth();
+    const [helperTasks, setHelperTasks] = useState<Task[]>([]);
     const { toast } = useToast();
     
+    // This is a temporary way to link a Firebase user to a helper profile.
+    // In a real app, this would be stored in the user's profile in Firestore.
+    const helperId = 'helper-1';
+
+    useEffect(() => {
+        if (user) {
+             // In a real app, you'd fetch tasks where helperId matches the current user's helper profile ID.
+             getTasks().then(allTasks => {
+                 const myTasks = allTasks.filter(task => task.helperId === helperId);
+                 setHelperTasks(myTasks);
+             });
+        }
+    }, [user])
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // In a real app, you would submit this data to your backend.

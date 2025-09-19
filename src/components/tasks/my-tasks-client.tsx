@@ -28,19 +28,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { WandSparkles, Bot, User, Check, X, Star, MessageSquare, CircleDollarSign, CalendarDays, Eye } from 'lucide-react';
-import { mockHelpers, getCurrentUser } from '@/lib/data';
+import { WandSparkles, Bot, Eye, MessageSquare, CircleDollarSign, CalendarDays, Star } from 'lucide-react';
+import { getHelpers } from '@/lib/data';
 import { getSuggestedMatches } from '@/app/actions';
 import type { SuggestTaskMatchesOutput } from '@/ai/flows/suggest-task-matches';
 import { Skeleton } from '../ui/skeleton';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Separator } from '../ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
 import Link from 'next/link';
+import { useAuth } from '@/contexts/auth-context';
 
 type MyTasksClientProps = {
   tasks: Task[];
+  isDialog?: boolean;
 };
 
 type MatcherDialogProps = {
@@ -52,19 +53,27 @@ function MatcherDialog({ task }: MatcherDialogProps) {
   const [loading, setLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<SuggestTaskMatchesOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const currentUser = getCurrentUser();
+  const [helpers, setHelpers] = useState<Helper[]>([]);
+  const { user } = useAuth();
 
   const handleFindMatches = async () => {
+    setIsOpen(true);
     setLoading(true);
     setError(null);
     setSuggestions(null);
+
+    // In a real app, requester location would come from the user's profile in Firestore.
+    const requesterLocation = "San Francisco, CA";
+
+    const availableHelpers = await getHelpers();
+    setHelpers(availableHelpers);
 
     const taskDetails = `Category: ${task.category}, Description: ${task.description}, Price: $${task.price}`;
 
     const result = await getSuggestedMatches({
       taskDetails,
-      requesterLocation: currentUser.location,
-      availableHelpers: mockHelpers.map(h => ({
+      requesterLocation: requesterLocation,
+      availableHelpers: availableHelpers.map(h => ({
         helperId: h.id,
         helperLocation: h.location,
         pastWork: h.pastWork
@@ -80,13 +89,13 @@ function MatcherDialog({ task }: MatcherDialogProps) {
   };
   
   const getHelperById = (id: string): Helper | undefined => {
-      return mockHelpers.find(h => h.id === id);
+      return helpers.find(h => h.id === id);
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="outline" onClick={() => handleFindMatches()} className="w-full md:w-auto">
+        <Button size="sm" variant="outline" onClick={handleFindMatches} className="w-full md:w-auto">
           <WandSparkles className="mr-2 h-4 w-4" />
           Find Matches
         </Button>
@@ -144,8 +153,18 @@ function MatcherDialog({ task }: MatcherDialogProps) {
 }
 
 function HelperInfo({ helperId }: { helperId: string }) {
-    const helper = mockHelpers.find(h => h.id === helperId);
-    if (!helper) return <span className="text-muted-foreground">N/A</span>;
+    const [helper, setHelper] = useState<Helper | null>(null);
+
+    useState(() => {
+        if(helperId) {
+            getHelpers().then(allHelpers => {
+                setHelper(allHelpers.find(h => h.id === helperId) || null);
+            })
+        }
+    })
+
+    if (!helperId) return <span className="text-muted-foreground">-</span>;
+    if (!helper) return <Skeleton className="h-5 w-24" />;
     
     return (
         <div className="flex items-center gap-2">
@@ -158,7 +177,7 @@ function HelperInfo({ helperId }: { helperId: string }) {
     )
 }
 
-function TaskActions({ task }: { task: Task }) {
+function TaskActions({ task, isDialog }: { task: Task, isDialog?: boolean }) {
     const commonButtonClass = "w-full md:w-auto";
 
     const viewDetailsButton = (
@@ -169,6 +188,10 @@ function TaskActions({ task }: { task: Task }) {
             </Link>
         </Button>
     );
+
+    if (isDialog) {
+        return <MatcherDialog task={task} />
+    }
 
     switch(task.status) {
         case 'Posted':
@@ -206,7 +229,7 @@ function TaskActions({ task }: { task: Task }) {
 }
 
 
-export default function MyTasksClient({ tasks }: MyTasksClientProps) {
+export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClientProps) {
   const isMobile = useIsMobile();
 
   const getStatusVariant = (status: Task['status']) => {
@@ -223,11 +246,23 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
     }
   };
 
+  if (isDialog) {
+      return (
+          <div className="text-center py-8">
+              <h3 className="font-semibold text-lg mb-2">No Helper Assigned</h3>
+              <p className="text-muted-foreground">This task is still open. We'll notify you when a helper accepts it.</p>
+              <div className="mt-4">
+                <TaskActions task={tasks[0]} isDialog={true} />
+              </div>
+          </div>
+      )
+  }
+
   if (tasks.length === 0) {
     return (
         <Card>
             <CardContent className="h-48 flex items-center justify-center">
-                <p className="text-muted-foreground">You haven&apos;t posted any tasks yet.</p>
+                <p className="text-muted-foreground">You don&apos;t have any tasks in this view.</p>
             </CardContent>
         </Card>
     )
@@ -247,7 +282,7 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
                     <CardContent className="grid gap-4">
                         <div>
                              <p className="text-sm font-medium mb-1">Helper</p>
-                             {task.helperId ? <HelperInfo helperId={task.helperId}/> : <span className="text-muted-foreground text-sm">-</span>}
+                             <HelperInfo helperId={task.helperId || ''}/>
                         </div>
                         <div className="flex justify-between items-center text-sm">
                              <div className="flex items-center gap-2 text-muted-foreground">
@@ -294,7 +329,7 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
                 <TableRow key={task.id}>
                   <TableCell className="font-medium">{task.title}</TableCell>
                    <TableCell>
-                    {task.helperId ? <HelperInfo helperId={task.helperId}/> : <span className="text-muted-foreground">-</span>}
+                    <HelperInfo helperId={task.helperId || ''}/>
                   </TableCell>
                   <TableCell>
                     <Badge variant={getStatusVariant(task.status)}>

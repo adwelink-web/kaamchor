@@ -2,14 +2,37 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { mockTasks } from '@/lib/data';
+import { getTasks } from '@/lib/data';
 import { CircleDollarSign, CalendarDays } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useAuth } from '@/contexts/auth-context';
+import { useState, useEffect } from 'react';
+import type { Task } from '@/lib/types';
+import { Skeleton } from '@/components/ui/skeleton';
 
 
 export default function EarningsPage() {
-    const helperId = 'helper-1'; // Placeholder
-    const completedTasks = mockTasks.filter(task => task.helperId === helperId && task.status === 'Completed');
+    const { user, loading: authLoading } = useAuth();
+    const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    // This is a temporary way to link a Firebase user to a helper profile.
+    // In a real app, this would be stored in the user's profile in Firestore.
+    const helperId = 'helper-1';
+
+    useEffect(() => {
+        if (user) {
+             // In a real app, you'd fetch tasks where helperId matches the current user's helper profile ID.
+            getTasks().then(allTasks => {
+                 const myCompletedTasks = allTasks.filter(task => task.helperId === helperId && task.status === 'Completed');
+                 setCompletedTasks(myCompletedTasks);
+                 setLoading(false);
+            })
+        } else if (!authLoading) {
+            setLoading(false);
+        }
+    }, [user, authLoading]);
+
     const totalEarnings = completedTasks.reduce((acc, task) => acc + task.price, 0);
     const isMobile = useIsMobile();
 
@@ -63,6 +86,21 @@ export default function EarningsPage() {
             )}
         </div>
     )
+
+    if (loading || authLoading) {
+        return (
+             <div className="grid flex-1 items-start gap-6">
+                <div className="flex items-center">
+                    <h1 className="font-semibold text-lg md:text-2xl">My Earnings</h1>
+                </div>
+                <div className="grid gap-6 sm:grid-cols-2">
+                    <Skeleton className="h-36" />
+                    <Skeleton className="h-36" />
+                </div>
+                <Skeleton className="h-64" />
+            </div>
+        )
+    }
 
     return (
         <div className="grid flex-1 items-start gap-6">

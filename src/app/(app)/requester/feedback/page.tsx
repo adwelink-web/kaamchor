@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,14 +6,23 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { getCurrentUser, mockTasks } from '@/lib/data';
+import { getTasksByRequester } from '@/lib/data';
 import { useToast } from '@/hooks/use-toast';
 import type React from 'react';
+import { useAuth } from '@/contexts/auth-context';
+import { useEffect, useState } from 'react';
+import type { Task } from '@/lib/types';
 
 export default function FeedbackPage() {
-    const currentUser = getCurrentUser();
-    const userTasks = mockTasks.filter(task => task.requesterId === currentUser.id);
+    const { user } = useAuth();
+    const [userTasks, setUserTasks] = useState<Task[]>([]);
     const { toast } = useToast();
+
+    useEffect(() => {
+        if (user) {
+            getTasksByRequester(user.uid).then(setUserTasks);
+        }
+    }, [user])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

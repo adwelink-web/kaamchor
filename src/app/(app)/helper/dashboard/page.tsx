@@ -1,33 +1,58 @@
-import { mockTasks, mockHelpers } from '@/lib/data';
+'use client';
+
+import { getTasks } from '@/lib/data';
 import TaskCard from '@/components/tasks/task-card';
+import { useAuth } from '@/contexts/auth-context';
+import { useEffect, useState } from 'react';
+import type { Task } from '@/lib/types';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function HelperDashboardPage() {
-  // In a real app, you would get the currently logged-in helper
-  const currentHelper = mockHelpers.find(h => h.id === 'helper-1');
+    const { user, loading: authLoading } = useAuth();
+    const [tasks, setTasks] = useState<Task[]>([]);
+    const [loading, setLoading] = useState(true);
 
-  // Filter tasks that are "Posted" and match the helper's location
-  const availableTasks = mockTasks.filter(task => 
-    task.status === 'Posted' && task.location === currentHelper?.location
-  );
-  
-  return (
-    <div className="flex flex-col flex-1 gap-4">
-      <div className="flex items-center">
-        <h1 className="font-semibold text-lg md:text-2xl">Find Work</h1>
-        <p className="text-muted-foreground ml-4 hidden sm:block">Browse tasks available in your area.</p>
-      </div>
-      
-      {availableTasks.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {availableTasks.map((task) => (
-              <TaskCard key={task.id} task={task} />
-              ))}
-          </div>
-      ) : (
-          <div className="text-center py-12 text-muted-foreground">
-              No available tasks found in your location.
-          </div>
-      )}
-    </div>
-  );
+    useEffect(() => {
+        // In a real app, you would also fetch the current helper's profile
+        // to get their location for filtering. For now, we fetch all tasks.
+        getTasks().then(allTasks => {
+            const availableTasks = allTasks.filter(task => task.status === 'Posted');
+            setTasks(availableTasks);
+            setLoading(false);
+        });
+    }, []);
+
+    if (loading || authLoading) {
+        return (
+            <div className="flex flex-col flex-1 gap-4">
+                <div className="flex items-center">
+                    <h1 className="font-semibold text-lg md:text-2xl">Find Work</h1>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-64 w-full" />)}
+                </div>
+            </div>
+        )
+    }
+
+    return (
+        <div className="flex flex-col flex-1 gap-4">
+        <div className="flex items-center">
+            <h1 className="font-semibold text-lg md:text-2xl">Find Work</h1>
+            <p className="text-muted-foreground ml-4 hidden sm:block">Browse tasks available in your area.</p>
+        </div>
+        
+        {tasks.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {tasks.map((task) => (
+                <TaskCard key={task.id} task={task} />
+                ))}
+            </div>
+        ) : (
+            <div className="text-center py-12 text-muted-foreground">
+                No available tasks found.
+            </div>
+        )}
+        </div>
+    );
 }
