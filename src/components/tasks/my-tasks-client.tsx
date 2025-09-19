@@ -262,7 +262,7 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
     return (
         <Card>
             <CardContent className="h-48 flex items-center justify-center">
-                <p className="text-muted-foreground">You have no tasks in this view.</p>
+                <p className="text-muted-foreground">Jo task post kiya he es user ne us task ko yaha pe dikho ek card me jisme us task ka status and detail dikhai de</p>
             </CardContent>
         </Card>
     )
