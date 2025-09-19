@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -80,21 +81,21 @@ export default function ProfilePage() {
                 <CardContent>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
                         <div className="p-4 bg-muted/50 rounded-lg">
-                            <p className="text-2xl font-bold">{tasksLoading ? <Skeleton className="h-8 w-1/4 mx-auto" /> : tasks.length}</p>
+                            <div className="text-2xl font-bold">{tasksLoading ? <Skeleton className="h-8 w-1/4 mx-auto" /> : tasks.length}</div>
                             <div className="flex items-center justify-center text-sm text-muted-foreground">
                                 <ClipboardList className="w-4 h-4 mr-1"/>
                                 Total Tasks Posted
                             </div>
                         </div>
                         <div className="p-4 bg-muted/50 rounded-lg">
-                            <p className="text-2xl font-bold">{tasksLoading ? <Skeleton className="h-8 w-1/4 mx-auto" /> : completedTasks}</p>
+                            <div className="text-2xl font-bold">{tasksLoading ? <Skeleton className="h-8 w-1/4 mx-auto" /> : completedTasks}</div>
                              <div className="flex items-center justify-center text-sm text-muted-foreground">
                                 <CheckCircle className="w-4 h-4 mr-1"/>
                                 Tasks Completed
                             </div>
                         </div>
                          <div className="p-4 bg-muted/50 rounded-lg">
-                            <p className="text-2xl font-bold">{tasksLoading ? <Skeleton className="h-8 w-1/4 mx-auto" /> : activeTasks}</p>
+                            <div className="text-2xl font-bold">{tasksLoading ? <Skeleton className="h-8 w-1/4 mx-auto" /> : activeTasks}</div>
                              <div className="flex items-center justify-center text-sm text-muted-foreground">
                                 <Star className="w-4 h-4 mr-1"/>
                                 Active Tasks
