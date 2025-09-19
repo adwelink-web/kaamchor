@@ -80,7 +80,7 @@ export default function LandingPage() {
 
         <section className="w-full py-24 md:py-32 lg:py-40">
            <div className="container px-4 md:px-6">
-            <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-3 lg:grid-rows-2">
+            <div className="mx-auto grid max-w-5xl gap-6 grid-cols-1 lg:grid-cols-3 lg:grid-rows-2">
               <BentoCard className="lg:col-span-2">
                  <CardHeader>
                     <div className="flex items-center gap-3">

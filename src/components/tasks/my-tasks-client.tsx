@@ -28,7 +28,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { WandSparkles, Bot, User, Check, X, Star, MessageSquare } from 'lucide-react';
+import { WandSparkles, Bot, User, Check, X, Star, MessageSquare, CircleDollarSign, CalendarDays } from 'lucide-react';
 import { mockHelpers, getCurrentUser } from '@/lib/data';
 import { getSuggestedMatches } from '@/app/actions';
 import type { SuggestTaskMatchesOutput } from '@/ai/flows/suggest-task-matches';
@@ -36,6 +36,7 @@ import { Skeleton } from '../ui/skeleton';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Separator } from '../ui/separator';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 type MyTasksClientProps = {
   tasks: Task[];
@@ -151,28 +152,29 @@ function HelperInfo({ helperId }: { helperId: string }) {
                 <AvatarImage src={helper.avatarUrl} alt={helper.name} />
                 <AvatarFallback>{helper.name[0]}</AvatarFallback>
             </Avatar>
-            <span>{helper.name}</span>
+            <span className="truncate">{helper.name}</span>
         </div>
     )
 }
 
 function TaskActions({ task }: { task: Task }) {
+    const commonButtonClass = "w-full md:w-auto";
     switch(task.status) {
         case 'Posted':
             return (
-                <div className="flex gap-2">
+                <div className="flex flex-col md:flex-row gap-2">
                     <MatcherDialog task={task} />
-                    <Button size="sm" variant="destructive-outline">Cancel</Button>
+                    <Button size="sm" variant="destructive-outline" className={commonButtonClass}>Cancel</Button>
                 </div>
             );
         case 'Accepted':
         case 'In Progress':
-             return <Button size="sm" variant="outline">
+             return <Button size="sm" variant="outline" className={commonButtonClass}>
                 <MessageSquare className="mr-2 h-4 w-4"/>
                 Contact Helper
              </Button>;
         case 'Completed':
-            return <Button size="sm">
+            return <Button size="sm" className={commonButtonClass}>
                 <Star className="mr-2 h-4 w-4"/>
                 Rate Helper
             </Button>;
@@ -183,6 +185,8 @@ function TaskActions({ task }: { task: Task }) {
 
 
 export default function MyTasksClient({ tasks }: MyTasksClientProps) {
+  const isMobile = useIsMobile();
+
   const getStatusVariant = (status: Task['status']) => {
     switch (status) {
       case 'Accepted':
@@ -197,9 +201,55 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
     }
   };
 
+  if (tasks.length === 0) {
+    return (
+        <Card>
+            <CardContent className="h-48 flex items-center justify-center">
+                <p className="text-muted-foreground">You haven&apos;t posted any tasks yet.</p>
+            </CardContent>
+        </Card>
+    )
+  }
+
+  if (isMobile) {
+      return (
+        <div className="grid gap-4">
+            {tasks.map(task => (
+                <Card key={task.id}>
+                    <CardHeader>
+                        <div className="flex justify-between items-start gap-2">
+                            <CardTitle className="text-base">{task.title}</CardTitle>
+                             <Badge variant={getStatusVariant(task.status)} className="text-xs whitespace-nowrap">{task.status}</Badge>
+                        </div>
+                    </CardHeader>
+                    <CardContent className="grid gap-4">
+                        <div>
+                             <p className="text-sm font-medium mb-1">Helper</p>
+                             {task.helperId ? <HelperInfo helperId={task.helperId}/> : <span className="text-muted-foreground text-sm">-</span>}
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                             <div className="flex items-center gap-2 text-muted-foreground">
+                                <CircleDollarSign className="w-4 h-4"/>
+                                <span>${task.price}</span>
+                             </div>
+                              <div className="flex items-center gap-2 text-muted-foreground">
+                                <CalendarDays className="w-4 h-4"/>
+                                <span>{task.createdAt.toLocaleDateString()}</span>
+                             </div>
+                        </div>
+                    </CardContent>
+                    <CardFooter className="bg-muted/50 p-4">
+                        <TaskActions task={task} />
+                    </CardFooter>
+                </Card>
+            ))}
+        </div>
+      )
+  }
+
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="hidden md:block">
         <CardTitle>Your Tasks</CardTitle>
         <CardDescription>
           A list of all the tasks you have posted.
@@ -218,8 +268,7 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tasks.length > 0 ? (
-              tasks.map((task) => (
+            {tasks.map((task) => (
                 <TableRow key={task.id}>
                   <TableCell className="font-medium">{task.title}</TableCell>
                    <TableCell>
@@ -236,14 +285,7 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
                     <TaskActions task={task} />
                   </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center">
-                  You haven&apos;t posted any tasks yet.
-                </TableCell>
-              </TableRow>
-            )}
+              ))}
           </TableBody>
         </Table>
       </CardContent>
