@@ -17,8 +17,8 @@ export default function FeedbackPage() {
             </div>
             <Card>
                 <CardHeader>
-                    <CardTitle>Feedback Form</CardTitle>
-                    <CardDescription>We value your feedback. Please let us know if you have any questions, concerns, or suggestions.</CardDescription>
+                    <CardTitle>Feedback & Complaint Form</CardTitle>
+                    <CardDescription>We value your input. Use this form to submit feedback, file a complaint, or ask a question.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form className="grid gap-6">
@@ -39,14 +39,14 @@ export default function FeedbackPage() {
                         </div>
                          <div className="grid gap-3">
                             <Label htmlFor="subject">Subject</Label>
-                            <Input id="subject" name="subject" placeholder="e.g., Issue with a completed task" />
+                            <Input id="subject" name="subject" placeholder="e.g., Complaint about a task" />
                         </div>
                         <div className="grid gap-3">
                             <Label htmlFor="message">Message</Label>
                             <Textarea id="message" name="message" placeholder="Please describe your issue or feedback in detail..." className="min-h-48"/>
                         </div>
                         <div className="flex justify-end">
-                            <Button type="submit">Submit Feedback</Button>
+                            <Button type="submit">Submit</Button>
                         </div>
                     </form>
                 </CardContent>
