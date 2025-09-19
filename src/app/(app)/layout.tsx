@@ -2,11 +2,27 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { AuthProvider, useAuth } from '@/contexts/auth-context';
+import { useEffect } from 'react';
 
 function AppLayoutContent({ children }: { children: React.ReactNode }) {
     const { user, loading } = useAuth();
     const router = useRouter();
     const pathname = usePathname();
+
+    useEffect(() => {
+        if (loading) {
+            return; // Don't do anything while loading
+        }
+
+        if (!user) {
+            // Redirect to login page if not authenticated, but only if not already on a public page
+            const isPublicPage = ['/login', '/signup', '/role-selection', '/splash'].some(p => pathname.startsWith(p));
+            if (!isPublicPage) {
+                router.push('/login');
+            }
+        }
+    }, [user, loading, pathname, router]);
+
 
     if (loading) {
         return (
@@ -19,14 +35,12 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
         )
     }
 
-    if (!user) {
-        // Redirect to login page if not authenticated, but only if not already on a public page
-        if (!['/login', '/signup', '/role-selection', '/splash'].some(p => pathname.startsWith(p))) {
-             router.push('/login');
-        }
-        // Return null or a loading indicator while redirecting
+    // If we're not loading and there's no user, and we're not on a public page,
+    // we should show a loading state or null while the redirect effect runs.
+    if (!user && !['/login', '/signup', '/role-selection', '/splash'].some(p => pathname.startsWith(p))) {
         return null;
     }
+
 
     return <>{children}</>;
 }
