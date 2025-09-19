@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Search, PanelLeft } from 'lucide-react';
+import { Search, PanelLeft, Bell } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -8,6 +8,14 @@ import {
 import { Button } from '@/components/ui/button';
 import UserNav from './user-nav';
 import { Logo } from './icons';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 type NavItem = {
   href: string;
@@ -19,6 +27,41 @@ type HeaderProps = {
   mobileNavItems: NavItem[];
   logoHref: string;
 };
+
+function Notifications() {
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button size="icon" variant="outline">
+                    <Bell className="h-5 w-5" />
+                    <span className="sr-only">Toggle notifications</span>
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-80">
+                <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                    <div className="flex flex-col">
+                        <p className="font-semibold">New Task Available</p>
+                        <p className="text-xs text-muted-foreground">"Fix a leaky kitchen faucet" is available in your area.</p>
+                    </div>
+                </DropdownMenuItem>
+                 <DropdownMenuItem>
+                    <div className="flex flex-col">
+                        <p className="font-semibold">Task Accepted</p>
+                        <p className="text-xs text-muted-foreground">Your task "Garden weeding" has been accepted by Charlie B.</p>
+                    </div>
+                </DropdownMenuItem>
+                 <DropdownMenuItem>
+                    <div className="flex flex-col">
+                        <p className="font-semibold">Payment Received</p>
+                        <p className="text-xs text-muted-foreground">You received a payment of $50 for "Bookshelf assembly".</p>
+                    </div>
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
 
 export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
   return (
@@ -54,12 +97,18 @@ export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
         </SheetContent>
       </Sheet>
 
-      <Button size="icon" variant="outline" className="sm:hidden">
-        <Search className="h-5 w-5" />
-        <span className="sr-only">Search</span>
-      </Button>
+      <div className="sm:hidden flex items-center gap-2">
+        <Button size="icon" variant="outline">
+            <Search className="h-5 w-5" />
+            <span className="sr-only">Search</span>
+        </Button>
+      </div>
 
-      <div className="ml-auto">
+
+      <div className="ml-auto flex items-center gap-2">
+        <div className="hidden sm:block">
+            <Notifications />
+        </div>
         <UserNav />
       </div>
     </header>
