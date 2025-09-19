@@ -6,9 +6,9 @@ import { Briefcase, ListTodo, User, Wallet, MessageSquareWarning } from 'lucide-
 import BottomNav from '@/components/bottom-nav';
 
 const helperNavItems = [
-    { href: '/helper/dashboard', icon: Briefcase, label: 'Find Work' },
-    { href: '/helper/tasks/accepted', icon: ListTodo, label: 'My Tasks' },
-    { href: '/helper/earnings', icon: Wallet, label: 'Earnings' },
+    { href: '/helper/dashboard', icon: Briefcase, label: 'Kaam Dhoondein' },
+    { href: '/helper/tasks/accepted', icon: ListTodo, label: 'Mere Kaam' },
+    { href: '/helper/earnings', icon: Wallet, label: 'Kamai' },
     { href: '/helper/profile', icon: User, label: 'Profile' },
     { href: '/helper/feedback', icon: MessageSquareWarning, label: 'Support' },
 ];

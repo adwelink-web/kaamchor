@@ -33,7 +33,7 @@ export default function AcceptedTasksPage() {
       return (
            <div className="grid flex-1 items-start gap-4">
                 <div className="flex items-center">
-                    <h1 className="font-semibold text-lg md:text-2xl">My Accepted Tasks</h1>
+                    <h1 className="font-semibold text-lg md:text-2xl">Mere Accept Kiye Hue Kaam</h1>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                     <Skeleton className="h-64 w-full" />
@@ -46,7 +46,7 @@ export default function AcceptedTasksPage() {
   return (
     <div className="grid flex-1 items-start gap-4">
       <div className="flex items-center">
-        <h1 className="font-semibold text-lg md:text-2xl">My Accepted Tasks</h1>
+        <h1 className="font-semibold text-lg md:text-2xl">Mere Accept Kiye Hue Kaam</h1>
       </div>
       <AcceptedTasksClient tasks={tasks} />
     </div>

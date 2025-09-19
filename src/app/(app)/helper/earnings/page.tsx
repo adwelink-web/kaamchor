@@ -16,13 +16,10 @@ export default function EarningsPage() {
     const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // This is a temporary way to link a Firebase user to a helper profile.
-    // In a real app, this would be stored in the user's profile in Firestore.
     const helperId = 'helper-1';
 
     useEffect(() => {
         if (user) {
-             // In a real app, you'd fetch tasks where helperId matches the current user's helper profile ID.
             getTasks().then(allTasks => {
                  const myCompletedTasks = allTasks.filter(task => task.helperId === helperId && task.status === 'Completed');
                  setCompletedTasks(myCompletedTasks);
@@ -40,9 +37,9 @@ export default function EarningsPage() {
          <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Task</TableHead>
-                    <TableHead>Date Completed</TableHead>
-                    <TableHead className="text-right">Amount</TableHead>
+                    <TableHead>Kaam</TableHead>
+                    <TableHead>Poora Hone Ki Tarikh</TableHead>
+                    <TableHead className="text-right">Rakam</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -50,11 +47,11 @@ export default function EarningsPage() {
                     <TableRow key={task.id}>
                         <TableCell className="font-medium">{task.title}</TableCell>
                         <TableCell>{task.createdAt.toLocaleDateString()}</TableCell>
-                        <TableCell className="text-right">${task.price.toFixed(2)}</TableCell>
+                        <TableCell className="text-right">₹{task.price.toFixed(2)}</TableCell>
                     </TableRow>
                 )) : (
                     <TableRow>
-                        <TableCell colSpan={3} className="h-24 text-center">You have no completed tasks.</TableCell>
+                        <TableCell colSpan={3} className="h-24 text-center">Aapne koi kaam poora nahi kiya hai.</TableCell>
                     </TableRow>
                 )}
             </TableBody>
@@ -75,13 +72,13 @@ export default function EarningsPage() {
                         </div>
                         <div className="flex items-center gap-2 font-semibold">
                             <CircleDollarSign className="w-4 h-4 text-primary"/>
-                            <span>${task.price.toFixed(2)}</span>
+                            <span>₹{task.price.toFixed(2)}</span>
                         </div>
                     </CardContent>
                 </Card>
             )) : (
                  <div className="text-center py-12 text-muted-foreground">
-                    You have no completed tasks.
+                    Aapne koi kaam poora nahi kiya hai.
                 </div>
             )}
         </div>
@@ -91,7 +88,7 @@ export default function EarningsPage() {
         return (
              <div className="grid flex-1 items-start gap-6">
                 <div className="flex items-center">
-                    <h1 className="font-semibold text-lg md:text-2xl">My Earnings</h1>
+                    <h1 className="font-semibold text-lg md:text-2xl">Meri Kamai</h1>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2">
                     <Skeleton className="h-36" />
@@ -105,22 +102,22 @@ export default function EarningsPage() {
     return (
         <div className="grid flex-1 items-start gap-6">
             <div className="flex items-center">
-                <h1 className="font-semibold text-lg md:text-2xl">My Earnings</h1>
+                <h1 className="font-semibold text-lg md:text-2xl">Meri Kamai</h1>
             </div>
             <div className="grid gap-6 sm:grid-cols-2">
                  <Card>
                     <CardHeader>
-                        <CardTitle>Total Earnings</CardTitle>
-                        <CardDescription>This is the total amount you've earned from completed tasks.</CardDescription>
+                        <CardTitle>Kul Kamai</CardTitle>
+                        <CardDescription>Yeh aapki poore hue kaamo se kul kamai hai.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-4xl font-bold">${totalEarnings.toFixed(2)}</p>
+                        <p className="text-4xl font-bold">₹{totalEarnings.toFixed(2)}</p>
                     </CardContent>
                 </Card>
                  <Card>
                     <CardHeader>
-                        <CardTitle>Tasks Completed</CardTitle>
-                        <CardDescription>The number of tasks you have successfully completed.</CardDescription>
+                        <CardTitle>Kaam Poore Hue</CardTitle>
+                        <CardDescription>Aapne kitne kaam safaltapoorvak poore kiye hain.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <p className="text-4xl font-bold">{completedTasks.length}</p>
@@ -129,8 +126,8 @@ export default function EarningsPage() {
             </div>
             <Card>
                 <CardHeader>
-                    <CardTitle>Earnings History</CardTitle>
-                    <CardDescription>A list of your completed tasks and the amount you earned for each.</CardDescription>
+                    <CardTitle>Kamai Ki History</CardTitle>
+                    <CardDescription>Aapke poore hue kaamon ki list aur har ek se kamai.</CardDescription>
                 </CardHeader>
                 <CardContent>
                    {isMobile ? <EarningsCards /> : <EarningsTable />}

@@ -25,13 +25,11 @@ export default function TaskCard({ task: initialTask }: TaskCardProps) {
   const { toast } = useToast();
 
   const handleAccept = () => {
-    // In a real app, you'd call an API to update the task status
-    // and send a real notification.
     setTask({ ...task, status: 'Accepted' });
 
     toast({
-      title: 'Task Accepted!',
-      description: `You have accepted the task: "${task.title}". The requester has been notified.`,
+      title: 'Kaam Accept Kar Liya!',
+      description: `Aapne yeh kaam accept kar liya hai: "${task.title}". Requester ko bata diya gaya hai.`,
     });
   };
 
@@ -64,7 +62,7 @@ export default function TaskCard({ task: initialTask }: TaskCardProps) {
         <div className="flex flex-col gap-2 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <CircleDollarSign className="w-4 h-4" />
-            <span>${task.price}</span>
+            <span>₹{task.price}</span>
           </div>
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4" />
@@ -74,10 +72,10 @@ export default function TaskCard({ task: initialTask }: TaskCardProps) {
       </CardContent>
       <CardFooter className="gap-2">
         <Button className="w-full" variant="outline" asChild>
-          <Link href={`/tasks/${task.id}`}>View Details</Link>
+          <Link href={`/tasks/${task.id}`}>Details Dekhein</Link>
         </Button>
         <Button className="w-full" disabled={!isAcceptable} onClick={handleAccept}>
-          {task.status === 'Posted' ? 'Accept Task' : 'Accepted'}
+          {task.status === 'Posted' ? 'Kaam Accept Karein' : 'Accepted'}
         </Button>
       </CardFooter>
     </Card>

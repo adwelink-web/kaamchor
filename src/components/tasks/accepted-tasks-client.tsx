@@ -35,7 +35,6 @@ export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTas
         task.id === taskId ? { ...task, status: newStatus } : task
       )
     );
-    // In a real app, you would also make an API call to update the backend.
   };
 
   const getStatusVariant = (status: Task['status']) => {
@@ -52,7 +51,7 @@ export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTas
   if (tasks.length === 0) {
     return (
         <div className="text-center py-12 text-muted-foreground border bg-card rounded-lg">
-            You haven't accepted any tasks yet.
+            Aapne abhi tak koi kaam accept nahi kiya hai.
         </div>
     )
   }
@@ -80,21 +79,21 @@ export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTas
             </div>
              <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <CircleDollarSign className="w-4 h-4" />
-                <span>${task.price}</span>
+                <span>₹{task.price}</span>
             </div>
              <div>
-                <p className="text-sm font-medium mb-2">Update Status</p>
+                <p className="text-sm font-medium mb-2">Status Update Karein</p>
                 <Select
                     value={task.status}
                     onValueChange={(newStatus: Task['status']) => handleStatusChange(task.id, newStatus)}
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="Set status" />
+                        <SelectValue placeholder="Status set karein" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="Accepted">Accepted</SelectItem>
-                        <SelectItem value="In Progress">In Progress</SelectItem>
-                        <SelectItem value="Completed">Completed</SelectItem>
+                        <SelectItem value="Accepted">Accept Kar Liya</SelectItem>
+                        <SelectItem value="In Progress">Kaam Chal Raha Hai</SelectItem>
+                        <SelectItem value="Completed">Poora Ho Gaya</SelectItem>
                     </SelectContent>
                 </Select>
              </div>
@@ -102,7 +101,7 @@ export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTas
           <CardFooter className="gap-2">
             <Button variant="outline" className="w-full">
                 <MessageSquare className="w-4 h-4 mr-2"/>
-                Contact Requester
+                Requester Se Baat Karein
             </Button>
           </CardFooter>
         </Card>

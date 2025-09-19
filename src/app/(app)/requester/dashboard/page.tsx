@@ -28,7 +28,7 @@ export default function MyTasksPage() {
       return (
           <div className="grid flex-1 items-start gap-4">
                <div className="flex items-center">
-                    <h1 className="font-semibold text-lg md:text-2xl">My Active Tasks</h1>
+                    <h1 className="font-semibold text-lg md:text-2xl">Mere Active Kaam</h1>
                 </div>
                 <Skeleton className="h-48 w-full" />
           </div>
@@ -38,7 +38,7 @@ export default function MyTasksPage() {
   return (
     <div className="grid flex-1 items-start gap-4">
       <div className="flex items-center">
-        <h1 className="font-semibold text-lg md:text-2xl">My Active Tasks</h1>
+        <h1 className="font-semibold text-lg md:text-2xl">Mere Active Kaam</h1>
       </div>
       <MyTasksClient tasks={tasks} />
     </div>

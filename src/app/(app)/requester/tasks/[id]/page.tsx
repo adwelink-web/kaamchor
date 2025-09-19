@@ -30,8 +30,8 @@ function HelperInfo({ helperId }: { helperId: string }) {
     const handleContact = () => {
         if (!helper) return;
         toast({
-            title: "Contacting Helper...",
-            description: `A notification has been sent to ${helper.name}.`,
+            title: "Helper se संपर्क हो रहा है...",
+            description: `${helper.name} ko ek notification bhej diya gaya hai.`,
         });
     }
 
@@ -84,7 +84,7 @@ function HelperInfo({ helperId }: { helperId: string }) {
                 <CardFooter>
                     <Button variant="outline" className="w-full" onClick={handleContact}>
                         <MessageSquare className="w-4 h-4 mr-2" />
-                        Contact Helper
+                        Helper Se Sampark Karein
                     </Button>
                 </CardFooter>
             </Card>
@@ -130,8 +130,8 @@ export default function RequesterTaskDetailsPage({ params }: { params: { id: str
   
   const handleMarkComplete = () => {
       toast({
-        title: "Task Marked as Complete!",
-        description: `Payment of $${task.price} will be released to the helper.`,
+        title: "Kaam Poora Ho Gaya!",
+        description: `₹${task.price} ka payment helper ko bhej diya jayega.`,
       })
   }
   
@@ -155,7 +155,7 @@ export default function RequesterTaskDetailsPage({ params }: { params: { id: str
     <div className="max-w-4xl mx-auto p-4 md:p-0">
         <Link href="/requester/dashboard" className="flex items-center gap-2 text-sm text-muted-foreground mb-4 hover:text-foreground">
             <ArrowLeft className="w-4 h-4" />
-            Back to My Tasks
+            Mere Kaam par Waapis
         </Link>
         <Card>
             {task.imageUrl && (
@@ -185,7 +185,7 @@ export default function RequesterTaskDetailsPage({ params }: { params: { id: str
                         <CircleDollarSign className="w-5 h-5 text-primary"/>
                         <div>
                             <p className="text-xs">Price</p>
-                            <p className="font-bold text-lg text-foreground">${task.price}</p>
+                            <p className="font-bold text-lg text-foreground">₹{task.price}</p>
                         </div>
                     </div>
                      <div className="flex items-center gap-2 text-muted-foreground p-3 bg-muted/50 rounded-lg">
@@ -210,14 +210,14 @@ export default function RequesterTaskDetailsPage({ params }: { params: { id: str
                     <HelperInfo helperId={task.helperId} />
                  ) : (
                     <div className="text-center py-8">
-                       <MyTasksClient tasks={[task]} isDialog={true}/>
+                       <MyTasksClient tasks={[task]} isDialog={true} />
                     </div>
                  )}
 
             </CardContent>
             {task.status === 'In Progress' && (
                 <CardFooter>
-                     <Button size="lg" className="w-full sm:w-auto" onClick={handleMarkComplete}>Mark as Complete</Button>
+                     <Button size="lg" className="w-full sm:w-auto" onClick={handleMarkComplete}>Poora Hua Mark Karein</Button>
                 </CardFooter>
             )}
         </Card>

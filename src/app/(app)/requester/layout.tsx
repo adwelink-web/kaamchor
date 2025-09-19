@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import BottomNav from '@/components/bottom-nav';
 
 const requesterNavItems = [
-  { href: '/requester/dashboard', icon: Home, label: 'My Tasks' },
+  { href: '/requester/dashboard', icon: Home, label: 'Mere Kaam' },
   { href: '/requester/history', icon: History, label: 'History' },
   { href: '/requester/tasks/new', icon: PlusCircle, label: 'Post' },
   { href: '/requester/helpers', icon: Users, label: 'Helpers' },

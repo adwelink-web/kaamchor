@@ -60,15 +60,11 @@ export async function getHelper(id: string) {
 }
 
 export async function getUser(id: string) {
-    // In a real app, you would have a 'users' collection with public profiles.
-    // We are simulating this for now as we don't have a public user profile collection yet.
-    // This would be expanded to fetch a user's public profile from Firestore.
-    // NOTE: This does not fetch the authenticated user object, but a public user profile.
     return {
         id: id,
         name: "Mock User",
         email: "mock@user.com",
         avatarUrl: `https://picsum.photos/seed/${id}/100/100`,
-        location: "San Francisco, CA"
+        location: "Mumbai, MH"
     };
 }

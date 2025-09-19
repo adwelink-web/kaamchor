@@ -5,11 +5,11 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 
 const NewTaskSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
-  description: z.string().min(1, 'Description is required'),
-  category: z.string().min(1, 'Category is required'),
-  location: z.string().min(1, 'Location is required'),
-  price: z.coerce.number().min(1, 'Price must be greater than 0'),
+  title: z.string().min(1, 'Title zaroori hai'),
+  description: z.string().min(1, 'Description zaroori hai'),
+  category: z.string().min(1, 'Category zaroori hai'),
+  location: z.string().min(1, 'Location zaroori hai'),
+  price: z.coerce.number().min(1, 'Price 0 se zyada hona chahiye'),
 });
 
 export async function createTask(prevState: any, formData: FormData) {
@@ -24,7 +24,7 @@ export async function createTask(prevState: any, formData: FormData) {
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Error: Please check the form fields.',
+      message: 'Error: Kripya form ke fields check karein.',
     };
   }
 
@@ -36,7 +36,7 @@ export async function createTask(prevState: any, formData: FormData) {
   revalidatePath('/tasks/mine');
 
   return {
-    message: 'Task successfully created!',
+    message: 'Kaam safaltapoorvak post ho gaya!',
     errors: {},
   };
 }
@@ -48,6 +48,6 @@ export async function getSuggestedMatches(input: SuggestTaskMatchesInput) {
         return { success: true, data: result };
     } catch (error) {
         console.error("Error getting suggestions:", error);
-        return { success: false, error: "Failed to get suggestions from AI." };
+        return { success: false, error: "AI se suggestions lene mein asamarth." };
     }
 }

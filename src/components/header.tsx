@@ -43,7 +43,7 @@ function Notifications() {
             <DropdownMenuTrigger asChild>
                 <Button size="icon" variant="outline">
                     <Bell className="h-5 w-5" />
-                    <span className="sr-only">Toggle notifications</span>
+                    <span className="sr-only">Notifications</span>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-80">
@@ -51,20 +51,20 @@ function Notifications() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                     <div className="flex flex-col">
-                        <p className="font-semibold">New Task Available</p>
-                        <p className="text-xs text-muted-foreground">"Fix a leaky kitchen faucet" is available in your area.</p>
+                        <p className="font-semibold">Naya Kaam Available Hai</p>
+                        <p className="text-xs text-muted-foreground">"Kitchen ka nal theek karna hai" aapke area mein available hai.</p>
                     </div>
                 </DropdownMenuItem>
                  <DropdownMenuItem>
                     <div className="flex flex-col">
-                        <p className="font-semibold">Task Accepted</p>
-                        <p className="text-xs text-muted-foreground">Your task "Garden weeding" has been accepted by Charlie B.</p>
+                        <p className="font-semibold">Kaam Accept Ho Gaya</p>
+                        <p className="text-xs text-muted-foreground">Aapka kaam "Garden ki safai" Charlie B. ne accept kar liya hai.</p>
                     </div>
                 </DropdownMenuItem>
                  <DropdownMenuItem>
                     <div className="flex flex-col">
-                        <p className="font-semibold">Payment Received</p>
-                        <p className="text-xs text-muted-foreground">You received a payment of $50 for "Bookshelf assembly".</p>
+                        <p className="font-semibold">Payment Mila</p>
+                        <p className="text-xs text-muted-foreground">Aapko "Bookshelf assemble karna" ke liye ₹2500 ka payment mila.</p>
                     </div>
                 </DropdownMenuItem>
             </DropdownMenuContent>
@@ -85,7 +85,7 @@ function SearchDialog() {
         <DialogHeader>
           <DialogTitle>Search</DialogTitle>
           <DialogDescription>
-            Search for tasks, helpers, or anything else.
+            Kaam, helpers, ya kuch aur search karein.
           </DialogDescription>
         </DialogHeader>
         <div className="flex items-center space-x-2">
@@ -106,7 +106,7 @@ export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
         <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="sm:hidden">
             <PanelLeft className="h-5 w-5" />
-            <span className="sr-only">Toggle Menu</span>
+            <span className="sr-only">Menu</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="sm:max-w-xs">

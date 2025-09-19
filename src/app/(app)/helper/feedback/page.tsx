@@ -20,13 +20,10 @@ export default function HelperFeedbackPage() {
     const [helperTasks, setHelperTasks] = useState<Task[]>([]);
     const { toast } = useToast();
     
-    // This is a temporary way to link a Firebase user to a helper profile.
-    // In a real app, this would be stored in the user's profile in Firestore.
     const helperId = 'helper-1';
 
     useEffect(() => {
         if (user) {
-             // In a real app, you'd fetch tasks where helperId matches the current user's helper profile ID.
              getTasks().then(allTasks => {
                  const myTasks = allTasks.filter(task => task.helperId === helperId);
                  setHelperTasks(myTasks);
@@ -36,10 +33,9 @@ export default function HelperFeedbackPage() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // In a real app, you would submit this data to your backend.
         toast({
-            title: "Support Form Submitted!",
-            description: "Thank you for reaching out. Our support team will review your request.",
+            title: "Support Form Submit Ho Gaya!",
+            description: "Dhanyavaad. Humari support team aapke request ko review karegi.",
         });
         (e.target as HTMLFormElement).reset();
     }
@@ -47,20 +43,20 @@ export default function HelperFeedbackPage() {
     return (
         <div className="grid flex-1 items-start gap-4">
             <div className="flex items-center">
-                <h1 className="font-semibold text-lg md:text-2xl">Submit Feedback or Complaint</h1>
+                <h1 className="font-semibold text-lg md:text-2xl">Feedback Ya Shikayat Darj Karein</h1>
             </div>
             <Card>
                 <CardHeader>
                     <CardTitle>Support Form</CardTitle>
-                    <CardDescription>Have an issue with a task or a requester? Use this form to submit a complaint or provide feedback.</CardDescription>
+                    <CardDescription>Kisi kaam ya requester se koi samasya hai? Is form ka upyog karke shikayat darj karein ya feedback dein.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form className="grid gap-6" onSubmit={handleSubmit}>
                         <div className="grid gap-3">
-                            <Label htmlFor="task">Related Task (Optional)</Label>
+                            <Label htmlFor="task">Related Kaam (Optional)</Label>
                             <Select name="task">
                                 <SelectTrigger id="task">
-                                    <SelectValue placeholder="Select a task..." />
+                                    <SelectValue placeholder="Ek kaam chunein..." />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {helperTasks.map(task => (
@@ -72,15 +68,15 @@ export default function HelperFeedbackPage() {
                             </Select>
                         </div>
                          <div className="grid gap-3">
-                            <Label htmlFor="subject">Subject</Label>
-                            <Input id="subject" name="subject" placeholder="e.g., Complaint about a requester" required/>
+                            <Label htmlFor="subject">Vishay</Label>
+                            <Input id="subject" name="subject" placeholder="e.g., Requester ke baare mein shikayat" required/>
                         </div>
                         <div className="grid gap-3">
-                            <Label htmlFor="message">Message</Label>
-                            <Textarea id="message" name="message" placeholder="Please describe your issue in detail..." className="min-h-48" required/>
+                            <Label htmlFor="message">Sandesh</Label>
+                            <Textarea id="message" name="message" placeholder="Kripya apni samasya detail mein batayein..." className="min-h-48" required/>
                         </div>
                         <div className="flex justify-end">
-                            <Button type="submit">Submit</Button>
+                            <Button type="submit">Submit Karein</Button>
                         </div>
                     </form>
                 </CardContent>

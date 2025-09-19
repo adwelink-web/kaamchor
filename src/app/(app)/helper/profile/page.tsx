@@ -9,7 +9,7 @@ export default function ProfilePage() {
     const helper = mockHelpers.find(h => h.id === 'helper-1');
 
     if (!helper) {
-        return <div>Helper not found.</div>
+        return <div>Helper nahi mila.</div>
     }
     
     const getInitials = (name: string) => {
@@ -22,7 +22,7 @@ export default function ProfilePage() {
     return (
         <div className="grid flex-1 items-start gap-6">
              <div className="flex items-center">
-                <h1 className="font-semibold text-lg md:text-2xl">My Profile</h1>
+                <h1 className="font-semibold text-lg md:text-2xl">Meri Profile</h1>
             </div>
             <Card>
                 <CardHeader className="items-center text-center">
@@ -47,7 +47,7 @@ export default function ProfilePage() {
                         </div>
                         <div className="p-4 bg-muted/50 rounded-lg">
                             <p className="text-2xl font-bold">12</p>
-                            <p className="text-sm text-muted-foreground">Tasks Completed</p>
+                            <p className="text-sm text-muted-foreground">Kaam Poore Kiye</p>
                         </div>
                          <div className="p-4 bg-muted/50 rounded-lg">
                              <div className="flex items-center justify-center gap-2">
@@ -58,7 +58,7 @@ export default function ProfilePage() {
                         </div>
                     </div>
                     <div className="mt-6">
-                        <h3 className="font-semibold mb-3 text-lg">My Skills</h3>
+                        <h3 className="font-semibold mb-3 text-lg">Meri Skills</h3>
                         <div className="flex flex-wrap gap-2">
                             {helper.skills.map(skill => (
                                 <Badge key={skill} variant="secondary" className="text-base px-3 py-1">{skill}</Badge>
@@ -66,7 +66,7 @@ export default function ProfilePage() {
                         </div>
                     </div>
                      <div className="mt-6">
-                        <h3 className="font-semibold mb-3 text-lg">Past Work Summary</h3>
+                        <h3 className="font-semibold mb-3 text-lg">Pichle Kaam Ka Summary</h3>
                         <p className="text-muted-foreground">{helper.pastWork}</p>
                     </div>
                 </CardContent>

@@ -13,8 +13,6 @@ export default function HelperDashboardPage() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // In a real app, you would also fetch the current helper's profile
-        // to get their location for filtering. For now, we fetch all tasks.
         getTasks().then(allTasks => {
             const availableTasks = allTasks.filter(task => task.status === 'Posted');
             setTasks(availableTasks);
@@ -26,7 +24,7 @@ export default function HelperDashboardPage() {
         return (
             <div className="flex flex-col flex-1 gap-4">
                 <div className="flex items-center">
-                    <h1 className="font-semibold text-lg md:text-2xl">Find Work</h1>
+                    <h1 className="font-semibold text-lg md:text-2xl">Kaam Dhoondein</h1>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-64 w-full" />)}
@@ -38,8 +36,8 @@ export default function HelperDashboardPage() {
     return (
         <div className="flex flex-col flex-1 gap-4">
         <div className="flex items-center">
-            <h1 className="font-semibold text-lg md:text-2xl">Find Work</h1>
-            <p className="text-muted-foreground ml-4 hidden sm:block">Browse tasks available in your area.</p>
+            <h1 className="font-semibold text-lg md:text-2xl">Kaam Dhoondein</h1>
+            <p className="text-muted-foreground ml-4 hidden sm:block">Aapke area mein available kaam dekhein.</p>
         </div>
         
         {tasks.length > 0 ? (
@@ -50,7 +48,7 @@ export default function HelperDashboardPage() {
             </div>
         ) : (
             <div className="text-center py-12 text-muted-foreground">
-                No available tasks found.
+                Koi kaam available nahi hai.
             </div>
         )}
         </div>

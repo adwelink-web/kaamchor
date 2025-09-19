@@ -63,12 +63,12 @@ function MatcherDialog({ task }: MatcherDialogProps) {
     setSuggestions(null);
 
     // In a real app, requester location would come from the user's profile in Firestore.
-    const requesterLocation = "San Francisco, CA";
+    const requesterLocation = "Mumbai, MH";
 
     const availableHelpers = await getHelpers();
     setHelpers(availableHelpers);
 
-    const taskDetails = `Category: ${task.category}, Description: ${task.description}, Price: $${task.price}`;
+    const taskDetails = `Category: ${task.category}, Description: ${task.description}, Price: ₹${task.price}`;
 
     const result = await getSuggestedMatches({
       taskDetails,
@@ -83,7 +83,7 @@ function MatcherDialog({ task }: MatcherDialogProps) {
     if (result.success && result.data) {
       setSuggestions(result.data);
     } else {
-      setError(result.error || 'An unknown error occurred.');
+      setError(result.error || 'Ek anjaan error hui.');
     }
     setLoading(false);
   };
@@ -97,14 +97,14 @@ function MatcherDialog({ task }: MatcherDialogProps) {
       <DialogTrigger asChild>
         <Button size="sm" variant="outline" onClick={handleFindMatches} className="w-full md:w-auto">
           <WandSparkles className="mr-2 h-4 w-4" />
-          Find Matches
+          AI Matches Dhoondein
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>AI Helper Suggestions</DialogTitle>
           <DialogDescription>
-            Our AI has analyzed your task and found the best helpers for the job.
+            Humare AI ne aapke kaam ke liye best helpers dhoond liye hain.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
@@ -139,7 +139,7 @@ function MatcherDialog({ task }: MatcherDialogProps) {
                           <Bot className="w-4 h-4 mt-0.5 shrink-0 text-primary"/> 
                           <span>{match.reason}</span>
                         </div>
-                         <Button size="sm" className="mt-2">Invite Helper</Button>
+                         <Button size="sm" className="mt-2">Helper Ko Invite Karein</Button>
                       </div>
                     </div>
                   );
@@ -184,7 +184,7 @@ function TaskActions({ task, isDialog }: { task: Task, isDialog?: boolean }) {
         <Button asChild size="sm" variant="outline" className={commonButtonClass}>
             <Link href={`/requester/tasks/${task.id}`}>
                 <Eye className="mr-2 h-4 w-4" />
-                View
+                Dekhein
             </Link>
         </Button>
     );
@@ -209,7 +209,7 @@ function TaskActions({ task, isDialog }: { task: Task, isDialog?: boolean }) {
                     {viewDetailsButton}
                     <Button size="sm" variant="outline" className={commonButtonClass}>
                         <MessageSquare className="mr-2 h-4 w-4"/>
-                        Contact Helper
+                        Helper se Baat Karein
                     </Button>
                 </div>
              );
@@ -219,7 +219,7 @@ function TaskActions({ task, isDialog }: { task: Task, isDialog?: boolean }) {
                     {viewDetailsButton}
                     <Button size="sm" className={commonButtonClass}>
                         <Star className="mr-2 h-4 w-4"/>
-                        Rate Helper
+                        Helper Ko Rate Karein
                     </Button>
                 </div>
             );
@@ -249,8 +249,8 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
   if (isDialog) {
       return (
           <div className="text-center py-8">
-              <h3 className="font-semibold text-lg mb-2">No Helper Assigned</h3>
-              <p className="text-muted-foreground">This task is still open. We'll notify you when a helper accepts it.</p>
+              <h3 className="font-semibold text-lg mb-2">Koi Helper Assigned Nahi Hai</h3>
+              <p className="text-muted-foreground">Yeh kaam abhi bhi open hai. Helper accept karega to hum aapko bata denge.</p>
               <div className="mt-4">
                 <TaskActions task={tasks[0]} isDialog={true} />
               </div>
@@ -262,7 +262,7 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
     return (
         <Card>
             <CardContent className="h-48 flex items-center justify-center">
-                <p className="text-muted-foreground">You don&apos;t have any tasks in this view.</p>
+                <p className="text-muted-foreground">Aapke paas is view mein koi kaam nahi hai.</p>
             </CardContent>
         </Card>
     )
@@ -287,7 +287,7 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
                         <div className="flex justify-between items-center text-sm">
                              <div className="flex items-center gap-2 text-muted-foreground">
                                 <CircleDollarSign className="w-4 h-4"/>
-                                <span>${task.price}</span>
+                                <span>₹{task.price}</span>
                              </div>
                               <div className="flex items-center gap-2 text-muted-foreground">
                                 <CalendarDays className="w-4 h-4"/>
@@ -307,9 +307,9 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Your Tasks</CardTitle>
+        <CardTitle>Aapke Kaam</CardTitle>
         <CardDescription>
-          A list of all the tasks you have posted.
+          Aapke dwara post kiye gaye sabhi kaamon ki list.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -336,7 +336,7 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
                       {task.status}
                     </Badge>
                   </TableCell>
-                  <TableCell>${task.price}</TableCell>
+                  <TableCell>₹{task.price}</TableCell>
                   <TableCell>{task.createdAt.toLocaleDateString()}</TableCell>
                   <TableCell className="text-right">
                     <TaskActions task={task} />

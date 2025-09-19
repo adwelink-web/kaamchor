@@ -45,7 +45,7 @@ export default function LandingPage() {
           </Link>
           <Button asChild>
             <Link href="/splash?to=/role-selection">
-              Get Started <MoveRight className="ml-2 h-4 w-4" />
+              Shuru Karein <MoveRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </nav>
@@ -56,21 +56,21 @@ export default function LandingPage() {
             <div className="flex flex-col items-center justify-center space-y-6 text-center">
               <div className="space-y-4 animate-in fade-in slide-in-from-bottom-12 duration-700">
                 <h1 className="text-5xl font-black tracking-tighter sm:text-7xl xl:text-8xl/none font-headline">
-                  <span className="text-primary">Your Life,</span> Delegated.
+                  <span className="text-primary">Aapki Life,</span> Sorted.
                 </h1>
                 <p className="max-w-[600px] text-muted-foreground md:text-xl mx-auto animate-in fade-in duration-500 delay-200">
-                  Stop drowning in chores. Kaamchor connects you with local hustlers ready to tackle your to-do list. Get it done.
+                  Kaamon mein mat doobo. Kaamchor aapko local helpers se jodta hai jo aapke kaam fatafat kar de. Ho jayega.
                 </p>
               </div>
               <div className="flex flex-col gap-4 sm:flex-row items-center animate-in fade-in duration-500 delay-300">
                 <Button asChild size="lg" className="shadow-lg shadow-primary/40 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 transform hover:scale-105">
                   <Link href="/splash?to=/role-selection">
-                    Find Help Now <MoveRight className="ml-2 h-5 w-5" />
+                    Madad Paayein <MoveRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="ghost" className="text-muted-foreground transition-all duration-300 transform hover:scale-105">
                   <Link href="#">
-                    Learn How It Works
+                    Kaise Kaam Karta Hai?
                   </Link>
                 </Button>
               </div>
@@ -85,12 +85,12 @@ export default function LandingPage() {
                  <CardHeader>
                     <div className="flex items-center gap-3">
                         <div className="p-3 rounded-lg bg-primary/20 border border-primary/30"><Zap className="w-6 h-6 text-primary"/></div>
-                        <CardTitle className="text-2xl font-bold font-headline">Post in Seconds</CardTitle>
+                        <CardTitle className="text-2xl font-bold font-headline">Seconds Mein Post Karein</CardTitle>
                     </div>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Describe your task, set a budget, and post. It's that easy. Our AI will help you find the right person for the job, fast.
+                    Apna kaam batayein, budget set karein, aur post kar dein. Itna aasan. Humara AI aapke liye sahi insaan dhoond lega, tezi se.
                   </p>
                 </CardContent>
               </BentoCard>
@@ -99,12 +99,12 @@ export default function LandingPage() {
                  <CardHeader>
                     <div className="flex items-center gap-3">
                          <div className="p-3 rounded-lg bg-primary/20 border border-primary/30"><Users className="w-6 h-6 text-primary"/></div>
-                        <CardTitle className="text-xl font-bold font-headline">Find Local Helpers</CardTitle>
+                        <CardTitle className="text-xl font-bold font-headline">Local Helpers Paayein</CardTitle>
                     </div>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Connect with trusted and verified people in your community.
+                    Apne community mein vishvasniya aur verified logon se judein.
                   </p>
                 </CardContent>
               </BentoCard>
@@ -113,12 +113,12 @@ export default function LandingPage() {
                  <CardHeader>
                     <div className="flex items-center gap-3">
                          <div className="p-3 rounded-lg bg-primary/20 border border-primary/30"><ShieldCheck className="w-6 h-6 text-primary"/></div>
-                        <CardTitle className="text-xl font-bold font-headline">Secure & Seamless</CardTitle>
+                        <CardTitle className="text-xl font-bold font-headline">Surakshit aur Aasan</CardTitle>
                     </div>
                 </CardHeader>
                  <CardContent>
                   <p className="text-muted-foreground">
-                    Track progress and communicate easily.
+                    Kaam ka progress track karein aur aasaani se baat karein.
                   </p>
                 </CardContent>
               </BentoCard>
@@ -132,7 +132,7 @@ export default function LandingPage() {
                 </CardHeader>
                  <CardContent>
                   <p className="text-muted-foreground">
-                    Our smart algorithm connects you with the best-suited helper based on skills, location, and your specific task requirements.
+                    Humara smart system aapko skills, location, aur aapke kaam ke hisaab se best helper se milata hai.
                   </p>
                 </CardContent>
               </BentoCard>
@@ -142,13 +142,13 @@ export default function LandingPage() {
 
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t border-white/10">
-        <p className="text-xs text-muted-foreground">&copy; 2024 Kaamchor. All rights reserved.</p>
+        <p className="text-xs text-muted-foreground">&copy; 2024 Kaamchor. Sarvadhikar surakshit.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link href="#" className="text-xs text-muted-foreground hover:text-white underline-offset-4" prefetch={false}>
-            Terms of Service
+            Seva ki Shartein
           </Link>
           <Link href="#" className="text-xs text-muted-foreground hover:text-white underline-offset-4" prefetch={false}>
-            Privacy
+            Gopniyata
           </Link>
         </nav>
       </footer>

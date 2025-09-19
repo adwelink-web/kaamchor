@@ -66,13 +66,11 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
   }
 
   const handleAccept = () => {
-    // In a real app, you'd call an API to update the task status
-    // and send a real notification.
     setTask({ ...task, status: 'Accepted' });
 
     toast({
-      title: 'Task Accepted!',
-      description: `You have accepted the task: "${task.title}". The requester has been notified.`,
+      title: 'Kaam Accept Ho Gaya!',
+      description: `Aapne yeh kaam accept kar liya hai: "${task.title}". Requester ko bata diya gaya hai.`,
     });
   };
   
@@ -103,7 +101,7 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
     <div className="max-w-4xl mx-auto p-4 md:p-0">
         <Link href="/helper/dashboard" className="flex items-center gap-2 text-sm text-muted-foreground mb-4 hover:text-foreground">
             <ArrowLeft className="w-4 h-4" />
-            Back to Find Work
+            Kaam Dhoondne Par Waapis
         </Link>
         <Card>
             {task.imageUrl && (
@@ -133,7 +131,7 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
                         <CircleDollarSign className="w-5 h-5 text-primary"/>
                         <div>
                             <p className="text-xs">Price</p>
-                            <p className="font-bold text-lg text-foreground">${task.price}</p>
+                            <p className="font-bold text-lg text-foreground">₹{task.price}</p>
                         </div>
                     </div>
                      <div className="flex items-center gap-2 text-muted-foreground p-3 bg-muted/50 rounded-lg">
@@ -154,7 +152,7 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
 
                 {requester && (
                      <div>
-                        <h3 className="font-semibold text-lg mb-3">Posted By</h3>
+                        <h3 className="font-semibold text-lg mb-3">Inhone Post Kiya</h3>
                         <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
                             <Avatar className="w-12 h-12">
                                 <AvatarImage src={requester.avatarUrl} alt={requester.name}/>
@@ -170,13 +168,13 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
             </CardContent>
             <CardFooter>
                  {task.status === 'Posted' && (
-                    <Button size="lg" className="w-full sm:w-auto" onClick={handleAccept}>Accept Task</Button>
+                    <Button size="lg" className="w-full sm:w-auto" onClick={handleAccept}>Kaam Accept Karein</Button>
                 )}
                  {(task.status === 'Accepted' || task.status === 'In Progress') && (
-                    <Button size="lg" disabled className="w-full sm:w-auto">Task Already Accepted</Button>
+                    <Button size="lg" disabled className="w-full sm:w-auto">Kaam Pehle Se Accept Ho Gaya Hai</Button>
                 )}
                  {task.status === 'Completed' && (
-                    <Button size="lg" disabled className="w-full sm:w-auto">Task Completed</Button>
+                    <Button size="lg" disabled className="w-full sm:w-auto">Kaam Poora Ho Gaya Hai</Button>
                 )}
             </CardFooter>
         </Card>
