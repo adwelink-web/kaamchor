@@ -5,9 +5,6 @@ import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth/next-server';
-import { cookies } from 'next/headers';
-import { app } from '@/lib/firebase';
 
 
 const NewTaskSchema = z.object({
@@ -34,21 +31,14 @@ export async function createTask(prevState: any, formData: FormData) {
     };
   }
   
-  const auth = getAuth(app);
-  const currentUser = auth.currentUser;
-
-  if (!currentUser) {
-    return {
-        message: 'Error: You must be logged in to create a task.',
-        errors: {},
-    }
-  }
+  // This is a placeholder. In a real app, you'd get this from the user's session.
+  const requesterId = "user-1-placeholder";
 
   try {
     const tasksCollection = collection(db, 'tasks');
     await addDoc(tasksCollection, {
       ...validatedFields.data,
-      requesterId: currentUser.uid,
+      requesterId: requesterId,
       status: 'Posted',
       createdAt: Timestamp.now(),
     });
