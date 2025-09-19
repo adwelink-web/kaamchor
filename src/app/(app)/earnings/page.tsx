@@ -13,7 +13,7 @@ export default function EarningsPage() {
             <div className="flex items-center">
                 <h1 className="font-semibold text-lg md:text-2xl">My Earnings</h1>
             </div>
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-6 sm:grid-cols-2">
                  <Card>
                     <CardHeader>
                         <CardTitle>Total Earnings</CardTitle>

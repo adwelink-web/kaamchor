@@ -37,7 +37,7 @@ export default function ProfilePage() {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
                         <div className="p-4 bg-muted/50 rounded-lg">
                             <p className="text-2xl font-bold">{helper.rating}</p>
                             <div className="flex items-center justify-center text-sm text-muted-foreground">
