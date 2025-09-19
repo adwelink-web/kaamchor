@@ -1,12 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { mockHelpers } from '@/lib/data';
+import { getHelper } from '@/lib/data';
 import { Star, CheckCircle, MapPin } from 'lucide-react';
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
     // Using a placeholder helper. In a real app, you'd get the current authenticated user.
-    const helper = mockHelpers.find(h => h.id === 'helper-1');
+    const helper = await getHelper('helper-1');
 
     if (!helper) {
         return <div>Helper not found.</div>
