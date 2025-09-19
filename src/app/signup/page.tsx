@@ -1,14 +1,19 @@
+
+'use client'
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Logo } from '@/components/icons';
 import Link from 'next/link';
-import { ChromeIcon } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
-export default function LoginPage() {
-  // In a real app, you'd have logic to determine if a user is new or returning.
-  // For this prototype, we'll assume a returning user and direct them to their dashboard.
-  // The mock data identifies user-1 (Alice) as a requester.
-  const loginHref = "/requester/dashboard"; // Default to requester dashboard for existing user.
+function SignupContent() {
+  const searchParams = useSearchParams();
+  const role = searchParams.get('role');
+
+  const roleText = role === 'helper' ? 'Helper' : 'Requester';
+  const loginHref = role === 'helper' ? '/helper/dashboard' : '/requester/dashboard';
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -17,8 +22,8 @@ export default function LoginPage() {
           <div className="flex justify-center items-center mb-4">
             <Logo className="h-8 w-8 text-primary" />
           </div>
-          <CardTitle className="text-2xl font-headline">Welcome back to Kaamchor</CardTitle>
-          <CardDescription>Sign in to continue</CardDescription>
+          <CardTitle className="text-2xl font-headline">Create Your {roleText} Account</CardTitle>
+          <CardDescription>One more step to get started!</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4">
@@ -30,13 +35,15 @@ export default function LoginPage() {
                     d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.19,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.19,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.19,22C17.6,22 21.5,18.33 21.5,12.33C21.5,11.76 21.45,11.44 21.35,11.1Z"
                   />
                 </svg>
-                Sign in with Google
+                Sign up with Google
               </Link>
             </Button>
-            <p className="text-center text-xs text-muted-foreground">New user? <Link href="/role-selection" className="underline hover:text-primary">Create an account</Link></p>
+             <p className="text-center text-xs text-muted-foreground">
+                Wrong role? <Link href="/role-selection" className="underline hover:text-primary">Go back</Link>
+            </p>
           </div>
           <p className="mt-4 text-center text-xs text-muted-foreground">
-            By signing in, you agree to our{' '}
+            By signing up, you agree to our{' '}
             <Link href="#" className="underline">
               Terms of Service
             </Link>
@@ -46,4 +53,13 @@ export default function LoginPage() {
       </Card>
     </div>
   );
+}
+
+
+export default function SignupPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <SignupContent />
+        </Suspense>
+    )
 }
