@@ -17,9 +17,11 @@ import Link from 'next/link';
 import { useAuth } from '@/contexts/auth-context';
 import { auth } from '@/lib/firebase';
 import { Skeleton } from './ui/skeleton';
+import { useRouter } from 'next/navigation';
 
 export default function UserNav() {
   const { user, loading } = useAuth();
+  const router = useRouter();
   
   // In a real app, role would be determined dynamically.
   const role = 'requester'; 
@@ -27,6 +29,7 @@ export default function UserNav() {
 
   const handleLogout = async () => {
     await auth.signOut();
+    router.push('/');
   }
 
   const getInitials = (name: string) => {
