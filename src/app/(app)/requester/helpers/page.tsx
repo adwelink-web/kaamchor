@@ -21,7 +21,7 @@ export default function FindHelpersPage() {
          return (
             <div className="grid flex-1 items-start gap-4">
                 <div className="flex items-center">
-                    <h1 className="font-semibold text-lg md:text-2xl">Helpers Dhoondein</h1>
+                    <h1 className="font-semibold text-lg md:text-2xl">Find Helpers</h1>
                 </div>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {[...Array(4)].map((_, i) => <Skeleton key={i} className="h-72 w-full" />)}
@@ -33,7 +33,7 @@ export default function FindHelpersPage() {
     return (
         <div className="grid flex-1 items-start gap-4">
         <div className="flex items-center">
-            <h1 className="font-semibold text-lg md:text-2xl">Helpers Dhoondein</h1>
+            <h1 className="font-semibold text-lg md:text-2xl">Find Helpers</h1>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {helpers.map((helper) => (

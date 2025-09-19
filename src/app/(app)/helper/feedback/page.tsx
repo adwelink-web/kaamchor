@@ -34,8 +34,8 @@ export default function HelperFeedbackPage() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         toast({
-            title: "Support Form Submit Ho Gaya!",
-            description: "Dhanyavaad. Humari support team aapke request ko review karegi.",
+            title: "Support Form Submitted!",
+            description: "Thank you. Our support team will review your request.",
         });
         (e.target as HTMLFormElement).reset();
     }
@@ -43,20 +43,20 @@ export default function HelperFeedbackPage() {
     return (
         <div className="grid flex-1 items-start gap-4">
             <div className="flex items-center">
-                <h1 className="font-semibold text-lg md:text-2xl">Feedback Ya Shikayat Darj Karein</h1>
+                <h1 className="font-semibold text-lg md:text-2xl">Submit Feedback or Complaint</h1>
             </div>
             <Card>
                 <CardHeader>
                     <CardTitle>Support Form</CardTitle>
-                    <CardDescription>Kisi kaam ya requester se koi samasya hai? Is form ka upyog karke shikayat darj karein ya feedback dein.</CardDescription>
+                    <CardDescription>Having an issue with a task or requester? Use this form to file a complaint or provide feedback.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <form className="grid gap-6" onSubmit={handleSubmit}>
                         <div className="grid gap-3">
-                            <Label htmlFor="task">Related Kaam (Optional)</Label>
+                            <Label htmlFor="task">Related Task (Optional)</Label>
                             <Select name="task">
                                 <SelectTrigger id="task">
-                                    <SelectValue placeholder="Ek kaam chunein..." />
+                                    <SelectValue placeholder="Select a task..." />
                                 </SelectTrigger>
                                 <SelectContent>
                                     {helperTasks.map(task => (
@@ -68,15 +68,15 @@ export default function HelperFeedbackPage() {
                             </Select>
                         </div>
                          <div className="grid gap-3">
-                            <Label htmlFor="subject">Vishay</Label>
-                            <Input id="subject" name="subject" placeholder="e.g., Requester ke baare mein shikayat" required/>
+                            <Label htmlFor="subject">Subject</Label>
+                            <Input id="subject" name="subject" placeholder="e.g., Complaint about a requester" required/>
                         </div>
                         <div className="grid gap-3">
-                            <Label htmlFor="message">Sandesh</Label>
-                            <Textarea id="message" name="message" placeholder="Kripya apni samasya detail mein batayein..." className="min-h-48" required/>
+                            <Label htmlFor="message">Message</Label>
+                            <Textarea id="message" name="message" placeholder="Please describe your issue in detail..." className="min-h-48" required/>
                         </div>
                         <div className="flex justify-end">
-                            <Button type="submit">Submit Karein</Button>
+                            <Button type="submit">Submit</Button>
                         </div>
                     </form>
                 </CardContent>

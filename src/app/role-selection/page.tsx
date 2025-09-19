@@ -13,9 +13,9 @@ export default function RoleSelectionPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold font-headline">Apna Role Chunein</h1>
+        <h1 className="text-4xl font-bold font-headline">Choose Your Role</h1>
         <p className="text-muted-foreground mt-2">
-          Aap yahan kaam karwane aaye hain ya kaam karne?
+          Are you here to get things done, or to do the work?
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">
@@ -25,13 +25,13 @@ export default function RoleSelectionPage() {
                 <div className="mx-auto bg-primary/20 p-4 rounded-full mb-4">
                     <User className="w-10 h-10 text-primary" />
                 </div>
-                <CardTitle className="text-2xl font-headline">Mujhe Madad Chahiye</CardTitle>
+                <CardTitle className="text-2xl font-headline">I Need Help</CardTitle>
                 <CardDescription>
-                Kaam post karein aur apne area mein skilled helpers paayein.
+                Post tasks and find skilled helpers in your area.
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <Button variant="outline">Requester Banein</Button>
+                <Button variant="outline">Become a Requester</Button>
             </CardContent>
             </Card>
         </Link>
@@ -42,21 +42,21 @@ export default function RoleSelectionPage() {
                  <div className="mx-auto bg-primary/20 p-4 rounded-full mb-4">
                     <Briefcase className="w-10 h-10 text-primary" />
                 </div>
-                <CardTitle className="text-2xl font-headline">Main Madad Karunga</CardTitle>
+                <CardTitle className="text-2xl font-headline">I Can Help</CardTitle>
                 <CardDescription>
-                Available kaam dekhein, apni skills offer karein, aur paise kamayein.
+                Browse available tasks, offer your skills, and earn money.
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                 <Button>Helper Banein</Button>
+                 <Button>Become a Helper</Button>
             </CardContent>
             </Card>
         </Link>
       </div>
        <p className="mt-8 text-center text-sm text-muted-foreground">
-          Pehle se account hai?{' '}
+          Already have an account?{' '}
           <Link href="/login" className="underline hover:text-primary">
-            Log In Karein
+            Log In
           </Link>
         </p>
     </div>

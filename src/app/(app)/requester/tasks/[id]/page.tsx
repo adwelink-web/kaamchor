@@ -30,8 +30,8 @@ function HelperInfo({ helperId }: { helperId: string }) {
     const handleContact = () => {
         if (!helper) return;
         toast({
-            title: "Helper se संपर्क हो रहा है...",
-            description: `${helper.name} ko ek notification bhej diya gaya hai.`,
+            title: "Contacting Helper...",
+            description: `A notification has been sent to ${helper.name}.`,
         });
     }
 
@@ -84,7 +84,7 @@ function HelperInfo({ helperId }: { helperId: string }) {
                 <CardFooter>
                     <Button variant="outline" className="w-full" onClick={handleContact}>
                         <MessageSquare className="w-4 h-4 mr-2" />
-                        Helper Se Sampark Karein
+                        Contact Helper
                     </Button>
                 </CardFooter>
             </Card>
@@ -130,8 +130,8 @@ export default function RequesterTaskDetailsPage({ params }: { params: { id: str
   
   const handleMarkComplete = () => {
       toast({
-        title: "Kaam Poora Ho Gaya!",
-        description: `₹${task.price} ka payment helper ko bhej diya jayega.`,
+        title: "Task Marked Complete!",
+        description: `Payment of ₹${task.price} will be released to the helper.`,
       })
   }
   
@@ -155,7 +155,7 @@ export default function RequesterTaskDetailsPage({ params }: { params: { id: str
     <div className="max-w-4xl mx-auto p-4 md:p-0">
         <Link href="/requester/dashboard" className="flex items-center gap-2 text-sm text-muted-foreground mb-4 hover:text-foreground">
             <ArrowLeft className="w-4 h-4" />
-            Mere Kaam par Waapis
+            Back to My Tasks
         </Link>
         <Card>
             {task.imageUrl && (
@@ -217,7 +217,7 @@ export default function RequesterTaskDetailsPage({ params }: { params: { id: str
             </CardContent>
             {task.status === 'In Progress' && (
                 <CardFooter>
-                     <Button size="lg" className="w-full sm:w-auto" onClick={handleMarkComplete}>Poora Hua Mark Karein</Button>
+                     <Button size="lg" className="w-full sm:w-auto" onClick={handleMarkComplete}>Mark as Complete</Button>
                 </CardFooter>
             )}
         </Card>

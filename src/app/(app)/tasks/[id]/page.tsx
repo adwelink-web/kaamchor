@@ -69,8 +69,8 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
     setTask({ ...task, status: 'Accepted' });
 
     toast({
-      title: 'Kaam Accept Ho Gaya!',
-      description: `Aapne yeh kaam accept kar liya hai: "${task.title}". Requester ko bata diya gaya hai.`,
+      title: 'Task Accepted!',
+      description: `You have accepted the task: "${task.title}". The requester has been notified.`,
     });
   };
   
@@ -101,7 +101,7 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
     <div className="max-w-4xl mx-auto p-4 md:p-0">
         <Link href="/helper/dashboard" className="flex items-center gap-2 text-sm text-muted-foreground mb-4 hover:text-foreground">
             <ArrowLeft className="w-4 h-4" />
-            Kaam Dhoondne Par Waapis
+            Back to Find Work
         </Link>
         <Card>
             {task.imageUrl && (
@@ -152,7 +152,7 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
 
                 {requester && (
                      <div>
-                        <h3 className="font-semibold text-lg mb-3">Inhone Post Kiya</h3>
+                        <h3 className="font-semibold text-lg mb-3">Posted By</h3>
                         <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
                             <Avatar className="w-12 h-12">
                                 <AvatarImage src={requester.avatarUrl} alt={requester.name}/>
@@ -168,13 +168,13 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
             </CardContent>
             <CardFooter>
                  {task.status === 'Posted' && (
-                    <Button size="lg" className="w-full sm:w-auto" onClick={handleAccept}>Kaam Accept Karein</Button>
+                    <Button size="lg" className="w-full sm:w-auto" onClick={handleAccept}>Accept Task</Button>
                 )}
                  {(task.status === 'Accepted' || task.status === 'In Progress') && (
-                    <Button size="lg" disabled className="w-full sm:w-auto">Kaam Pehle Se Accept Ho Gaya Hai</Button>
+                    <Button size="lg" disabled className="w-full sm:w-auto">Task Already Accepted</Button>
                 )}
                  {task.status === 'Completed' && (
-                    <Button size="lg" disabled className="w-full sm:w-auto">Kaam Poora Ho Gaya Hai</Button>
+                    <Button size="lg" disabled className="w-full sm:w-auto">Task is Completed</Button>
                 )}
             </CardFooter>
         </Card>

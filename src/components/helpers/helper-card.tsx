@@ -49,7 +49,7 @@ export default function HelperCard({ helper }: HelperCardProps) {
       </CardContent>
       <CardFooter className="w-full">
         <Button className="w-full" variant="outline" asChild>
-            <Link href={`/helper/profile`}>Profile Dekhein</Link>
+            <Link href={`/helper/profile`}>View Profile</Link>
         </Button>
       </CardFooter>
     </Card>

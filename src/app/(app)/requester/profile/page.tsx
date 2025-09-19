@@ -29,7 +29,7 @@ export default function ProfilePage() {
         return (
              <div className="grid flex-1 items-start gap-6">
                 <div className="flex items-center">
-                    <h1 className="font-semibold text-lg md:text-2xl">Meri Profile</h1>
+                    <h1 className="font-semibold text-lg md:text-2xl">My Profile</h1>
                 </div>
                 <Card>
                     <CardHeader className="items-center text-center">
@@ -63,7 +63,7 @@ export default function ProfilePage() {
     return (
         <div className="grid flex-1 items-start gap-6">
              <div className="flex items-center">
-                <h1 className="font-semibold text-lg md:text-2xl">Meri Profile</h1>
+                <h1 className="font-semibold text-lg md:text-2xl">My Profile</h1>
             </div>
             <Card>
                 <CardHeader className="items-center text-center">
@@ -84,21 +84,21 @@ export default function ProfilePage() {
                             <div className="text-2xl font-bold">{tasksLoading ? <Skeleton className="h-8 w-1/4 mx-auto" /> : tasks.length}</div>
                             <div className="flex items-center justify-center text-sm text-muted-foreground">
                                 <ClipboardList className="w-4 h-4 mr-1"/>
-                                Kul Kaam Post Kiye
+                                Total Tasks Posted
                             </div>
                         </div>
                         <div className="p-4 bg-muted/50 rounded-lg">
                             <div className="text-2xl font-bold">{tasksLoading ? <Skeleton className="h-8 w-1/4 mx-auto" /> : completedTasks}</div>
                              <div className="flex items-center justify-center text-sm text-muted-foreground">
                                 <CheckCircle className="w-4 h-4 mr-1"/>
-                                Kaam Poore Hue
+                                Tasks Completed
                             </div>
                         </div>
                          <div className="p-4 bg-muted/50 rounded-lg">
                             <div className="text-2xl font-bold">{tasksLoading ? <Skeleton className="h-8 w-1/4 mx-auto" /> : activeTasks}</div>
                              <div className="flex items-center justify-center text-sm text-muted-foreground">
                                 <Star className="w-4 h-4 mr-1"/>
-                                Active Kaam
+                                Active Tasks
                             </div>
                         </div>
                     </div>

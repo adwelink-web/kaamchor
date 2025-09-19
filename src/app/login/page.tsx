@@ -18,15 +18,15 @@ export default function LoginPage() {
     try {
       await signInWithPopup(auth, provider);
       toast({
-        title: 'Login Safal',
-        description: "Aapka swagat hai!",
+        title: 'Login Successful',
+        description: "Welcome back!",
       });
       router.push('/requester/dashboard');
     } catch (error) {
       console.error('Error during sign-in:', error);
       toast({
-        title: 'Login Asafal',
-        description: 'Kuch gadbad ho gayi. Kripya phir se koshish karein.',
+        title: 'Login Failed',
+        description: 'Something went wrong. Please try again.',
         variant: 'destructive',
       });
     }
@@ -39,8 +39,8 @@ export default function LoginPage() {
           <div className="flex justify-center items-center mb-4">
             <Logo className="h-8 w-8 text-primary" />
           </div>
-          <CardTitle className="text-2xl font-headline">Kaamchor Pe Vaapis Swagat Hai</CardTitle>
-          <CardDescription>Jaari rakhne ke liye sign in karein</CardDescription>
+          <CardTitle className="text-2xl font-headline">Welcome Back to Kaamchor</CardTitle>
+          <CardDescription>Sign in to continue</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4">
@@ -52,17 +52,17 @@ export default function LoginPage() {
                     d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.19,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.19,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.19,22C17.6,22 21.5,18.33 21.5,12.33C21.5,11.76 21.45,11.44 21.35,11.1Z"
                   />
                 </svg>
-                Google Se Sign In Karein
+                Sign In with Google
               </div>
             </Button>
-            <p className="text-center text-xs text-muted-foreground">Naye user? <Link href="/role-selection" className="underline hover:text-primary">Account banayein</Link></p>
+            <p className="text-center text-xs text-muted-foreground">New user? <Link href="/role-selection" className="underline hover:text-primary">Create an account</Link></p>
           </div>
           <p className="mt-4 text-center text-xs text-muted-foreground">
-            Sign in karke, aap humari{' '}
+            By signing in, you agree to our{' '}
             <Link href="#" className="underline">
-              Seva ki Shartein
+              Terms of Service
             </Link>
-             se sehmat hain.
+            .
           </p>
         </CardContent>
       </Card>

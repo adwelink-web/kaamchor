@@ -51,7 +51,7 @@ export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTas
   if (tasks.length === 0) {
     return (
         <div className="text-center py-12 text-muted-foreground border bg-card rounded-lg">
-            Aapne abhi tak koi kaam accept nahi kiya hai.
+            You haven't accepted any tasks yet.
         </div>
     )
   }
@@ -82,18 +82,18 @@ export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTas
                 <span>₹{task.price}</span>
             </div>
              <div>
-                <p className="text-sm font-medium mb-2">Status Update Karein</p>
+                <p className="text-sm font-medium mb-2">Update Status</p>
                 <Select
                     value={task.status}
                     onValueChange={(newStatus: Task['status']) => handleStatusChange(task.id, newStatus)}
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="Status set karein" />
+                        <SelectValue placeholder="Set status" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="Accepted">Accept Kar Liya</SelectItem>
-                        <SelectItem value="In Progress">Kaam Chal Raha Hai</SelectItem>
-                        <SelectItem value="Completed">Poora Ho Gaya</SelectItem>
+                        <SelectItem value="Accepted">Accepted</SelectItem>
+                        <SelectItem value="In Progress">In Progress</SelectItem>
+                        <SelectItem value="Completed">Completed</SelectItem>
                     </SelectContent>
                 </Select>
              </div>
@@ -101,7 +101,7 @@ export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTas
           <CardFooter className="gap-2">
             <Button variant="outline" className="w-full">
                 <MessageSquare className="w-4 h-4 mr-2"/>
-                Requester Se Baat Karein
+                Contact Requester
             </Button>
           </CardFooter>
         </Card>

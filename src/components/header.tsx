@@ -51,20 +51,20 @@ function Notifications() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                     <div className="flex flex-col">
-                        <p className="font-semibold">Naya Kaam Available Hai</p>
-                        <p className="text-xs text-muted-foreground">"Kitchen ka nal theek karna hai" aapke area mein available hai.</p>
+                        <p className="font-semibold">New Task Available</p>
+                        <p className="text-xs text-muted-foreground">"Fix kitchen sink" is available in your area.</p>
                     </div>
                 </DropdownMenuItem>
                  <DropdownMenuItem>
                     <div className="flex flex-col">
-                        <p className="font-semibold">Kaam Accept Ho Gaya</p>
-                        <p className="text-xs text-muted-foreground">Aapka kaam "Garden ki safai" Charlie B. ne accept kar liya hai.</p>
+                        <p className="font-semibold">Task Accepted</p>
+                        <p className="text-xs text-muted-foreground">Your task "Garden cleanup" was accepted by Charlie B.</p>
                     </div>
                 </DropdownMenuItem>
                  <DropdownMenuItem>
                     <div className="flex flex-col">
-                        <p className="font-semibold">Payment Mila</p>
-                        <p className="text-xs text-muted-foreground">Aapko "Bookshelf assemble karna" ke liye ₹2500 ka payment mila.</p>
+                        <p className="font-semibold">Payment Received</p>
+                        <p className="text-xs text-muted-foreground">You received a payment of ₹2500 for "Assemble bookshelf".</p>
                     </div>
                 </DropdownMenuItem>
             </DropdownMenuContent>
@@ -85,7 +85,7 @@ function SearchDialog() {
         <DialogHeader>
           <DialogTitle>Search</DialogTitle>
           <DialogDescription>
-            Kaam, helpers, ya kuch aur search karein.
+            Search for tasks, helpers, or anything else.
           </DialogDescription>
         </DialogHeader>
         <div className="flex items-center space-x-2">
@@ -106,7 +106,7 @@ export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
         <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="sm:hidden">
             <PanelLeft className="h-5 w-5" />
-            <span className="sr-only">Menu</span>
+            <span className="sr-only">Toggle Menu</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="sm:max-w-xs">

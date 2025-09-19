@@ -83,7 +83,7 @@ function MatcherDialog({ task }: MatcherDialogProps) {
     if (result.success && result.data) {
       setSuggestions(result.data);
     } else {
-      setError(result.error || 'Ek anjaan error hui.');
+      setError(result.error || 'An unknown error occurred.');
     }
     setLoading(false);
   };
@@ -97,14 +97,14 @@ function MatcherDialog({ task }: MatcherDialogProps) {
       <DialogTrigger asChild>
         <Button size="sm" variant="outline" onClick={handleFindMatches} className="w-full md:w-auto">
           <WandSparkles className="mr-2 h-4 w-4" />
-          AI Matches Dhoondein
+          Find AI Matches
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>AI Helper Suggestions</DialogTitle>
           <DialogDescription>
-            Humare AI ne aapke kaam ke liye best helpers dhoond liye hain.
+            Our AI has found the best helpers for your task.
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 py-4">
@@ -139,7 +139,7 @@ function MatcherDialog({ task }: MatcherDialogProps) {
                           <Bot className="w-4 h-4 mt-0.5 shrink-0 text-primary"/> 
                           <span>{match.reason}</span>
                         </div>
-                         <Button size="sm" className="mt-2">Helper Ko Invite Karein</Button>
+                         <Button size="sm" className="mt-2">Invite Helper</Button>
                       </div>
                     </div>
                   );
@@ -184,7 +184,7 @@ function TaskActions({ task, isDialog }: { task: Task, isDialog?: boolean }) {
         <Button asChild size="sm" variant="outline" className={commonButtonClass}>
             <Link href={`/requester/tasks/${task.id}`}>
                 <Eye className="mr-2 h-4 w-4" />
-                Dekhein
+                View
             </Link>
         </Button>
     );
@@ -209,7 +209,7 @@ function TaskActions({ task, isDialog }: { task: Task, isDialog?: boolean }) {
                     {viewDetailsButton}
                     <Button size="sm" variant="outline" className={commonButtonClass}>
                         <MessageSquare className="mr-2 h-4 w-4"/>
-                        Helper se Baat Karein
+                        Contact Helper
                     </Button>
                 </div>
              );
@@ -219,7 +219,7 @@ function TaskActions({ task, isDialog }: { task: Task, isDialog?: boolean }) {
                     {viewDetailsButton}
                     <Button size="sm" className={commonButtonClass}>
                         <Star className="mr-2 h-4 w-4"/>
-                        Helper Ko Rate Karein
+                        Rate Helper
                     </Button>
                 </div>
             );
@@ -249,8 +249,8 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
   if (isDialog) {
       return (
           <div className="text-center py-8">
-              <h3 className="font-semibold text-lg mb-2">Koi Helper Assigned Nahi Hai</h3>
-              <p className="text-muted-foreground">Yeh kaam abhi bhi open hai. Helper accept karega to hum aapko bata denge.</p>
+              <h3 className="font-semibold text-lg mb-2">No Helper Assigned</h3>
+              <p className="text-muted-foreground">This task is still open. We'll notify you when a helper accepts.</p>
               <div className="mt-4">
                 <TaskActions task={tasks[0]} isDialog={true} />
               </div>
@@ -262,7 +262,7 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
     return (
         <Card>
             <CardContent className="h-48 flex items-center justify-center">
-                <p className="text-muted-foreground">Aapke paas is view mein koi kaam nahi hai.</p>
+                <p className="text-muted-foreground">You have no tasks in this view.</p>
             </CardContent>
         </Card>
     )
@@ -307,9 +307,9 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Aapke Kaam</CardTitle>
+        <CardTitle>Your Tasks</CardTitle>
         <CardDescription>
-          Aapke dwara post kiye gaye sabhi kaamon ki list.
+          A list of all the tasks you have posted.
         </CardDescription>
       </CardHeader>
       <CardContent>

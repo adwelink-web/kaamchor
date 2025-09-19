@@ -11,13 +11,13 @@ export default function NewTaskPage() {
   return (
     <div className="mx-auto grid w-full max-w-4xl gap-4">
       <div className="flex items-center">
-        <h1 className="font-semibold text-lg md:text-2xl">Naya Kaam Post Karein</h1>
+        <h1 className="font-semibold text-lg md:text-2xl">Post a New Task</h1>
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Kaam Ki Details</CardTitle>
+          <CardTitle>Task Details</CardTitle>
           <CardDescription>
-            Neeche diye gaye form ko bharein aur naya kaam post karein jisse helpers dhoond sakein.
+            Fill out the form below to post a new task for helpers to find.
           </CardDescription>
         </CardHeader>
         <CardContent>

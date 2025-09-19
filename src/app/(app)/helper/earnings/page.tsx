@@ -37,9 +37,9 @@ export default function EarningsPage() {
          <Table>
             <TableHeader>
                 <TableRow>
-                    <TableHead>Kaam</TableHead>
-                    <TableHead>Poora Hone Ki Tarikh</TableHead>
-                    <TableHead className="text-right">Rakam</TableHead>
+                    <TableHead>Task</TableHead>
+                    <TableHead>Completion Date</TableHead>
+                    <TableHead className="text-right">Amount</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -51,7 +51,7 @@ export default function EarningsPage() {
                     </TableRow>
                 )) : (
                     <TableRow>
-                        <TableCell colSpan={3} className="h-24 text-center">Aapne koi kaam poora nahi kiya hai.</TableCell>
+                        <TableCell colSpan={3} className="h-24 text-center">You have not completed any tasks yet.</TableCell>
                     </TableRow>
                 )}
             </TableBody>
@@ -78,7 +78,7 @@ export default function EarningsPage() {
                 </Card>
             )) : (
                  <div className="text-center py-12 text-muted-foreground">
-                    Aapne koi kaam poora nahi kiya hai.
+                    You have not completed any tasks yet.
                 </div>
             )}
         </div>
@@ -88,7 +88,7 @@ export default function EarningsPage() {
         return (
              <div className="grid flex-1 items-start gap-6">
                 <div className="flex items-center">
-                    <h1 className="font-semibold text-lg md:text-2xl">Meri Kamai</h1>
+                    <h1 className="font-semibold text-lg md:text-2xl">My Earnings</h1>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2">
                     <Skeleton className="h-36" />
@@ -102,13 +102,13 @@ export default function EarningsPage() {
     return (
         <div className="grid flex-1 items-start gap-6">
             <div className="flex items-center">
-                <h1 className="font-semibold text-lg md:text-2xl">Meri Kamai</h1>
+                <h1 className="font-semibold text-lg md:text-2xl">My Earnings</h1>
             </div>
             <div className="grid gap-6 sm:grid-cols-2">
                  <Card>
                     <CardHeader>
-                        <CardTitle>Kul Kamai</CardTitle>
-                        <CardDescription>Yeh aapki poore hue kaamo se kul kamai hai.</CardDescription>
+                        <CardTitle>Total Earnings</CardTitle>
+                        <CardDescription>This is your total earnings from completed tasks.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <p className="text-4xl font-bold">₹{totalEarnings.toFixed(2)}</p>
@@ -116,8 +116,8 @@ export default function EarningsPage() {
                 </Card>
                  <Card>
                     <CardHeader>
-                        <CardTitle>Kaam Poore Hue</CardTitle>
-                        <CardDescription>Aapne kitne kaam safaltapoorvak poore kiye hain.</CardDescription>
+                        <CardTitle>Tasks Completed</CardTitle>
+                        <CardDescription>The number of tasks you have successfully completed.</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <p className="text-4xl font-bold">{completedTasks.length}</p>
@@ -126,8 +126,8 @@ export default function EarningsPage() {
             </div>
             <Card>
                 <CardHeader>
-                    <CardTitle>Kamai Ki History</CardTitle>
-                    <CardDescription>Aapke poore hue kaamon ki list aur har ek se kamai.</CardDescription>
+                    <CardTitle>Earnings History</CardTitle>
+                    <CardDescription>A list of your completed tasks and the earnings from each.</CardDescription>
                 </CardHeader>
                 <CardContent>
                    {isMobile ? <EarningsCards /> : <EarningsTable />}

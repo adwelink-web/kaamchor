@@ -28,8 +28,8 @@ export default function TaskCard({ task: initialTask }: TaskCardProps) {
     setTask({ ...task, status: 'Accepted' });
 
     toast({
-      title: 'Kaam Accept Kar Liya!',
-      description: `Aapne yeh kaam accept kar liya hai: "${task.title}". Requester ko bata diya gaya hai.`,
+      title: 'Task Accepted!',
+      description: `You have accepted the task: "${task.title}". The requester has been notified.`,
     });
   };
 
@@ -72,10 +72,10 @@ export default function TaskCard({ task: initialTask }: TaskCardProps) {
       </CardContent>
       <CardFooter className="gap-2">
         <Button className="w-full" variant="outline" asChild>
-          <Link href={`/tasks/${task.id}`}>Details Dekhein</Link>
+          <Link href={`/tasks/${task.id}`}>View Details</Link>
         </Button>
         <Button className="w-full" disabled={!isAcceptable} onClick={handleAccept}>
-          {task.status === 'Posted' ? 'Kaam Accept Karein' : 'Accepted'}
+          {task.status === 'Posted' ? 'Accept Task' : 'Accepted'}
         </Button>
       </CardFooter>
     </Card>

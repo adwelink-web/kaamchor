@@ -21,7 +21,7 @@ import { Upload } from 'lucide-react';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
-  return <Button type="submit" disabled={pending}>{pending ? 'Post Ho Raha Hai...' : 'Kaam Post Karein'}</Button>;
+  return <Button type="submit" disabled={pending}>{pending ? 'Posting...' : 'Post Task'}</Button>;
 }
 
 export default function NewTaskForm() {
@@ -32,7 +32,7 @@ export default function NewTaskForm() {
   useEffect(() => {
     if (state.message && state.errors && Object.keys(state.errors).length === 0) {
         toast({
-            title: "Safal!",
+            title: "Success!",
             description: state.message,
         })
     } else if (state.message && state.errors && Object.keys(state.errors).length > 0) {
@@ -48,7 +48,7 @@ export default function NewTaskForm() {
     <form action={dispatch} className="grid gap-6">
       <div className="grid gap-3">
         <Label htmlFor="title">Title</Label>
-        <Input id="title" name="title" placeholder="e.g., Nal theek karna hai" />
+        <Input id="title" name="title" placeholder="e.g., Need to fix a leaking tap" />
         {state.errors?.title && <p className="text-sm text-destructive">{state.errors.title}</p>}
       </div>
       <div className="grid gap-3">
@@ -56,7 +56,7 @@ export default function NewTaskForm() {
         <Textarea
           id="description"
           name="description"
-          placeholder="Kaam ke baare mein detail mein batayein..."
+          placeholder="Describe the task in detail..."
           className="min-h-32"
         />
         {state.errors?.description && <p className="text-sm text-destructive">{state.errors.description}</p>}
@@ -65,8 +65,8 @@ export default function NewTaskForm() {
         <div className="grid gap-3">
           <Label htmlFor="category">Category</Label>
            <Select name="category">
-                <SelectTrigger id="category" aria-label="Category chunein">
-                    <SelectValue placeholder="Category chunein" />
+                <SelectTrigger id="category" aria-label="Select category">
+                    <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
                     {TASK_CATEGORIES.map(cat => (
@@ -93,7 +93,7 @@ export default function NewTaskForm() {
         </div>
       </div>
        <div className="grid gap-3">
-        <Label htmlFor="photo">Kaam Ka Photo (Optional)</Label>
+        <Label htmlFor="photo">Photo of the task (Optional)</Label>
         <Input id="photo" name="photo" type="file" className="h-auto p-0 file:h-10 file:mr-4 file:px-4 file:border-0 file:bg-muted file:text-muted-foreground hover:file:bg-muted/50"/>
       </div>
       <div className="flex justify-end">
