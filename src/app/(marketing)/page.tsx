@@ -68,7 +68,7 @@ export default function LandingPage() {
                     Find Help Now <MoveRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="ghost" className="text-muted-foreground hover:text-white transition-all duration-300 transform hover:scale-105">
+                <Button asChild size="lg" variant="ghost" className="text-muted-foreground transition-all duration-300 transform hover:scale-105">
                   <Link href="#">
                     Learn How It Works
                   </Link>
