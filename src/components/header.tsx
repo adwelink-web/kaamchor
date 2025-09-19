@@ -102,10 +102,9 @@ function SearchDialog() {
 export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-      {/* This Sheet is for the desktop sidebar toggle, which is not yet implemented */}
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="icon" variant="outline" className="hidden sm:flex">
+          <Button size="icon" variant="outline" className="sm:hidden">
             <PanelLeft className="h-5 w-5" />
             <span className="sr-only">Toggle Menu</span>
           </Button>
