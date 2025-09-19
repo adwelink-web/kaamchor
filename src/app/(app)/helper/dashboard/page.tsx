@@ -22,7 +22,7 @@ export default function HelperDashboardPage() {
     <div className="grid flex-1 items-start gap-4">
       <div className="flex items-center">
         <h1 className="font-semibold text-lg md:text-2xl">Find Work</h1>
-        <p className="text-muted-foreground ml-4">Browse tasks available in your area.</p>
+        <p className="text-muted-foreground ml-4 hidden sm:block">Browse tasks available in your area.</p>
       </div>
       <Tabs defaultValue="all">
         <ScrollArea className="w-full whitespace-nowrap">
