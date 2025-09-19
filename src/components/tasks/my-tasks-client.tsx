@@ -86,7 +86,7 @@ function MatcherDialog({ task }: MatcherDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="outline" onClick={() => handleFindMatches()}>
+        <Button size="sm" variant="outline" onClick={() => handleFindMatches()} className="w-full md:w-auto">
           <WandSparkles className="mr-2 h-4 w-4" />
           Find Matches
         </Button>
@@ -260,7 +260,7 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
                              </div>
                         </div>
                     </CardContent>
-                    <CardFooter className="bg-muted/50 p-4">
+                    <CardFooter className="bg-muted/50 p-2 sm:p-4">
                         <TaskActions task={task} />
                     </CardFooter>
                 </Card>
