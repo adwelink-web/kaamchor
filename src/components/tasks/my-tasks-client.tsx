@@ -163,7 +163,7 @@ function TaskActions({ task }: { task: Task }) {
 
     const viewDetailsButton = (
         <Button asChild size="sm" variant="outline" className={commonButtonClass}>
-            <Link href={`/tasks/${task.id}`}>
+            <Link href={`/requester/tasks/${task.id}`}>
                 <Eye className="mr-2 h-4 w-4" />
                 View
             </Link>
