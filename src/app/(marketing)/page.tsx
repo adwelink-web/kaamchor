@@ -37,14 +37,14 @@ export default function LandingPage() {
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6 items-center">
           <Link
-            href="/login"
+            href="/splash?to=/login"
             className="text-sm font-medium text-muted-foreground hover:text-white transition-colors"
             prefetch={false}
           >
             Login
           </Link>
           <Button asChild>
-            <Link href="/role-selection">
+            <Link href="/splash?to=/role-selection">
               Get Started <MoveRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
@@ -64,7 +64,7 @@ export default function LandingPage() {
               </div>
               <div className="flex flex-col gap-4 sm:flex-row items-center animate-in fade-in duration-500 delay-300">
                 <Button asChild size="lg" className="shadow-lg shadow-primary/40 bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 transform hover:scale-105">
-                  <Link href="/role-selection">
+                  <Link href="/splash?to=/role-selection">
                     Find Help Now <MoveRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
