@@ -51,8 +51,8 @@ function Notifications() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
                     <div className="flex flex-col">
-                        <p className="font-semibold">New Task Available</p>
-                        <p className="text-xs text-muted-foreground">"Fix kitchen sink" is available in your area.</p>
+                        <p className="font-semibold">New Task Posted</p>
+                        <p className="text-xs text-muted-foreground">A new task is available for you to accept.</p>
                     </div>
                 </DropdownMenuItem>
                  <DropdownMenuItem>
