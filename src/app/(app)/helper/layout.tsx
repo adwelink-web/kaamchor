@@ -2,13 +2,14 @@
 
 import AppSidebar from '@/components/app-sidebar';
 import Header from '@/components/header';
-import { Briefcase, ListTodo, User, Wallet } from 'lucide-react';
+import { Briefcase, ListTodo, User, Wallet, MessageSquareWarning } from 'lucide-react';
 
 const helperNavItems = [
     { href: '/helper/dashboard', icon: Briefcase, label: 'Find Work' },
     { href: '/helper/tasks/accepted', icon: ListTodo, label: 'My Accepted Tasks' },
     { href: '/helper/earnings', icon: Wallet, label: 'Earnings' },
     { href: '/helper/profile', icon: User, label: 'Profile' },
+    { href: '/helper/feedback', icon: MessageSquareWarning, label: 'Support' },
 ];
 
 export default function HelperAppLayout({
