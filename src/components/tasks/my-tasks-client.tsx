@@ -28,7 +28,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { WandSparkles, Bot, User, Check, X, Star, MessageSquare, CircleDollarSign, CalendarDays } from 'lucide-react';
+import { WandSparkles, Bot, User, Check, X, Star, MessageSquare, CircleDollarSign, CalendarDays, Eye } from 'lucide-react';
 import { mockHelpers, getCurrentUser } from '@/lib/data';
 import { getSuggestedMatches } from '@/app/actions';
 import type { SuggestTaskMatchesOutput } from '@/ai/flows/suggest-task-matches';
@@ -37,6 +37,7 @@ import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Separator } from '../ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
+import Link from 'next/link';
 
 type MyTasksClientProps = {
   tasks: Task[];
@@ -159,27 +160,48 @@ function HelperInfo({ helperId }: { helperId: string }) {
 
 function TaskActions({ task }: { task: Task }) {
     const commonButtonClass = "w-full md:w-auto";
+
+    const viewDetailsButton = (
+        <Button asChild size="sm" variant="outline" className={commonButtonClass}>
+            <Link href={`/tasks/${task.id}`}>
+                <Eye className="mr-2 h-4 w-4" />
+                View
+            </Link>
+        </Button>
+    );
+
     switch(task.status) {
         case 'Posted':
             return (
                 <div className="flex flex-col md:flex-row gap-2">
+                    {viewDetailsButton}
                     <MatcherDialog task={task} />
                     <Button size="sm" variant="destructive-outline" className={commonButtonClass}>Cancel</Button>
                 </div>
             );
         case 'Accepted':
         case 'In Progress':
-             return <Button size="sm" variant="outline" className={commonButtonClass}>
-                <MessageSquare className="mr-2 h-4 w-4"/>
-                Contact Helper
-             </Button>;
+             return (
+                <div className="flex flex-col md:flex-row gap-2">
+                    {viewDetailsButton}
+                    <Button size="sm" variant="outline" className={commonButtonClass}>
+                        <MessageSquare className="mr-2 h-4 w-4"/>
+                        Contact Helper
+                    </Button>
+                </div>
+             );
         case 'Completed':
-            return <Button size="sm" className={commonButtonClass}>
-                <Star className="mr-2 h-4 w-4"/>
-                Rate Helper
-            </Button>;
+            return (
+                <div className="flex flex-col md:flex-row gap-2">
+                    {viewDetailsButton}
+                    <Button size="sm" className={commonButtonClass}>
+                        <Star className="mr-2 h-4 w-4"/>
+                        Rate Helper
+                    </Button>
+                </div>
+            );
         default:
-            return null;
+            return viewDetailsButton;
     }
 }
 
