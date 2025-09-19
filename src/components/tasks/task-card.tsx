@@ -1,3 +1,5 @@
+'use client';
+
 import type { Task } from '@/lib/types';
 import {
   Card,
@@ -11,23 +13,43 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { CircleDollarSign, MapPin } from 'lucide-react';
 import Link from 'next/link';
+import { useToast } from '@/hooks/use-toast';
+import { useState } from 'react';
 
 type TaskCardProps = {
   task: Task;
 };
 
-export default function TaskCard({ task }: TaskCardProps) {
+export default function TaskCard({ task: initialTask }: TaskCardProps) {
+  const [task, setTask] = useState(initialTask);
+  const { toast } = useToast();
+
+  const handleAccept = () => {
+    // In a real app, you'd call an API to update the task status
+    // and send a real notification.
+    setTask({ ...task, status: 'Accepted' });
+
+    toast({
+      title: 'Task Accepted!',
+      description: `You have accepted the task: "${task.title}". The requester has been notified.`,
+    });
+  };
+
   const getStatusVariant = (status: Task['status']) => {
     switch (status) {
       case 'Accepted':
         return 'secondary';
       case 'Completed':
         return 'default';
+      case 'In Progress':
+        return 'warning';
       case 'Posted':
       default:
         return 'outline';
     }
   };
+
+  const isAcceptable = task.status === 'Posted';
 
   return (
     <Card className="flex flex-col">
@@ -50,9 +72,12 @@ export default function TaskCard({ task }: TaskCardProps) {
           </div>
         </div>
       </CardContent>
-      <CardFooter>
-        <Button className="w-full" asChild>
+      <CardFooter className="gap-2">
+        <Button className="w-full" variant="outline" asChild>
           <Link href={`/tasks/${task.id}`}>View Details</Link>
+        </Button>
+        <Button className="w-full" disabled={!isAcceptable} onClick={handleAccept}>
+          {task.status === 'Posted' ? 'Accept Task' : 'Accepted'}
         </Button>
       </CardFooter>
     </Card>
