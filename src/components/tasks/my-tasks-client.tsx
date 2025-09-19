@@ -28,7 +28,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { WandSparkles, Bot, Eye, MessageSquare, CircleDollarSign, CalendarDays, Star } from 'lucide-react';
+import { WandSparkles, Bot, Eye, MessageSquare, CircleDollarSign, CalendarDays, Star, ClipboardList } from 'lucide-react';
 import { getHelpers } from '@/lib/data';
 import { getSuggestedMatches } from '@/app/actions';
 import type { SuggestTaskMatchesOutput } from '@/ai/flows/suggest-task-matches';
