@@ -1,7 +1,5 @@
 import Link from 'next/link';
-import {
-  PanelLeft,
-} from 'lucide-react';
+import { Search, PanelLeft } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -11,25 +9,24 @@ import { Button } from '@/components/ui/button';
 import UserNav from './user-nav';
 import { Logo } from './icons';
 
-
 type NavItem = {
-    href: string;
-    icon: React.ElementType;
-    label: string;
-}
+  href: string;
+  icon: React.ElementType;
+  label: string;
+};
 
 type HeaderProps = {
-    mobileNavItems: NavItem[];
-    logoHref: string;
-}
+  mobileNavItems: NavItem[];
+  logoHref: string;
+};
 
 export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
-
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+      {/* This Sheet is for the desktop sidebar toggle, which is not yet implemented */}
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="icon" variant="outline" className="sm:hidden">
+          <Button size="icon" variant="outline" className="hidden sm:flex">
             <PanelLeft className="h-5 w-5" />
             <span className="sr-only">Toggle Menu</span>
           </Button>
@@ -56,6 +53,12 @@ export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
           </nav>
         </SheetContent>
       </Sheet>
+
+      <Button size="icon" variant="outline" className="sm:hidden">
+        <Search className="h-5 w-5" />
+        <span className="sr-only">Search</span>
+      </Button>
+
       <div className="ml-auto">
         <UserNav />
       </div>
