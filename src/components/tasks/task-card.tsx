@@ -10,6 +10,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { CircleDollarSign, MapPin } from 'lucide-react';
+import Link from 'next/link';
 
 type TaskCardProps = {
   task: Task;
@@ -50,7 +51,9 @@ export default function TaskCard({ task }: TaskCardProps) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">View Details</Button>
+        <Button className="w-full" asChild>
+          <Link href={`/tasks/${task.id}`}>View Details</Link>
+        </Button>
       </CardFooter>
     </Card>
   );
