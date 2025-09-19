@@ -2,12 +2,13 @@
 
 import AppSidebar from '@/components/app-sidebar';
 import Header from '@/components/header';
-import { Home, ListTodo, PlusCircle, Users } from 'lucide-react';
+import { Home, ListTodo, PlusCircle, Users, PlusIcon } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const requesterNavItems = [
-  { href: '/requester/dashboard', icon: Home, label: 'Available Tasks' },
+  { href: '/requester/dashboard', icon: Home, label: 'My Tasks' },
   { href: '/requester/tasks/new', icon: PlusCircle, label: 'Post Task' },
-  { href: '/requester/tasks/mine', icon: ListTodo, label: 'My Tasks' },
   { href: '/requester/helpers', icon: Users, label: 'Find Helpers' },
 ];
 
@@ -21,7 +22,15 @@ export default function RequesterAppLayout({
       <AppSidebar navItems={requesterNavItems} logoHref="/requester/dashboard" />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <Header mobileNavItems={requesterNavItems} logoHref="/requester/dashboard" />
-        <main className="p-4 sm:px-6 sm:py-0 flex-1">{children}</main>
+        <main className="p-4 sm:px-6 sm:py-0 flex-1 relative">
+          {children}
+           <Button asChild className="fixed bottom-8 right-8 h-16 w-16 rounded-full shadow-lg" size="icon">
+             <Link href="/requester/tasks/new">
+               <PlusIcon className="h-8 w-8" />
+               <span className="sr-only">Post a Task</span>
+             </Link>
+           </Button>
+        </main>
       </div>
     </div>
   );

@@ -1,72 +1,16 @@
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs';
-import { PlusIcon, Search } from 'lucide-react';
-import Link from 'next/link';
-import { TASK_CATEGORIES } from '@/lib/constants';
-import { mockTasks } from '@/lib/data';
-import TaskCard from '@/components/tasks/task-card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import MyTasksClient from '@/components/tasks/my-tasks-client';
+import { getCurrentUser, mockTasks } from '@/lib/data';
 
-export default function DashboardPage() {
-  const availableTasks = mockTasks.filter(task => task.status === 'Posted');
-  
+export default function MyTasksPage() {
+  const currentUser = getCurrentUser();
+  const myTasks = mockTasks.filter((task) => task.requesterId === currentUser.id);
+
   return (
-    <div className="grid flex-1 items-start gap-4 relative">
+    <div className="grid flex-1 items-start gap-4">
       <div className="flex items-center">
-        <h1 className="font-semibold text-lg md:text-2xl">Available Tasks</h1>
+        <h1 className="font-semibold text-lg md:text-2xl">My Posted Tasks</h1>
       </div>
-       <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-          <Input
-            placeholder="Search for tasks..."
-            className="pl-10 w-full"
-          />
-        </div>
-      <Tabs defaultValue="all">
-        <TabsList>
-          <TabsTrigger value="all">All</TabsTrigger>
-          {TASK_CATEGORIES.map((cat) => (
-            <TabsTrigger value={cat.value} key={cat.value}>
-              <cat.icon className="h-4 w-4 mr-2" />
-              {cat.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-        <TabsContent value="all">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {availableTasks.map((task) => (
-              <TaskCard key={task.id} task={task} />
-            ))}
-          </div>
-        </TabsContent>
-        {TASK_CATEGORIES.map((cat) => (
-          <TabsContent value={cat.value} key={cat.value}>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {availableTasks
-                .filter((task) => task.category === cat.value)
-                .map((task) => (
-                  <TaskCard key={task.id} task={task} />
-                ))}
-            </div>
-             {availableTasks.filter(task => task.category === cat.value).length === 0 && (
-                <div className="text-center py-12 text-muted-foreground">
-                    No tasks found in this category.
-                </div>
-            )}
-          </TabsContent>
-        ))}
-      </Tabs>
-       <Button asChild className="fixed bottom-8 right-8 h-16 w-16 rounded-full shadow-lg" size="icon">
-         <Link href="/requester/tasks/new">
-           <PlusIcon className="h-8 w-8" />
-           <span className="sr-only">Post a Task</span>
-         </Link>
-       </Button>
+      <MyTasksClient tasks={myTasks} />
     </div>
   );
 }
