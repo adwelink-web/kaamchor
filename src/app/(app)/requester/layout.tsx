@@ -2,7 +2,7 @@
 
 import AppSidebar from '@/components/app-sidebar';
 import Header from '@/components/header';
-import { Home, PlusCircle, Users, PlusIcon, History } from 'lucide-react';
+import { Home, PlusCircle, Users, PlusIcon, History, MessageSquareWarning } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
@@ -11,6 +11,7 @@ const requesterNavItems = [
   { href: '/requester/history', icon: History, label: 'Task History' },
   { href: '/requester/tasks/new', icon: PlusCircle, label: 'Post Task' },
   { href: '/requester/helpers', icon: Users, label: 'Find Helpers' },
+  { href: '/requester/feedback', icon: MessageSquareWarning, label: 'Feedback' },
 ];
 
 export default function RequesterAppLayout({
