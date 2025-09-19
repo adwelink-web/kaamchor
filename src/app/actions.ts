@@ -3,6 +3,8 @@
 import { suggestTaskMatches, type SuggestTaskMatchesInput } from '@/ai/flows/suggest-task-matches';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
+import { db, auth } from '@/lib/firebase';
+import { collection, addDoc, Timestamp } from 'firebase/firestore';
 
 const NewTaskSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -28,17 +30,37 @@ export async function createTask(prevState: any, formData: FormData) {
     };
   }
 
-  // Here you would typically save the data to your database.
-  // For this demo, we'll just log it and revalidate the path.
-  console.log('New Task Created:', validatedFields.data);
+  const currentUser = auth.currentUser;
+  if (!currentUser) {
+    return {
+        message: 'Error: You must be logged in to create a task.',
+        errors: {},
+    }
+  }
 
-  revalidatePath('/dashboard');
-  revalidatePath('/tasks/mine');
+  try {
+    const tasksCollection = collection(db, 'tasks');
+    await addDoc(tasksCollection, {
+      ...validatedFields.data,
+      requesterId: currentUser.uid,
+      status: 'Posted',
+      createdAt: Timestamp.now(),
+    });
 
-  return {
-    message: 'Task posted successfully!',
-    errors: {},
-  };
+    revalidatePath('/requester/dashboard');
+    revalidatePath('/helper/dashboard');
+
+    return {
+      message: 'Task posted successfully!',
+      errors: {},
+    };
+  } catch (error) {
+    console.error("Error creating task:", error);
+    return {
+        message: 'Error: Could not post the task to the database.',
+        errors: {},
+    }
+  }
 }
 
 
