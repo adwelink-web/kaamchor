@@ -3,7 +3,7 @@
 import { suggestTaskMatches, type SuggestTaskMatchesInput } from '@/ai/flows/suggest-task-matches';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { db } from '@/lib/firebase';
+import { db, auth } from '@/lib/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 
 
@@ -31,14 +31,20 @@ export async function createTask(prevState: any, formData: FormData) {
     };
   }
   
-  // This is a placeholder. In a real app, you'd get this from the user's session.
-  const requesterId = "user-1-placeholder";
+  const user = auth.currentUser;
+
+  if (!user) {
+    return {
+        message: 'Error: You must be logged in to create a task.',
+        errors: {},
+    }
+  }
 
   try {
     const tasksCollection = collection(db, 'tasks');
     await addDoc(tasksCollection, {
       ...validatedFields.data,
-      requesterId: requesterId,
+      requesterId: user.uid,
       status: 'Posted',
       createdAt: Timestamp.now(),
     });
