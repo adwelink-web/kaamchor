@@ -261,8 +261,15 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
   if (tasks.length === 0) {
     return (
         <Card>
-            <CardContent className="h-48 flex items-center justify-center">
-                <p className="text-muted-foreground">Jo task post kiya he es user ne us task ko yaha pe dikho ek card me jisme us task ka status and detail dikhai de</p>
+            <CardContent className="h-48 flex flex-col items-center justify-center text-center gap-4">
+                <ClipboardList className="w-12 h-12 text-muted-foreground" />
+                <div className="space-y-1">
+                    <p className="font-semibold">No active tasks</p>
+                    <p className="text-muted-foreground text-sm">You haven't posted any tasks yet. Get started by posting a new task!</p>
+                </div>
+                 <Button asChild>
+                    <Link href="/requester/tasks/new">Post a Task</Link>
+                </Button>
             </CardContent>
         </Card>
     )
@@ -349,3 +356,5 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
     </Card>
   );
 }
+
+    
