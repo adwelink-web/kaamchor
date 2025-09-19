@@ -3,8 +3,12 @@
 import { suggestTaskMatches, type SuggestTaskMatchesInput } from '@/ai/flows/suggest-task-matches';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { db, auth } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth/next-server';
+import { cookies } from 'next/headers';
+import { app } from '@/lib/firebase';
+
 
 const NewTaskSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -29,8 +33,10 @@ export async function createTask(prevState: any, formData: FormData) {
       message: 'Error: Please check the form fields.',
     };
   }
-
+  
+  const auth = getAuth(app);
   const currentUser = auth.currentUser;
+
   if (!currentUser) {
     return {
         message: 'Error: You must be logged in to create a task.',
