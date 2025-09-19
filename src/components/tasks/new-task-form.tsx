@@ -15,9 +15,10 @@ import {
   SelectValue,
 } from '../ui/select';
 import { TASK_CATEGORIES } from '@/lib/constants';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { Upload } from 'lucide-react';
+import { useAuth } from '@/contexts/auth-context';
+import { useRouter } from 'next/navigation';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -28,24 +29,31 @@ export default function NewTaskForm() {
   const initialState = { message: '', errors: {} };
   const [state, dispatch] = useActionState(createTask, initialState);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    if (state.message && state.errors && Object.keys(state.errors).length === 0) {
+    if (state.message && Object.keys(state.errors).length === 0) {
         toast({
             title: "Success!",
             description: state.message,
-        })
-    } else if (state.message && state.errors && Object.keys(state.errors).length > 0) {
+        });
+        formRef.current?.reset();
+        router.push('/requester/dashboard');
+
+    } else if (state.message && Object.keys(state.errors).length > 0) {
         toast({
             title: "Error",
             description: state.message,
             variant: "destructive"
         })
     }
-  }, [state, toast]);
+  }, [state, toast, router]);
 
   return (
-    <form action={dispatch} className="grid gap-6">
+    <form ref={formRef} action={dispatch} className="grid gap-6">
+      <input type="hidden" name="requesterId" value={user?.uid || ''} />
       <div className="grid gap-3">
         <Label htmlFor="title">Title</Label>
         <Input id="title" name="title" placeholder="e.g., Need to fix a leaking tap" />

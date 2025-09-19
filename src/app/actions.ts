@@ -3,7 +3,7 @@
 import { suggestTaskMatches, type SuggestTaskMatchesInput } from '@/ai/flows/suggest-task-matches';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { db, auth } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 
 
@@ -13,6 +13,7 @@ const NewTaskSchema = z.object({
   category: z.string().min(1, 'Category is required'),
   location: z.string().min(1, 'Location is required'),
   price: z.coerce.number().min(1, 'Price must be greater than 0'),
+  requesterId: z.string().min(1, 'Requester ID is missing'),
 });
 
 export async function createTask(prevState: any, formData: FormData) {
@@ -22,29 +23,30 @@ export async function createTask(prevState: any, formData: FormData) {
     category: formData.get('category'),
     location: formData.get('location'),
     price: formData.get('price'),
+    requesterId: formData.get('requesterId'),
   });
 
   if (!validatedFields.success) {
+    // Check if the error is for the requesterId, and show a generic auth error
+    if (validatedFields.error.flatten().fieldErrors.requesterId) {
+       return {
+         message: 'Error: You must be logged in to create a task.',
+         errors: {},
+       };
+    }
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: 'Error: Please check the form fields.',
     };
   }
   
-  const user = auth.currentUser;
-
-  if (!user) {
-    return {
-        message: 'Error: You must be logged in to create a task.',
-        errors: {},
-    }
-  }
+  const { requesterId, ...taskData } = validatedFields.data;
 
   try {
     const tasksCollection = collection(db, 'tasks');
     await addDoc(tasksCollection, {
-      ...validatedFields.data,
-      requesterId: user.uid,
+      ...taskData,
+      requesterId: requesterId,
       status: 'Posted',
       createdAt: Timestamp.now(),
     });
