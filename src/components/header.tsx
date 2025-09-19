@@ -102,6 +102,7 @@ export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
             <Search className="h-5 w-5" />
             <span className="sr-only">Search</span>
         </Button>
+         <Notifications />
       </div>
 
 
