@@ -249,7 +249,7 @@ export default function MyTasksClient({ tasks }: MyTasksClientProps) {
 
   return (
     <Card>
-      <CardHeader className="hidden md:block">
+      <CardHeader>
         <CardTitle>Your Tasks</CardTitle>
         <CardDescription>
           A list of all the tasks you have posted.

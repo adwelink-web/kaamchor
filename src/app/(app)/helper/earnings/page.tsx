@@ -2,8 +2,8 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { getCurrentUser, mockTasks } from '@/lib/data';
-import { CheckCircle, CircleDollarSign, CalendarDays } from 'lucide-react';
+import { mockTasks } from '@/lib/data';
+import { CircleDollarSign, CalendarDays } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 
