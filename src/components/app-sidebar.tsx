@@ -17,6 +17,7 @@ import {
   Briefcase,
   Wallet,
   User,
+  History,
 } from 'lucide-react';
 import { Logo } from './icons';
 import { cn } from '@/lib/utils';

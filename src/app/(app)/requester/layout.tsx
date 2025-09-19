@@ -2,12 +2,13 @@
 
 import AppSidebar from '@/components/app-sidebar';
 import Header from '@/components/header';
-import { Home, ListTodo, PlusCircle, Users, PlusIcon } from 'lucide-react';
+import { Home, PlusCircle, Users, PlusIcon, History } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 const requesterNavItems = [
   { href: '/requester/dashboard', icon: Home, label: 'My Tasks' },
+  { href: '/requester/history', icon: History, label: 'Task History' },
   { href: '/requester/tasks/new', icon: PlusCircle, label: 'Post Task' },
   { href: '/requester/helpers', icon: Users, label: 'Find Helpers' },
 ];
