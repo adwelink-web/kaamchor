@@ -1,13 +1,6 @@
 import Link from 'next/link';
 import {
   PanelLeft,
-  Home,
-  ListTodo,
-  PlusCircle,
-  Users,
-  Briefcase,
-  Wallet,
-  User as UserIcon
 } from 'lucide-react';
 import {
   Sheet,
@@ -18,25 +11,19 @@ import { Button } from '@/components/ui/button';
 import UserNav from './user-nav';
 import { Logo } from './icons';
 
-const requesterMobileNavItems = [
-  { href: '/dashboard', icon: Home, label: 'Available Tasks' },
-  { href: '/tasks/new', icon: PlusCircle, label: 'Post Task' },
-  { href: '/tasks/mine', icon: ListTodo, label: 'My Tasks' },
-  { href: '/helpers', icon: Users, label: 'Find Helpers' },
-];
 
-const helperMobileNavItems = [
-    { href: '/helper-dashboard', icon: Briefcase, label: 'Find Work' },
-    { href: '/tasks/accepted', icon: ListTodo, label: 'My Accepted Tasks' },
-    { href: '/earnings', icon: Wallet, label: 'Earnings' },
-    { href: '/profile', icon: UserIcon, label: 'Profile' },
-]
+type NavItem = {
+    href: string;
+    icon: React.ElementType;
+    label: string;
+}
 
-// This is a placeholder. In a real app, you'd get this from user auth state.
-const userRole = 'helper';
+type HeaderProps = {
+    mobileNavItems: NavItem[];
+    logoHref: string;
+}
 
-export default function Header() {
-  const mobileNavItems = userRole === 'helper' ? helperMobileNavItems : requesterMobileNavItems;
+export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -50,7 +37,7 @@ export default function Header() {
         <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
             <Link
-              href="/dashboard"
+              href={logoHref}
               className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
             >
               <Logo className="h-5 w-5 transition-all group-hover:scale-110" />

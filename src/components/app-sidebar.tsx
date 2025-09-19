@@ -21,32 +21,26 @@ import {
 import { Logo } from './icons';
 import { cn } from '@/lib/utils';
 
-const requesterNavItems = [
-  { href: '/dashboard', icon: Home, label: 'Available Tasks' },
-  { href: '/tasks/new', icon: PlusCircle, label: 'Post Task' },
-  { href: '/tasks/mine', icon: ListTodo, label: 'My Tasks' },
-  { href: '/helpers', icon: Users, label: 'Find Helpers' },
-];
 
-const helperNavItems = [
-    { href: '/helper-dashboard', icon: Briefcase, label: 'Find Work' },
-    { href: '/tasks/accepted', icon: ListTodo, label: 'My Accepted Tasks' },
-    { href: '/earnings', icon: Wallet, label: 'Earnings' },
-    { href: '/profile', icon: User, label: 'Profile' },
-]
+type NavItem = {
+    href: string;
+    icon: React.ElementType;
+    label: string;
+}
 
-// This is a placeholder. In a real app, you'd get this from user auth state.
-const userRole = 'helper'; 
+type AppSidebarProps = {
+    navItems: NavItem[];
+    logoHref: string;
+}
 
-export default function AppSidebar() {
+export default function AppSidebar({ navItems, logoHref }: AppSidebarProps) {
   const pathname = usePathname();
-  const navItems = userRole === 'helper' ? helperNavItems : requesterNavItems;
 
   return (
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
       <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
         <Link
-          href="/dashboard"
+          href={logoHref}
           className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
         >
           <Logo className="h-5 w-5 transition-all group-hover:scale-110" />
