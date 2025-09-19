@@ -18,6 +18,10 @@ import Link from 'next/link';
 
 export default function UserNav() {
   const user = getCurrentUser();
+  // In a real app, role would be determined dynamically.
+  const role = 'requester'; 
+  const profileHref = role === 'helper' ? '/helper/profile' : '/requester/profile';
+
 
   const getInitials = (name: string) => {
     return name
@@ -47,7 +51,9 @@ export default function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href={profileHref}>Profile</Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

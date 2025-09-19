@@ -80,8 +80,8 @@ export default function LandingPage() {
 
         <section className="w-full py-24 md:py-32 lg:py-40">
            <div className="container px-4 md:px-6">
-            <div className="mx-auto grid max-w-5xl gap-6 grid-cols-1 lg:grid-cols-3 lg:grid-rows-2">
-              <BentoCard className="lg:col-span-2">
+            <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3 md:grid-rows-2">
+              <BentoCard className="md:col-span-2">
                  <CardHeader>
                     <div className="flex items-center gap-3">
                         <div className="p-3 rounded-lg bg-primary/20 border border-primary/30"><Zap className="w-6 h-6 text-primary"/></div>
@@ -123,7 +123,7 @@ export default function LandingPage() {
                 </CardContent>
               </BentoCard>
 
-              <BentoCard className="lg:col-span-2">
+              <BentoCard className="md:col-span-2">
                 <CardHeader>
                     <div className="flex items-center gap-3">
                          <div className="p-3 rounded-lg bg-primary/20 border border-primary/30"><MapPin className="w-6 h-6 text-primary"/></div>

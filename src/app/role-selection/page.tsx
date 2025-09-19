@@ -11,16 +11,16 @@ import { User, Briefcase } from 'lucide-react';
 
 export default function RoleSelectionPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold font-headline">Choose Your Role</h1>
         <p className="text-muted-foreground mt-2">
           Are you here to find help or to offer your skills?
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">
         <Link href="/signup?role=requester">
-            <Card className="text-center hover:bg-primary/5 border-2 border-transparent hover:border-primary/30 transition-all duration-300 transform hover:scale-105 cursor-pointer flex flex-col items-center p-8">
+            <Card className="text-center hover:bg-primary/5 border-2 border-transparent hover:border-primary/30 transition-all duration-300 transform hover:scale-105 cursor-pointer flex flex-col items-center p-8 h-full">
             <CardHeader>
                 <div className="mx-auto bg-primary/20 p-4 rounded-full mb-4">
                     <User className="w-10 h-10 text-primary" />
@@ -37,7 +37,7 @@ export default function RoleSelectionPage() {
         </Link>
 
         <Link href="/signup?role=helper">
-            <Card className="text-center hover:bg-primary/5 border-2 border-transparent hover:border-primary/30 transition-all duration-300 transform hover:scale-105 cursor-pointer flex flex-col items-center p-8">
+            <Card className="text-center hover:bg-primary/5 border-2 border-transparent hover:border-primary/30 transition-all duration-300 transform hover:scale-105 cursor-pointer flex flex-col items-center p-8 h-full">
             <CardHeader>
                  <div className="mx-auto bg-primary/20 p-4 rounded-full mb-4">
                     <Briefcase className="w-10 h-10 text-primary" />
