@@ -29,7 +29,7 @@ export default function UserNav() {
 
   const handleLogout = async () => {
     await auth.signOut();
-    router.push('/');
+    window.location.href = '/';
   }
 
   const getInitials = (name: string) => {
