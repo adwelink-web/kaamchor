@@ -1,6 +1,15 @@
 import Link from 'next/link';
 import { Search, PanelLeft, Bell } from 'lucide-react';
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import {
   Sheet,
   SheetContent,
   SheetTrigger,
@@ -63,6 +72,33 @@ function Notifications() {
     )
 }
 
+function SearchDialog() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button size="icon" variant="outline">
+          <Search className="h-5 w-5" />
+          <span className="sr-only">Search</span>
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Search</DialogTitle>
+          <DialogDescription>
+            Search for tasks, helpers, or anything else.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex items-center space-x-2">
+          <Input placeholder="e.g. 'plumbing', 'Alice'..." className="flex-1"/>
+          <Button type="submit" size="icon">
+            <Search className="h-4 w-4" />
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -98,11 +134,8 @@ export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
       </Sheet>
 
       <div className="sm:hidden flex items-center gap-2">
-        <Button size="icon" variant="outline">
-            <Search className="h-5 w-5" />
-            <span className="sr-only">Search</span>
-        </Button>
-         <Notifications />
+        <SearchDialog />
+        <Notifications />
       </div>
 
 
