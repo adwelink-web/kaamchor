@@ -5,6 +5,11 @@ import Link from 'next/link';
 import { ChromeIcon } from 'lucide-react';
 
 export default function LoginPage() {
+  // In a real app, you'd have logic to determine if a user is new or returning.
+  // For this prototype, we'll assume a returning user and direct them to their dashboard.
+  // The mock data identifies user-1 (Alice) as a requester.
+  const loginHref = "/requester/dashboard"; // Default to requester dashboard for existing user.
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <Card className="w-full max-w-sm">
@@ -12,13 +17,13 @@ export default function LoginPage() {
           <div className="flex justify-center items-center mb-4">
             <Logo className="h-8 w-8 text-primary" />
           </div>
-          <CardTitle className="text-2xl font-headline">Welcome to Kaamchor</CardTitle>
+          <CardTitle className="text-2xl font-headline">Welcome back to Kaamchor</CardTitle>
           <CardDescription>Sign in to continue</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-4">
             <Button asChild>
-              <Link href="/role-selection" className="flex items-center gap-2">
+              <Link href={loginHref} className="flex items-center gap-2">
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path
                     fill="currentColor"
@@ -28,6 +33,7 @@ export default function LoginPage() {
                 Sign in with Google
               </Link>
             </Button>
+            <p className="text-center text-xs text-muted-foreground">New user? <Link href="/role-selection" className="underline">Create an account</Link></p>
           </div>
           <p className="mt-4 text-center text-xs text-muted-foreground">
             By signing in, you agree to our{' '}
