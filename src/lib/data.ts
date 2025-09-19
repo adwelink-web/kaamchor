@@ -1,4 +1,6 @@
 import type { User, Task, Helper } from '@/lib/types';
+import { db } from './firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 export const mockUsers: User[] = [
   { id: 'user-1', name: 'Alice Johnson', email: 'alice@example.com', avatarUrl: 'https://picsum.photos/seed/avatar1/100/100', location: 'San Francisco, CA' },
@@ -51,7 +53,7 @@ export const mockTasks: Task[] = [
     helperId: 'helper-3',
     createdAt: new Date(2023, 10, 10),
   },
-  {
+    {
     id: 'task-4',
     title: 'Garden weeding and cleanup',
     description: 'My garden is overgrown with weeds and needs a thorough cleanup.',
@@ -87,4 +89,11 @@ export const mockTasks: Task[] = [
   },
 ];
 
-export const getCurrentUser = (): User => mockUsers[0];
+
+export async function getTasksByRequester(requesterId: string) {
+    const tasksCol = collection(db, 'tasks');
+    const q = query(tasksCol, where('requesterId', '==', requesterId));
+    const querySnapshot = await getDocs(q);
+    const tasks = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Task[];
+    return tasks;
+}
