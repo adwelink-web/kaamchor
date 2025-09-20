@@ -6,8 +6,9 @@ import { Logo } from '@/components/icons';
 import Link from 'next/link';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Suspense } from 'react';
-import { auth } from '@/lib/firebase';
+import { auth, db } from '@/lib/firebase';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { useToast } from '@/hooks/use-toast';
 
 function SignupContent() {
@@ -22,7 +23,20 @@ function SignupContent() {
   const handleSignUp = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Create a user document in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        role: role,
+        createdAt: serverTimestamp(),
+        location: "Mumbai, MH" // Placeholder location
+      });
+
       toast({
         title: 'Account Created!',
         description: `Welcome to Kaamchor as a ${roleText}!`,
