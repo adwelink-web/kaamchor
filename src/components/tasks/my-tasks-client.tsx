@@ -167,11 +167,13 @@ function HelperInfo({ helperId }: { helperId: string }) {
     if (!helperId) return <span className="text-muted-foreground">-</span>;
     if (!helper) return <Skeleton className="h-5 w-24" />;
     
+    const getInitials = (name: string) => name.split(' ').map(n => n[0]).join('').toUpperCase();
+
     return (
         <div className="flex items-center gap-2">
             <Avatar className="h-6 w-6">
                 <AvatarImage src={helper.avatarUrl} alt={helper.name} />
-                <AvatarFallback>{helper.name[0]}</AvatarFallback>
+                <AvatarFallback>{getInitials(helper.name)}</AvatarFallback>
             </Avatar>
             <span className="truncate">{helper.name}</span>
         </div>
@@ -377,3 +379,5 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
     </Card>
   );
 }
+
+    

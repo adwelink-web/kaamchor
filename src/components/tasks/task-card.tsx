@@ -26,13 +26,11 @@ export default function TaskCard({ task: initialTask }: TaskCardProps) {
   const [task, setTask] = useState(initialTask);
   const [isAccepting, setIsAccepting] = useState(false);
   const { toast } = useToast();
-  const { user } = useAuth(); // Assuming this provides the current helper's info.
+  // This is a temporary way to link a Firebase user to a helper profile.
+  // In a real app, this would be stored in the user's profile in Firestore.
+  const helperId = 'helper-1';
 
   const handleAccept = async () => {
-    // In a real app, the helper's ID would come from their user profile.
-    // We are using a hardcoded ID for now as we don't have helper profiles.
-    const helperId = 'helper-1';
-
     if (!helperId) {
        toast({
         title: 'Error',
