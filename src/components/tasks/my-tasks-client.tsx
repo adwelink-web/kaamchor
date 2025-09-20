@@ -28,7 +28,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { WandSparkles, Bot, Eye, MessageSquare, CircleDollarSign, CalendarDays, Star, ClipboardList } from 'lucide-react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { WandSparkles, Bot, Eye, MessageSquare, CircleDollarSign, CalendarDays, Star, ClipboardList, Trash2 } from 'lucide-react';
 import { getHelpers } from '@/lib/data';
 import { getSuggestedMatches, deleteTask } from '@/app/actions';
 import type { SuggestTaskMatchesOutput } from '@/ai/flows/suggest-task-matches';
@@ -196,11 +197,31 @@ function TaskActions({ task, isDialog }: { task: Task, isDialog?: boolean }) {
     switch(task.status) {
         case 'Posted':
             return (
-                <form action={() => deleteTask(task.id)} className="flex flex-col md:flex-row gap-2">
+                <div className="flex flex-col md:flex-row gap-2">
                     {viewDetailsButton}
                     <MatcherDialog task={task} />
-                    <Button size="sm" variant="destructive" className={commonButtonClass}>Delete</Button>
-                </form>
+                    <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button size="sm" variant="destructive" className={commonButtonClass}>
+                                <Trash2 className="mr-2 h-4 w-4" />
+                                Delete
+                            </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                            <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete your
+                                task and remove it from our servers.
+                            </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => deleteTask(task.id)}>Continue</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
+                </div>
             );
         case 'Accepted':
         case 'In Progress':
