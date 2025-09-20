@@ -15,6 +15,8 @@ export type Task = {
   price: number;
   status: 'Posted' | 'Accepted' | 'In Progress' | 'Completed';
   requesterId: string;
+  requesterEmail?: string;
+  requesterPhone?: string;
   helperId?: string;
   createdAt: Date;
   imageUrl?: string;

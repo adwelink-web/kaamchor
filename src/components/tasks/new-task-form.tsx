@@ -54,11 +54,21 @@ export default function NewTaskForm() {
   return (
     <form ref={formRef} action={dispatch} className="grid gap-6">
       <input type="hidden" name="requesterId" value={user?.uid || ''} />
-      <div className="grid gap-3">
-        <Label htmlFor="title">Title</Label>
-        <Input id="title" name="title" placeholder="e.g., Need to fix a leaking tap" />
-        {state.errors?.title && <p className="text-sm text-destructive">{state.errors.title}</p>}
+      <input type="hidden" name="requesterEmail" value={user?.email || ''} />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid gap-3">
+            <Label htmlFor="title">Title</Label>
+            <Input id="title" name="title" placeholder="e.g., Need to fix a leaking tap" />
+            {state.errors?.title && <p className="text-sm text-destructive">{state.errors.title}</p>}
+        </div>
+         <div className="grid gap-3">
+            <Label htmlFor="requesterPhone">Mobile Number (Optional)</Label>
+            <Input id="requesterPhone" name="requesterPhone" placeholder="e.g., 9876543210" />
+            {state.errors?.requesterPhone && <p className="text-sm text-destructive">{state.errors.requesterPhone}</p>}
+        </div>
       </div>
+      
       <div className="grid gap-3">
         <Label htmlFor="description">Description</Label>
         <Textarea

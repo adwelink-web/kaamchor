@@ -14,6 +14,8 @@ const NewTaskSchema = z.object({
   location: z.string().min(1, 'Location is required'),
   price: z.coerce.number().min(1, 'Price must be greater than 0'),
   requesterId: z.string().min(1, 'Requester ID is missing'),
+  requesterEmail: z.string().email('Invalid email address'),
+  requesterPhone: z.string().optional(),
 });
 
 export async function createTask(prevState: any, formData: FormData) {
@@ -24,6 +26,8 @@ export async function createTask(prevState: any, formData: FormData) {
     location: formData.get('location'),
     price: formData.get('price'),
     requesterId: formData.get('requesterId'),
+    requesterEmail: formData.get('requesterEmail'),
+    requesterPhone: formData.get('requesterPhone'),
   });
 
   if (!validatedFields.success) {
