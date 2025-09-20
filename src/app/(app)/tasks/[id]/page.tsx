@@ -1,3 +1,4 @@
+
 'use client';
 
 import { getTask, getUser } from '@/lib/data';
@@ -12,10 +13,11 @@ import Link from 'next/link';
 import { TASK_CATEGORIES } from '@/lib/constants';
 import type { Task, User } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function TaskDetailsPage({ params }: { params: { id: string } }) {
+export default function TaskDetailsPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
+  const params = use(paramsPromise);
   const [task, setTask] = useState<Task | null | undefined>(null);
   const [requester, setRequester] = useState<User | null>(null);
   const { toast } = useToast();
@@ -66,6 +68,7 @@ export default function TaskDetailsPage({ params }: { params: { id: string } }) 
   }
 
   const handleAccept = () => {
+    if (!task) return;
     setTask({ ...task, status: 'Accepted' });
 
     toast({

@@ -14,7 +14,7 @@ import { TASK_CATEGORIES } from '@/lib/constants';
 import type { Task, Helper } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import MyTasksClient from '@/components/tasks/my-tasks-client';
 
@@ -93,7 +93,8 @@ function HelperInfo({ helperId }: { helperId: string }) {
 }
 
 
-export default function RequesterTaskDetailsPage({ params }: { params: { id: string } }) {
+export default function RequesterTaskDetailsPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
+  const params = use(paramsPromise);
   const [task, setTask] = useState<Task | null | undefined>(null);
   const { toast } = useToast();
 
@@ -129,6 +130,7 @@ export default function RequesterTaskDetailsPage({ params }: { params: { id: str
   }
   
   const handleMarkComplete = () => {
+      if (!task) return;
       toast({
         title: "Task Marked Complete!",
         description: `Payment of ₹${task.price} will be released to the helper.`,
