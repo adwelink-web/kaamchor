@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Task, Helper } from '@/lib/types';
 import {
   Card,
@@ -30,7 +30,7 @@ import {
 } from '@/components/ui/dialog';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { WandSparkles, Bot, Eye, MessageSquare, CircleDollarSign, CalendarDays, Star, ClipboardList, Trash2 } from 'lucide-react';
-import { getHelpers } from '@/lib/data';
+import { getHelpers, getHelper } from '@/lib/data';
 import { getSuggestedMatches, deleteTask } from '@/app/actions';
 import type { SuggestTaskMatchesOutput } from '@/ai/flows/suggest-task-matches';
 import { Skeleton } from '../ui/skeleton';
@@ -156,13 +156,11 @@ function MatcherDialog({ task }: MatcherDialogProps) {
 function HelperInfo({ helperId }: { helperId: string }) {
     const [helper, setHelper] = useState<Helper | null>(null);
 
-    useState(() => {
+    useEffect(() => {
         if(helperId) {
-            getHelpers().then(allHelpers => {
-                setHelper(allHelpers.find(h => h.id === helperId) || null);
-            })
+            getHelper(helperId).then(setHelper)
         }
-    })
+    }, [helperId])
 
     if (!helperId) return <span className="text-muted-foreground">-</span>;
     if (!helper) return <Skeleton className="h-5 w-24" />;
