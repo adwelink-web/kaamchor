@@ -34,19 +34,29 @@ export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTas
 
   const handleStatusChange = async (taskId: string, newStatus: Task['status']) => {
     // Optimistically update the UI
+    const originalTasks = tasks;
     setTasks(prevTasks =>
       prevTasks.map(task =>
         task.id === taskId ? { ...task, status: newStatus } : task
       )
     );
 
-    // Call the server action
-    await updateTaskStatus(taskId, newStatus);
-
-    toast({
-        title: "Status Updated!",
-        description: `Task status has been changed to "${newStatus}".`
-    })
+    try {
+        // Call the server action
+        await updateTaskStatus(taskId, newStatus);
+        toast({
+            title: "Status Updated!",
+            description: `Task status has been changed to "${newStatus}".`
+        })
+    } catch (error) {
+        // Revert the optimistic update on error
+        setTasks(originalTasks);
+        toast({
+            title: "Error",
+            description: "Failed to update status. Please try again.",
+            variant: "destructive"
+        })
+    }
   };
 
   const getStatusVariant = (status: Task['status']) => {

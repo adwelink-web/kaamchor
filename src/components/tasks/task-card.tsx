@@ -15,6 +15,8 @@ import { CircleDollarSign, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
+import { updateTaskStatus } from '@/app/actions';
+import { useAuth } from '@/contexts/auth-context';
 
 type TaskCardProps = {
   task: Task;
@@ -22,15 +24,45 @@ type TaskCardProps = {
 
 export default function TaskCard({ task: initialTask }: TaskCardProps) {
   const [task, setTask] = useState(initialTask);
+  const [isAccepting, setIsAccepting] = useState(false);
   const { toast } = useToast();
+  const { user } = useAuth(); // Assuming this provides the current helper's info.
 
-  const handleAccept = () => {
-    setTask({ ...task, status: 'Accepted' });
+  const handleAccept = async () => {
+    // In a real app, the helper's ID would come from their user profile.
+    // We are using a hardcoded ID for now as we don't have helper profiles.
+    const helperId = 'helper-1';
 
-    toast({
-      title: 'Task Accepted!',
-      description: `You have accepted the task: "${task.title}". The requester has been notified.`,
-    });
+    if (!helperId) {
+       toast({
+        title: 'Error',
+        description: 'You must be logged in as a helper to accept a task.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsAccepting(true);
+
+    try {
+      // Set the task as accepted and assign the helper
+      await updateTaskStatus(task.id, 'Accepted', helperId);
+      
+      setTask({ ...task, status: 'Accepted', helperId: helperId });
+
+      toast({
+        title: 'Task Accepted!',
+        description: `You have accepted the task: "${task.title}". The requester has been notified.`,
+      });
+    } catch (error) {
+       toast({
+        title: 'Error',
+        description: 'Could not accept the task. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsAccepting(false);
+    }
   };
 
   const getStatusVariant = (status: Task['status']) => {
@@ -74,8 +106,8 @@ export default function TaskCard({ task: initialTask }: TaskCardProps) {
         <Button className="w-full" variant="outline" asChild>
           <Link href={`/tasks/${task.id}`}>View Details</Link>
         </Button>
-        <Button className="w-full" disabled={!isAcceptable} onClick={handleAccept}>
-          {task.status === 'Posted' ? 'Accept Task' : 'Accepted'}
+        <Button className="w-full" disabled={!isAcceptable || isAccepting} onClick={handleAccept}>
+          {isAccepting ? 'Accepting...' : task.status === 'Posted' ? 'Accept Task' : 'Accepted'}
         </Button>
       </CardFooter>
     </Card>

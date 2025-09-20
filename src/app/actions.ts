@@ -86,7 +86,7 @@ export async function deleteTask(taskId: string) {
     }
 }
 
-export async function updateTaskStatus(taskId: string, status: 'Posted' | 'Accepted' | 'In Progress' | 'Completed') {
+export async function updateTaskStatus(taskId: string, status: 'Posted' | 'Accepted' | 'In Progress' | 'Completed', helperId?: string) {
     if (!taskId) {
         console.error('Error: Task ID is missing');
         return;
@@ -94,7 +94,14 @@ export async function updateTaskStatus(taskId: string, status: 'Posted' | 'Accep
     
     try {
         const taskRef = doc(db, "tasks", taskId);
-        await updateDoc(taskRef, { status: status });
+        
+        const updateData: { status: string, helperId?: string } = { status: status };
+
+        if (status === 'Accepted' && helperId) {
+            updateData.helperId = helperId;
+        }
+
+        await updateDoc(taskRef, updateData);
         
         revalidatePath('/requester/dashboard');
         revalidatePath('/helper/dashboard');
