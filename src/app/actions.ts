@@ -4,7 +4,7 @@ import { suggestTaskMatches, type SuggestTaskMatchesInput } from '@/ai/flows/sug
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { collection, addDoc, Timestamp, doc, deleteDoc } from 'firebase/firestore';
 
 
 const NewTaskSchema = z.object({
@@ -65,6 +65,21 @@ export async function createTask(prevState: any, formData: FormData) {
         errors: {},
     }
   }
+}
+
+export async function deleteTask(taskId: string) {
+    if (!taskId) {
+        console.error('Error: Task ID is missing');
+        return;
+    }
+
+    try {
+        await deleteDoc(doc(db, "tasks", taskId));
+        revalidatePath('/requester/dashboard');
+        revalidatePath('/helper/dashboard');
+    } catch (error) {
+        console.error("Error deleting task:", error);
+    }
 }
 
 

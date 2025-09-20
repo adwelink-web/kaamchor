@@ -30,7 +30,7 @@ import {
 } from '@/components/ui/dialog';
 import { WandSparkles, Bot, Eye, MessageSquare, CircleDollarSign, CalendarDays, Star, ClipboardList } from 'lucide-react';
 import { getHelpers } from '@/lib/data';
-import { getSuggestedMatches } from '@/app/actions';
+import { getSuggestedMatches, deleteTask } from '@/app/actions';
 import type { SuggestTaskMatchesOutput } from '@/ai/flows/suggest-task-matches';
 import { Skeleton } from '../ui/skeleton';
 import Image from 'next/image';
@@ -196,11 +196,11 @@ function TaskActions({ task, isDialog }: { task: Task, isDialog?: boolean }) {
     switch(task.status) {
         case 'Posted':
             return (
-                <div className="flex flex-col md:flex-row gap-2">
+                <form action={() => deleteTask(task.id)} className="flex flex-col md:flex-row gap-2">
                     {viewDetailsButton}
                     <MatcherDialog task={task} />
-                    <Button size="sm" variant="destructive-outline" className={commonButtonClass}>Cancel</Button>
-                </div>
+                    <Button size="sm" variant="destructive" className={commonButtonClass}>Delete</Button>
+                </form>
             );
         case 'Accepted':
         case 'In Progress':
