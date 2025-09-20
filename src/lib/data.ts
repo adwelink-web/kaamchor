@@ -1,6 +1,6 @@
 import type { User, Task, Helper } from '@/lib/types';
 import { db } from './firebase';
-import { collection, getDocs, query, where, Timestamp, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, query, where, Timestamp, doc, getDoc, onSnapshot } from 'firebase/firestore';
 
 
 // Firestore data converter
@@ -20,6 +20,18 @@ const taskConverter = {
         } as Task;
     }
 };
+
+export function onTasksByRequesterUpdate(requesterId: string, callback: (tasks: Task[]) => void) {
+    const tasksCol = collection(db, 'tasks').withConverter(taskConverter);
+    const q = query(tasksCol, where('requesterId', '==', requesterId));
+    
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const tasks = querySnapshot.docs.map(doc => doc.data());
+        callback(tasks);
+    });
+
+    return unsubscribe;
+}
 
 export async function getTasks() {
     const tasksCol = collection(db, 'tasks').withConverter(taskConverter);

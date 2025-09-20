@@ -2,7 +2,7 @@
 'use client';
 
 import MyTasksClient from '@/components/tasks/my-tasks-client';
-import { getTasksByRequester } from '@/lib/data';
+import { onTasksByRequesterUpdate } from '@/lib/data';
 import { useAuth } from '@/contexts/auth-context';
 import { useEffect, useState } from 'react';
 import type { Task } from '@/lib/types';
@@ -15,11 +15,15 @@ export default function MyTasksPage() {
 
   useEffect(() => {
     if (user) {
-      getTasksByRequester(user.uid).then((userTasks) => {
+      const unsubscribe = onTasksByRequesterUpdate(user.uid, (userTasks) => {
         const activeTasks = userTasks.filter(task => task.status !== 'Completed');
         setTasks(activeTasks);
         setLoading(false);
       });
+
+      // Cleanup subscription on unmount
+      return () => unsubscribe();
+
     } else if (!authLoading) {
         setLoading(false);
     }
