@@ -21,6 +21,8 @@ import {
 import { Badge } from '../ui/badge';
 import { MapPin, CircleDollarSign, MessageSquare } from 'lucide-react';
 import Image from 'next/image';
+import { updateTaskStatus } from '@/app/actions';
+import { useToast } from '@/hooks/use-toast';
 
 type AcceptedTasksClientProps = {
   tasks: Task[];
@@ -28,13 +30,23 @@ type AcceptedTasksClientProps = {
 
 export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTasksClientProps) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const { toast } = useToast();
 
-  const handleStatusChange = (taskId: string, newStatus: Task['status']) => {
+  const handleStatusChange = async (taskId: string, newStatus: Task['status']) => {
+    // Optimistically update the UI
     setTasks(prevTasks =>
       prevTasks.map(task =>
         task.id === taskId ? { ...task, status: newStatus } : task
       )
     );
+
+    // Call the server action
+    await updateTaskStatus(taskId, newStatus);
+
+    toast({
+        title: "Status Updated!",
+        description: `Task status has been changed to "${newStatus}".`
+    })
   };
 
   const getStatusVariant = (status: Task['status']) => {
@@ -43,6 +55,8 @@ export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTas
         return 'secondary';
       case 'In Progress':
         return 'warning';
+      case 'Completed':
+        return 'default';
       default:
         return 'outline';
     }

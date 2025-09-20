@@ -4,7 +4,7 @@ import { suggestTaskMatches, type SuggestTaskMatchesInput } from '@/ai/flows/sug
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/firebase';
-import { collection, addDoc, Timestamp, doc, deleteDoc } from 'firebase/firestore';
+import { collection, addDoc, Timestamp, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 
 
 const NewTaskSchema = z.object({
@@ -27,7 +27,6 @@ export async function createTask(prevState: any, formData: FormData) {
   });
 
   if (!validatedFields.success) {
-    // Check if the error is for the requesterId, and show a generic auth error
     if (validatedFields.error.flatten().fieldErrors.requesterId) {
        return {
          message: 'Error: You must be logged in to create a task.',
@@ -77,8 +76,30 @@ export async function deleteTask(taskId: string) {
         await deleteDoc(doc(db, "tasks", taskId));
         revalidatePath('/requester/dashboard');
         revalidatePath('/helper/dashboard');
+        revalidatePath('/helper/tasks/accepted');
     } catch (error) {
         console.error("Error deleting task:", error);
+    }
+}
+
+export async function updateTaskStatus(taskId: string, status: 'Posted' | 'Accepted' | 'In Progress' | 'Completed') {
+    if (!taskId) {
+        console.error('Error: Task ID is missing');
+        return;
+    }
+    
+    try {
+        const taskRef = doc(db, "tasks", taskId);
+        await updateDoc(taskRef, { status: status });
+        
+        revalidatePath('/requester/dashboard');
+        revalidatePath('/helper/dashboard');
+        revalidatePath('/helper/tasks/accepted');
+        revalidatePath(`/requester/tasks/${taskId}`);
+        revalidatePath(`/tasks/${taskId}`);
+
+    } catch (error) {
+        console.error("Error updating task status:", error);
     }
 }
 
