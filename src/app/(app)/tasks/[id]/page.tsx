@@ -97,7 +97,8 @@ export default function TaskDetailsPage({ params: paramsPromise }: { params: Pro
     return name
       .split(' ')
       .map((n) => n[0])
-      .join('');
+      .join('')
+      .toUpperCase();
   };
 
   return (
