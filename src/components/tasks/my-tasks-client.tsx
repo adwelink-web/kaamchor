@@ -28,7 +28,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { WandSparkles, Bot, Eye, MessageSquare, CircleDollarSign, CalendarDays, Star, ClipboardList, Trash2 } from 'lucide-react';
 import { getHelpers } from '@/lib/data';
 import { getSuggestedMatches, deleteTask } from '@/app/actions';
@@ -377,5 +377,3 @@ export default function MyTasksClient({ tasks, isDialog = false }: MyTasksClient
     </Card>
   );
 }
-
-    
