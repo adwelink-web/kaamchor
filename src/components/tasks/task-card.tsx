@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { Task } from '@/lib/types';
@@ -26,9 +27,9 @@ export default function TaskCard({ task: initialTask }: TaskCardProps) {
   const [task, setTask] = useState(initialTask);
   const [isAccepting, setIsAccepting] = useState(false);
   const { toast } = useToast();
-  // This is a temporary way to link a Firebase user to a helper profile.
-  // In a real app, this would be stored in the user's profile in Firestore.
-  const helperId = 'helper-1';
+  const { dbUser } = useAuth();
+  
+  const helperId = dbUser?.id;
 
   const handleAccept = async () => {
     if (!helperId) {
@@ -77,7 +78,7 @@ export default function TaskCard({ task: initialTask }: TaskCardProps) {
     }
   };
 
-  const isAcceptable = task.status === 'Posted';
+  const isAcceptable = task.status === 'Posted' && dbUser?.role === 'helper';
 
   return (
     <Card className="flex flex-col">
@@ -104,9 +105,11 @@ export default function TaskCard({ task: initialTask }: TaskCardProps) {
         <Button className="w-full" variant="outline" asChild>
           <Link href={`/tasks/${task.id}`}>View Details</Link>
         </Button>
-        <Button className="w-full" disabled={!isAcceptable || isAccepting} onClick={handleAccept}>
-          {isAccepting ? 'Accepting...' : task.status === 'Posted' ? 'Accept Task' : 'Accepted'}
-        </Button>
+        {dbUser?.role === 'helper' && (
+             <Button className="w-full" disabled={!isAcceptable || isAccepting} onClick={handleAccept}>
+              {isAccepting ? 'Accepting...' : task.status === 'Posted' ? 'Accept Task' : 'Accepted'}
+            </Button>
+        )}
       </CardFooter>
     </Card>
   );

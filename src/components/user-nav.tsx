@@ -1,3 +1,4 @@
+
 import {
   Avatar,
   AvatarFallback,
@@ -18,18 +19,29 @@ import { useAuth } from '@/contexts/auth-context';
 import { auth } from '@/lib/firebase';
 import { Skeleton } from './ui/skeleton';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { getUser } from '@/lib/data';
 
 export default function UserNav() {
   const { user, loading } = useAuth();
+  const [userRole, setUserRole] = useState<'requester' | 'helper' | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      getUser(user.uid).then(dbUser => {
+        if (dbUser) {
+          setUserRole(dbUser.role);
+        }
+      })
+    }
+  }, [user]);
   
-  // In a real app, role would be determined dynamically.
-  const role = 'requester'; 
-  const profileHref = role === 'helper' ? '/helper/profile' : '/requester/profile';
+  const profileHref = userRole === 'helper' ? '/helper/profile' : '/requester/profile';
 
   const handleLogout = async () => {
     await auth.signOut();
-    window.location.href = '/';
+    router.push('/');
   }
 
   const getInitials = (name: string) => {

@@ -3,7 +3,7 @@
 
 import AppSidebar from '@/components/app-sidebar';
 import Header from '@/components/header';
-import { Home, PlusCircle, Users, History, MessageSquareWarning } from 'lucide-react';
+import { Home, PlusCircle, Users, History, MessageSquareWarning, User } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import BottomNav from '@/components/bottom-nav';
@@ -13,6 +13,7 @@ const requesterNavItems = [
   { href: '/requester/history', icon: History, label: 'History' },
   { href: '/requester/tasks/new', icon: PlusCircle, label: 'Post' },
   { href: '/requester/helpers', icon: Users, label: 'Helpers' },
+  { href: '/requester/profile', icon: User, label: 'Profile' },
   { href: '/requester/feedback', icon: MessageSquareWarning, label: 'Feedback' },
 ];
 

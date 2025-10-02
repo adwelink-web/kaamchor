@@ -1,3 +1,4 @@
+
 'use client';
 
 import AcceptedTasksClient from '@/components/tasks/accepted-tasks-client';
@@ -8,26 +9,21 @@ import type { Task } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function AcceptedTasksPage() {
-  const { user, loading: authLoading } = useAuth();
+  const { user, dbUser, loading: authLoading } = useAuth();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // This is a temporary way to link a Firebase user to a helper profile.
-  // In a real app, this would be stored in the user's profile in Firestore.
-  const helperId = 'helper-1'; 
-
   useEffect(() => {
-    if (user) {
-        // In a real app, you'd fetch tasks where helperId matches the current user's helper profile ID.
+    if (dbUser) {
         getTasks().then(allTasks => {
-            const accepted = allTasks.filter((task) => task.helperId === helperId && task.status !== 'Completed');
+            const accepted = allTasks.filter((task) => task.helperId === dbUser.id && task.status !== 'Completed');
             setTasks(accepted);
             setLoading(false);
         });
     } else if (!authLoading) {
         setLoading(false);
     }
-  }, [user, authLoading]);
+  }, [dbUser, authLoading]);
 
   if (loading || authLoading) {
       return (

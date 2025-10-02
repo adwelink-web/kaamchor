@@ -16,8 +16,7 @@ export default function MyTasksPage() {
   useEffect(() => {
     if (user) {
       const unsubscribe = onTasksByRequesterUpdate(user.uid, (userTasks) => {
-        const activeTasks = userTasks.filter(task => task.status !== 'Completed');
-        setTasks(activeTasks);
+        setTasks(userTasks);
         setLoading(false);
       });
 

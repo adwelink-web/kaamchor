@@ -1,9 +1,11 @@
+
 export type User = {
   id: string;
   name: string;
   email: string;
   avatarUrl?: string;
   location: string;
+  role: 'requester' | 'helper';
 };
 
 export type Task = {

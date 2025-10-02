@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,23 +13,21 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 
 export default function EarningsPage() {
-    const { user, loading: authLoading } = useAuth();
+    const { user, dbUser, loading: authLoading } = useAuth();
     const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const helperId = 'helper-1';
-
     useEffect(() => {
-        if (user) {
+        if (dbUser) {
             getTasks().then(allTasks => {
-                 const myCompletedTasks = allTasks.filter(task => task.helperId === helperId && task.status === 'Completed');
+                 const myCompletedTasks = allTasks.filter(task => task.helperId === dbUser.id && task.status === 'Completed');
                  setCompletedTasks(myCompletedTasks);
                  setLoading(false);
             })
         } else if (!authLoading) {
             setLoading(false);
         }
-    }, [user, authLoading]);
+    }, [dbUser, authLoading]);
 
     const totalEarnings = completedTasks.reduce((acc, task) => acc + task.price, 0);
     const isMobile = useIsMobile();

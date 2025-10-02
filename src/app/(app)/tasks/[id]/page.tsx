@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { getTask, getUser, getHelper } from '@/lib/data';
@@ -16,6 +17,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useState, useEffect, use } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { updateTaskStatus } from '@/app/actions';
+import { useAuth } from '@/contexts/auth-context';
 
 export default function TaskDetailsPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
   const params = use(paramsPromise);
@@ -23,10 +25,9 @@ export default function TaskDetailsPage({ params: paramsPromise }: { params: Pro
   const [requester, setRequester] = useState<User | null>(null);
   const [isAccepting, setIsAccepting] = useState(false);
   const { toast } = useToast();
+  const { dbUser } = useAuth();
   
-  // This is a temporary way to link a Firebase user to a helper profile.
-  // In a real app, this would be stored in the user's profile in Firestore.
-  const helperId = 'helper-1'; 
+  const helperId = dbUser?.id; 
 
   useEffect(() => {
     getTask(params.id).then(fetchedTask => {
@@ -190,7 +191,7 @@ export default function TaskDetailsPage({ params: paramsPromise }: { params: Pro
                 )}
             </CardContent>
             <CardFooter>
-                 {task.status === 'Posted' && (
+                 {task.status === 'Posted' && dbUser?.role === 'helper' && (
                     <Button size="lg" className="w-full sm:w-auto" onClick={handleAccept} disabled={isAccepting}>
                         {isAccepting ? 'Accepting...' : 'Accept Task'}
                     </Button>

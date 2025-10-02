@@ -1,3 +1,4 @@
+
 import type { User, Task, Helper } from '@/lib/types';
 import { db } from './firebase';
 import { collection, getDocs, query, where, Timestamp, doc, getDoc, onSnapshot } from 'firebase/firestore';
@@ -56,17 +57,41 @@ export async function getTasksByRequester(requesterId: string) {
     return querySnapshot.docs.map(doc => doc.data());
 }
 
-export async function getHelpers() {
-    const helpersCol = collection(db, 'helpers');
-    const querySnapshot = await getDocs(helpersCol);
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Helper[];
+export async function getHelpers(): Promise<Helper[]> {
+    const usersCol = collection(db, 'users');
+    const q = query(usersCol, where('role', '==', 'helper'));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+            id: doc.id,
+            name: data.name,
+            avatarUrl: data.photoURL || `https://i.pravatar.cc/150?u=${doc.id}`,
+            location: data.location,
+            skills: data.skills || ['General Help'], // Placeholder
+            rating: data.rating || 4.5, // Placeholder
+            pastWork: data.pastWork || "No past work summary available." // Placeholder
+        } as Helper;
+    });
 }
 
-export async function getHelper(id: string) {
-    const helperDocRef = doc(db, 'helpers', id);
-    const helperSnap = await getDoc(helperDocRef);
-    if (helperSnap.exists()) {
-        return { id: helperSnap.id, ...helperSnap.data() } as Helper;
+export async function getHelper(id: string): Promise<Helper | undefined> {
+    const userDocRef = doc(db, 'users', id);
+    const userSnap = await getDoc(userDocRef);
+
+    if (userSnap.exists()) {
+        const data = userSnap.data();
+        if (data.role === 'helper') {
+             return {
+                id: userSnap.id,
+                name: data.name,
+                avatarUrl: data.photoURL || `https://i.pravatar.cc/150?u=${userSnap.id}`,
+                location: data.location,
+                skills: data.skills || ['General Help'], // Placeholder
+                rating: data.rating || 4.5, // Placeholder
+                pastWork: data.pastWork || "No past work summary available." // Placeholder
+            } as Helper;
+        }
     }
     return undefined;
 }
@@ -83,6 +108,7 @@ export async function getUser(id: string): Promise<User | null> {
             email: data.email,
             avatarUrl: data.photoURL,
             location: data.location || "Mumbai, MH", // fallback location
+            role: data.role,
         } as User;
     }
 

@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -16,20 +17,18 @@ import type { Task } from '@/lib/types';
 
 
 export default function HelperFeedbackPage() {
-    const { user } = useAuth();
+    const { user, dbUser } = useAuth();
     const [helperTasks, setHelperTasks] = useState<Task[]>([]);
     const { toast } = useToast();
-    
-    const helperId = 'helper-1';
 
     useEffect(() => {
-        if (user) {
+        if (dbUser) {
              getTasks().then(allTasks => {
-                 const myTasks = allTasks.filter(task => task.helperId === helperId);
+                 const myTasks = allTasks.filter(task => task.helperId === dbUser.id);
                  setHelperTasks(myTasks);
              });
         }
-    }, [user])
+    }, [dbUser])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
