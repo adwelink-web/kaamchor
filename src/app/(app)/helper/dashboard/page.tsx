@@ -1,29 +1,10 @@
+'use client';
 
 import { getTasks } from '@/lib/data';
 import TaskCard from '@/components/tasks/task-card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Suspense } from 'react';
-
-async function TaskList() {
-  const allTasks = await getTasks();
-  const availableTasks = allTasks.filter(task => task.status === 'Posted');
-
-  if (availableTasks.length === 0) {
-    return (
-        <div className="text-center py-12 text-muted-foreground col-span-full">
-            No tasks available right now.
-        </div>
-    );
-  }
-
-  return (
-    <>
-      {availableTasks.map((task) => (
-        <TaskCard key={task.id} task={task} />
-      ))}
-    </>
-  );
-}
+import { useEffect, useState } from 'react';
+import type { Task } from '@/lib/types';
 
 function TaskListSkeleton() {
     return (
@@ -34,6 +15,17 @@ function TaskListSkeleton() {
 }
 
 export default function HelperDashboardPage() {
+    const [tasks, setTasks] = useState<Task[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        getTasks().then(allTasks => {
+            const availableTasks = allTasks.filter(task => task.status === 'Posted');
+            setTasks(availableTasks);
+            setLoading(false);
+        });
+    }, []);
+
     return (
         <div className="flex flex-col flex-1 gap-4">
             <div className="flex items-center">
@@ -42,9 +34,17 @@ export default function HelperDashboardPage() {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                <Suspense fallback={<TaskListSkeleton />}>
-                    <TaskList />
-                </Suspense>
+                {loading ? (
+                    <TaskListSkeleton />
+                ) : tasks.length > 0 ? (
+                    tasks.map((task) => (
+                        <TaskCard key={task.id} task={task} />
+                    ))
+                ) : (
+                    <div className="text-center py-12 text-muted-foreground col-span-full">
+                        No tasks available right now.
+                    </div>
+                )}
             </div>
         </div>
     );
