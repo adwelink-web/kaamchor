@@ -2,7 +2,7 @@
 'use client';
 
 import AcceptedTasksClient from '@/components/tasks/accepted-tasks-client';
-import { getTasks } from '@/lib/data';
+import { onTasksForHelperUpdate } from '@/lib/data';
 import { useAuth } from '@/contexts/auth-context';
 import { useEffect, useState } from 'react';
 import type { Task } from '@/lib/types';
@@ -15,13 +15,14 @@ export default function AcceptedTasksPage() {
 
   useEffect(() => {
     if (dbUser) {
-        getTasks().then(allTasks => {
-            const accepted = allTasks.filter((task) => task.helperId === dbUser.id && task.status !== 'Completed');
-            setTasks(accepted);
-            setLoading(false);
-        });
-    } else if (!authLoading) {
+      const unsubscribe = onTasksForHelperUpdate(dbUser.id, (helperTasks) => {
+        setTasks(helperTasks);
         setLoading(false);
+      });
+      // Cleanup subscription on unmount
+      return () => unsubscribe();
+    } else if (!authLoading) {
+      setLoading(false);
     }
   }, [dbUser, authLoading]);
 

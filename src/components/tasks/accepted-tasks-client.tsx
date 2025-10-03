@@ -82,6 +82,11 @@ function RequesterInfo({ requesterId }: { requesterId: string }) {
 export default function AcceptedTasksClient({ tasks: initialTasks }: AcceptedTasksClientProps) {
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const { toast } = useToast();
+  
+  useEffect(() => {
+    setTasks(initialTasks);
+  }, [initialTasks]);
+
 
   const handleStatusChange = async (taskId: string, newStatus: Task['status']) => {
     // Optimistically update the UI
