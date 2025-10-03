@@ -22,7 +22,11 @@ export default function LoginPage() {
         description: "Welcome back!",
       });
       router.push('/requester/dashboard');
-    } catch (error) {
+    } catch (error: any) {
+      if (error.code === 'auth/popup-closed-by-user') {
+        console.log('Login popup closed by user.');
+        return;
+      }
       console.error('Error during sign-in:', error);
       toast({
         title: 'Login Failed',

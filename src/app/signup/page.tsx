@@ -42,7 +42,11 @@ function SignupContent() {
         description: `Welcome to Kaamchor as a ${roleText}!`,
       });
       router.push(loginHref);
-    } catch (error) {
+    } catch (error: any) {
+       if (error.code === 'auth/popup-closed-by-user') {
+        console.log('Sign-up popup closed by user.');
+        return;
+      }
       console.error('Error during sign-up:', error);
       toast({
         title: 'Sign-up Failed',
