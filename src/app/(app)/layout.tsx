@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { AuthProvider, useAuth } from '@/contexts/auth-context';
 import { useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 function AppLayoutContent({ children }: { children: React.ReactNode }) {
     const { user, loading } = useAuth();
@@ -26,10 +27,10 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="animate-pulse">
-                    {/* You can use your Logo component here if you want */}
-                    <p>Loading...</p>
+            <div className="flex items-center justify-center min-h-screen bg-background">
+                <div className="grid gap-4 w-full max-w-sm">
+                    <Skeleton className="h-14 w-full" />
+                    <Skeleton className="h-80 w-full" />
                 </div>
             </div>
         )
@@ -38,7 +39,14 @@ function AppLayoutContent({ children }: { children: React.ReactNode }) {
     // If we're not loading and there's no user, and we're not on a public page,
     // we should show a loading state or null while the redirect effect runs.
     if (!user && !['/login', '/signup', '/role-selection', '/splash'].some(p => pathname.startsWith(p))) {
-        return null;
+        return (
+             <div className="flex items-center justify-center min-h-screen bg-background">
+                 <div className="grid gap-4 w-full max-w-sm">
+                    <Skeleton className="h-14 w-full" />
+                    <Skeleton className="h-80 w-full" />
+                </div>
+            </div>
+        )
     }
 
 
