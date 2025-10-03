@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Search, PanelLeft, Bell } from 'lucide-react';
 import {
@@ -137,9 +138,15 @@ export default function Header({ mobileNavItems, logoHref }: HeaderProps) {
         </SheetContent>
       </Sheet>
 
-      <div className="sm:hidden flex items-center gap-2">
-        <SearchDialog />
-        <Notifications />
+      <div className="relative ml-auto flex-1 md:grow-0">
+        <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground hidden sm:block">
+            <Search/>
+        </div>
+        <Input
+            type="search"
+            placeholder="Search..."
+            className="w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[336px] hidden sm:block"
+        />
       </div>
 
 

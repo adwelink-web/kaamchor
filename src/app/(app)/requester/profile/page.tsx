@@ -44,7 +44,7 @@ async function ProfileData() {
                     <Badge variant="secondary" className="mt-2">Requester</Badge>
             </CardHeader>
             <CardContent>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
                     <div className="p-4 bg-muted/50 rounded-lg">
                         <div className="text-2xl font-bold">{tasks.length}</div>
                         <div className="flex items-center justify-center text-sm text-muted-foreground">
@@ -85,7 +85,7 @@ function ProfileSkeleton() {
                     <Skeleton className="h-4 w-32 mt-2" />
             </CardHeader>
             <CardContent>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
                         <Skeleton className="h-24 w-full" />
                         <Skeleton className="h-24 w-full" />
                         <Skeleton className="h-24 w-full" />
