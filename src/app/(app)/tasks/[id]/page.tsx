@@ -1,8 +1,7 @@
 
-
 'use client';
 
-import { getTask, getUser, getHelper } from '@/lib/data';
+import { getTask, getUser } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,15 +11,14 @@ import { CircleDollarSign, MapPin, CalendarDays, ArrowLeft } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { TASK_CATEGORIES } from '@/lib/constants';
-import type { Task, User, Helper } from '@/lib/types';
+import type { Task, User } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { updateTaskStatus } from '@/app/actions';
 import { useAuth } from '@/contexts/auth-context';
 
-export default function TaskDetailsPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
-  const params = use(paramsPromise);
+export default function TaskDetailsPage({ params }: { params: { id: string } }) {
   const [task, setTask] = useState<Task | null | undefined>(undefined);
   const [requester, setRequester] = useState<User | null>(null);
   const [isAccepting, setIsAccepting] = useState(false);
@@ -30,12 +28,14 @@ export default function TaskDetailsPage({ params: paramsPromise }: { params: Pro
   const helperId = dbUser?.id; 
 
   useEffect(() => {
-    getTask(params.id).then(fetchedTask => {
-      setTask(fetchedTask);
-      if (fetchedTask?.requesterId) {
-        getUser(fetchedTask.requesterId).then(setRequester);
-      }
-    });
+    if (params.id) {
+        getTask(params.id).then(fetchedTask => {
+          setTask(fetchedTask === undefined ? null : fetchedTask);
+          if (fetchedTask?.requesterId) {
+            getUser(fetchedTask.requesterId).then(setRequester);
+          }
+        });
+    }
   }, [params.id]);
 
   if (task === undefined) {

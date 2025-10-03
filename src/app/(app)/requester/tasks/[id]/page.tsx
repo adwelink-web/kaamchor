@@ -14,7 +14,7 @@ import { TASK_CATEGORIES } from '@/lib/constants';
 import type { Task, Helper } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect, useState, use } from 'react';
+import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import MyTasksClient from '@/components/tasks/my-tasks-client';
 
@@ -93,40 +93,43 @@ function HelperInfo({ helperId }: { helperId: string }) {
 }
 
 
-export default function RequesterTaskDetailsPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
-  const params = use(paramsPromise);
-  const [task, setTask] = useState<Task | null | undefined>(null);
+export default function RequesterTaskDetailsPage({ params }: { params: { id: string } }) {
+  const [task, setTask] = useState<Task | null | undefined>(undefined);
   const { toast } = useToast();
 
   useEffect(() => {
-    getTask(params.id).then(setTask);
+    if (params.id) {
+        getTask(params.id).then(fetchedTask => {
+            setTask(fetchedTask === undefined ? null : fetchedTask);
+        });
+    }
   }, [params.id]);
 
 
   if (task === undefined) {
-    notFound();
+    return (
+        <div className="max-w-4xl mx-auto p-4 md:p-0">
+             <Skeleton className="h-8 w-48 mb-4" />
+              <Card>
+                  <Skeleton className="aspect-video w-full rounded-t-lg" />
+                  <CardHeader>
+                      <Skeleton className="h-10 w-3/4" />
+                      <Skeleton className="h-5 w-1/4 mt-2" />
+                  </CardHeader>
+                  <CardContent className="grid gap-6">
+                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                          <Skeleton className="h-20 w-full" />
+                          <Skeleton className="h-20 w-full" />
+                          <Skeleton className="h-20 w-full" />
+                       </div>
+                  </CardContent>
+              </Card>
+        </div>
+    )
   }
-
+  
   if (task === null) {
-      return (
-          <div className="max-w-4xl mx-auto p-4 md:p-0">
-               <Skeleton className="h-8 w-48 mb-4" />
-                <Card>
-                    <Skeleton className="aspect-video w-full rounded-t-lg" />
-                    <CardHeader>
-                        <Skeleton className="h-10 w-3/4" />
-                        <Skeleton className="h-5 w-1/4 mt-2" />
-                    </CardHeader>
-                    <CardContent className="grid gap-6">
-                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <Skeleton className="h-20 w-full" />
-                            <Skeleton className="h-20 w-full" />
-                            <Skeleton className="h-20 w-full" />
-                         </div>
-                    </CardContent>
-                </Card>
-          </div>
-      )
+    notFound();
   }
   
   const handleMarkComplete = () => {
