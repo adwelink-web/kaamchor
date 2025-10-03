@@ -7,7 +7,6 @@ import { Briefcase, ListTodo, Wallet, MessageSquareWarning, User } from 'lucide-
 import BottomNav from '@/components/bottom-nav';
 
 const helperNavItems = [
-    { href: '/helper/dashboard', icon: Briefcase, label: 'Find Work' },
     { href: '/helper/tasks/accepted', icon: ListTodo, label: 'My Tasks' },
     { href: '/helper/earnings', icon: Wallet, label: 'Earnings' },
     { href: '/helper/profile', icon: User, label: 'Profile' },
@@ -21,9 +20,9 @@ export default function HelperAppLayout({
 }) {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      <AppSidebar navItems={helperNavItems} logoHref="/helper/dashboard" />
+      <AppSidebar navItems={helperNavItems} logoHref="/helper/tasks/accepted" />
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-        <Header mobileNavItems={helperNavItems} logoHref="/helper/dashboard" />
+        <Header mobileNavItems={helperNavItems} logoHref="/helper/tasks/accepted" />
         <main className="p-4 sm:px-6 sm:py-0 flex-1 pb-20 sm:pb-0">{children}</main>
       </div>
       <BottomNav navItems={helperNavItems} />
