@@ -30,7 +30,7 @@ const BentoCard = ({
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen bg-black text-white">
-      <header className="px-4 lg:px-6 h-16 flex items-center bg-transparent backdrop-blur-sm sticky top-0 z-50 animate-in fade-in slide-in-from-top-4 duration-500">
+      <header className="px-4 lg:px-6 h-16 flex items-center bg-black/50 backdrop-blur-sm border-b border-white/10 sticky top-0 z-50 animate-in fade-in slide-in-from-top-4 duration-500">
         <Link href="#" className="flex items-center justify-center" prefetch={false}>
           <Logo className="h-6 w-6 text-primary" />
           <span className="ml-2 font-bold text-xl font-headline">Kaamchor</span>
