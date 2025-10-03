@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { auth } from '@/lib/firebase';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useToast } from '@/hooks/use-toast';
+import { ArrowLeft } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -38,8 +39,12 @@ export default function LoginPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen">
-      <Card className="w-full max-w-sm">
-        <CardHeader className="text-center">
+      <Card className="w-full max-w-sm relative">
+        <Link href="/" className="absolute top-4 left-4 flex items-center text-sm text-muted-foreground hover:text-foreground">
+          <ArrowLeft className="w-4 h-4 mr-1" />
+          Back to Home
+        </Link>
+        <CardHeader className="text-center pt-12">
           <div className="flex justify-center items-center mb-4">
             <Logo className="h-8 w-8 text-primary" />
           </div>
